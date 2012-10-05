@@ -1,5 +1,5 @@
 /*
-	jQuery Plugnin: imgLiquid v0.1
+	jQuery Plugnin: imgLiquid v0.6
 	http://www.proyectiva.com
 	@krc_ale
 
