@@ -2,6 +2,18 @@
 	jQuery Plugnin: imgLiquid v0.6
 	http://www.proyectiva.com
 	@krc_ale
+	
+		ex:
+		$(".imgLiquid").imgLiquid({fill:true});
+
+		//Settings:
+		fill: true,
+		verticalAlign: 'center', //'top' // 'bottom'
+		horizontalAlign: 'center', // 'left' // 'right'
+		fadeTime: 0,
+		responsive: false,
+		delay: 0,
+
 
 	Copyright (c) 2012 Alejandro Emparan (karacas), http://www.proyectiva.com
 	
@@ -38,19 +50,19 @@
 			//___________________________________________________________________
 			var settings = $.extend({
 				fill: true,
+				verticalAlign: 'center', //'top' // 'bottom'
+				horizontalAlign: 'center', // 'left' // 'right'
 				fadeTime: 0,
-				verticalAlign: 'center',
-				horizontalAlign: 'center',
+				responsive: false,
 				delay: 0,
 				/**/
 				removeBoxBackground: true,
-				ieFadeOff: true,
-				imageRendering: 'auto',
-				responsive: false
+				ieFadeInDisabled: true,
+				imageRendering: 'auto'
 			}, this.defaultOptions, options);
 
 			//ie OffAnims
-			if (isIE && settings.ieFadeOff){
+			if (isIE && settings.ieFadeInDisabled){
 				settings.fadeTime = 0;
 			}
 			if (settings.responsive) {

@@ -2,6 +2,18 @@
 	jQuery Plugnin: imgLiquid v0.6
 	http://www.proyectiva.com
 	@krc_ale
+	
+		ex:
+		$(".imgLiquid").imgLiquid({fill:true});
+
+		//Settings:
+		fill: true,
+		verticalAlign: 'center', //'top' // 'bottom'
+		horizontalAlign: 'center', // 'left' // 'right'
+		fadeTime: 0,
+		responsive: false,
+		delay: 0,
+
 
 	Copyright (c) 2012 Alejandro Emparan (karacas), http://www.proyectiva.com
 	
