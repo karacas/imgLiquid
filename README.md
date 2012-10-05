@@ -18,7 +18,7 @@ Licensed under the MIT
 	//+ Options:
 	$(".imgLiquid").imgLiquid({fill : true, fadeInTime: 300, verticalAlign: 'center', horizontalAlign: 'center'})
 ```
-view in action:		http://goo.gl/py2Is
+view in action:		http://goo.gl/Wk8bU
 or play with it:	http://jsfiddle.net/karacas/3CRx7/#base
 
 
