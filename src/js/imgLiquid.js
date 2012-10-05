@@ -1,7 +1,7 @@
 /*
 	jQuery Plugnin: imgLiquid v0.1
 	http://www.proyectiva.com
- 	@krc_ale
+	@krc_ale
 
 	Copyright (c) 2012 Alejandro Emparan (karacas), http://www.proyectiva.com
 	
@@ -33,8 +33,10 @@
 			//Settings
 			//___________________________________________________________________
 			var settings = $.extend({
-				fill: false, 
-				fadeTime: 500
+				fill: true,
+				fadeTime: 500,
+				verticalAlign: 'center',
+				horizontalAlign: 'center'
 			}, this.defaultOptions, options);
 
 			
@@ -44,12 +46,12 @@
 				
 				//Obj
 				var $imgBox = $(this);
-				var $img = $('img:first', $imgBox);	
+				var $img = $('img:first', $imgBox);
 
 				//Alpha to 0
 				$img.fadeTo(0, 0);
 				$img.css('visibility', 'visible');
-				$img.css('display', 'block');
+				$img.css('display',  'block');
 
 				//OverFlow
 				$imgBox.css('display', 'block');
@@ -59,10 +61,12 @@
 				$img.runned = false;
 				$img.processed = false;
 				$img.error_ = false;
+				$img.loaded_ = false;
 
 				//OnLoad
 				$img.load(function () {
 					if (!Boolean($img.width() === 0 && $img.height() === 0)) {
+						$img.loaded_ = true;
 						process($imgBox, $img);
 						$img.runned = true;
 					}
@@ -71,6 +75,12 @@
 						$img.trigger('load');
 					}
 				});
+				$img.error(function () {
+                    $img.error_ = true;
+                    $img.runned = true;
+                    $imgBox.css('visibility', 'hidden');
+                    return null;
+                });
 
 
                 //Process
@@ -78,14 +88,12 @@
 				function process($imgBox, $img){
 					
 					//Prportions
-					var $imgBoxProp = $imgBox.width() /  $imgBox.height()
-					var $imgProp    = $img.width() / $img.height()
+					var imgBoxProp = $imgBox.width() /  $imgBox.height();
+					var imgProp    = $img.width() / $img.height();
 
-					// console.log($imgBoxProp);
-					// console.log($imgProp);
-
+					//Size
 					if (settings.fill){
-						if ($imgBoxProp > $imgProp){
+						if (imgBoxProp > imgProp){
 							$img.css('width', '100%');
 							$img.css('height', 'auto');
 						}else{
@@ -93,7 +101,7 @@
 							$img.css('height', '100%');
 						}
 					}else{
-						if ($imgBoxProp < $imgProp){
+						if (imgBoxProp < imgProp){
 							$img.css('width', '100%');
 							$img.css('height', 'auto');
 						}else{
@@ -102,11 +110,37 @@
 						}
 					}
 
+
+					//align X
+					settings.horizontalAlign = settings.horizontalAlign.toLowerCase();
+					var hdif = $imgBox.width() - $img.width();
+					var margL = 0;
+					if (settings.horizontalAlign == 'center'){
+						margL = hdif/2;
+					}
+					else if (settings.horizontalAlign == 'right'){
+						margL = hdif;
+					}
+					$img.css('margin-left', Math.round(margL));
+
+
+					//align Y
+					settings.verticalAlign = settings.verticalAlign.toLowerCase();
+					var vdif = $imgBox.height() - $img.height();
+					var margT = 0;
+					if (settings.verticalAlign == 'center' || settings.verticalAlign == 'middle'){
+						margT = vdif/2;
+					}
+					else if (settings.verticalAlign == 'bottom'){
+						margT = vdif;
+					}
+					$img.css('margin-top', Math.round(margT));
+
+
 					//FadeIn
 					$img.fadeTo(settings.fadeTime, 1);
+					$img.processed = true;
 				}
-
-
 			});
 }
 });
