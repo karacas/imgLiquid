@@ -42,10 +42,11 @@
 				verticalAlign: 'center',
 				horizontalAlign: 'center',
 				delay: 0,
+				/**/
+				removeBoxBackground: true,
 				ieFadeOff: true,
 				imageRendering: 'auto',
-				responsive: true,
-				removeBoxBackground: true
+				responsive: false
 			}, this.defaultOptions, options);
 
 			//ie OffAnims
@@ -72,18 +73,15 @@
 				$img.css('image-rendering',  settings.imageRendering);
 				if (settings.imageRendering == 'optimizeQuality') $img.css('-ms-interpolation-mode',  'bicubic');
 
-
 				//OverFlow
 				$imgBox.css('display', 'block');
 				$imgBox.css('overflow', 'hidden');
-
 
 				//Status
 				$img.ILrunned = false;
 				$img.ILprocessed = false;
 				$img.ILerror = false;
 				$img.ILloaded = false;
-
 
 
 				if (settings.responsive) {
@@ -93,7 +91,6 @@
 						process($$imgBox, $$img);
 					});
 				}
-
 
 				//OnLoad
 				$img.load(function () {
@@ -127,7 +124,8 @@
 
 					//Size
 					if (settings.fill){
-						if (imgBoxProp > imgProp){
+						//Fill
+						if (imgBoxProp >= imgProp){
 							$img.css('width', '100%');
 							$img.css('height', 'auto');
 						}else{
@@ -135,7 +133,8 @@
 							$img.css('height', '100%');
 						}
 					}else{
-						if (imgBoxProp < imgProp){
+						//no Fill
+						if (imgBoxProp <= imgProp){
 							$img.css('width', '100%');
 							$img.css('height', 'auto');
 						}else{

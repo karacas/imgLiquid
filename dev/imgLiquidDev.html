@@ -5,10 +5,7 @@
 	<title>imgLiquid Jquery Plugin</title>
 	
 	<link  	href="reset.css" 	type="text/css" rel="stylesheet" />
-
-	<!-- OpenSans  ====================================-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-	<!-- Jquery 1.8.2 =================================-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
 	
 
@@ -20,10 +17,11 @@
 	<!-- EXAMPLE  ====================================-->
 	<script type="text/javascript">
 	$(document).ready(function () {
-		$(".imgLiquid").imgLiquid({fill:true});
-		$(".imgLiquid2").imgLiquid({fill:false});
+		$(".imgLiquidFill").imgLiquid({fill:true});
+		$(".imgLiquidNoFill").imgLiquid({fill:false});
 	});
 	</script>
+
 
 	<!-- CSS  ========================================-->
 	<style type="text/css">
@@ -64,21 +62,11 @@
 </head>
 <body>
 
-	<div class="boxSep" >
-		<div class="imgLiquid" style="width:200px; height:200px;">
-			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank"  title="test">
-				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
-			</a>
-		</div>
-	</div>
-	
-
 	<h1 style='clear:both'>imgLiquid Jquery Plugin</h1>
-
 
 	<h2 style='clear:both'>ImageBox typeOut: true</h2>
 	<div class="boxSep" >
-		<div class="imgLiquid" style="width:200px; height:200px;">
+		<div class="imgLiquidFill imgLiquid" style="width:200px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank"  title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
@@ -86,7 +74,7 @@
 	</div>
 
 	<div class="boxSep" >
-		<div class="imgLiquid" style="width:150px; height:200px;">
+		<div class="imgLiquidFill imgLiquid" style="width:150px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg" target="_blank"  title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
@@ -94,7 +82,7 @@
 	</div>
 
 	<div class="boxSep" >
-		<div class="imgLiquid" style="width:300px; height:200px;">
+		<div class="imgLiquidFill imgLiquid" style="width:350px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank" title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
@@ -106,7 +94,7 @@
 
 	<h2 style='clear:both'>ImageBox typeOut: false</h2>
 	<div class="boxSep" >
-		<div class="imgLiquid2" style="width:200px; height:200px;">
+		<div class="imgLiquidNoFill imgLiquid" style="width:200px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank" title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
@@ -114,7 +102,7 @@
 	</div>
 
 	<div class="boxSep" >
-		<div class="imgLiquid2" style="width:150px; height:200px;">
+		<div class="imgLiquidNoFill imgLiquid" style="width:150px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank" title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
@@ -122,7 +110,7 @@
 	</div>
 
 	<div class="boxSep" >
-		<div class="imgLiquid2" style="width:300px; height:200px;">
+		<div class="imgLiquidNoFill imgLiquid" style="width:350px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg" target="_blank"  title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
