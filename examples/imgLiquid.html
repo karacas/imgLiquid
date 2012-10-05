@@ -4,24 +4,26 @@
 	<meta charset="utf-8">
 	<title>imgLiquid Jquery Plugin</title>
 	
-	<!-- OpemSans  ====================================-->
+	<link  	href="reset.css" 	type="text/css" rel="stylesheet" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-	<!-- Jquery 1.8.2 =================================-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
 	
+
 	<!-- JS & CSS  ====================================-->
 	<link  	href="../src/css/imgLiquid.js.css" 	type="text/css" rel="stylesheet" />
-	<script src ="../src/js/imgLiquid.js" type="text/javascript"></script>
+	<script src ="../src/js/imgLiquid-min.js" type="text/javascript"></script>
 	
 
 	<!-- EXAMPLE  ====================================-->
 	<script type="text/javascript">
 	$(document).ready(function () {
-		$(".imgLiquid").imgLiquid();
+		$(".imgLiquidFill").imgLiquid({fill:true, fadeInTime:500});
+		$(".imgLiquidNoFill").imgLiquid({fill:false});
 	});
 	</script>
 
-	<!-- CSSin  ==================================-->
+
+	<!-- CSS  ========================================-->
 	<style type="text/css">
 	body {
 		margin:0;
@@ -33,7 +35,7 @@
 	}
 	.boxSep{
 		background-color:#f7f7f7;
-		border: 2px solid #ccc;
+		border: 1px solid #ddd;
 		margin:10px;
 		float:left;
 		margin-right:30px;
@@ -62,30 +64,29 @@
 
 	<h1 style='clear:both'>imgLiquid Jquery Plugin</h1>
 
-
 	<h2 style='clear:both'>ImageBox typeOut: true</h2>
 	<div class="boxSep" >
-		<span class="imgLiquid" style="width:200px; height:200px;">
+		<div class="imgLiquidFill imgLiquid" style="width:200px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank"  title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
-		</span>
+		</div>
 	</div>
 
 	<div class="boxSep" >
-		<span class="imgLiquid" style="width:150px; height:200px;">
+		<div class="imgLiquidFill imgLiquid" style="width:150px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg" target="_blank"  title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
-		</span>
+		</div>
 	</div>
 
 	<div class="boxSep" >
-		<span class="imgLiquid" style="width:300px; height:200px;">
+		<div class="imgLiquidFill imgLiquid" style="width:350px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank" title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
-		</span>
+		</div>
 	</div>
 
 	<div style='clear:both'></div>
@@ -93,28 +94,28 @@
 
 	<h2 style='clear:both'>ImageBox typeOut: false</h2>
 	<div class="boxSep" >
-		<span class="imgLiquid" style="width:200px; height:200px;">
+		<div class="imgLiquidNoFill imgLiquid" style="width:200px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank" title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
-		</span>
+		</div>
 	</div>
 
 	<div class="boxSep" >
-		<span class="imgLiquid" style="width:150px; height:200px;">
+		<div class="imgLiquidNoFill imgLiquid" style="width:150px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank" title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
-		</span>
+		</div>
 	</div>
 
 	<div class="boxSep" >
-		<span class="imgLiquid" style="width:300px; height:200px;">
+		<div class="imgLiquidNoFill imgLiquid" style="width:350px; height:200px;">
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg" target="_blank"  title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
-		</span>
-	</div>
+		</div>
+	</div> 
 
 
 </body>
