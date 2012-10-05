@@ -44,12 +44,16 @@
 				delay: 0,
 				ieFadeOff: true,
 				imageRendering: 'auto',
+				responsive: true,
 				removeBoxBackground: true
 			}, this.defaultOptions, options);
 
 			//ie OffAnims
 			if (isIE && settings.ieFadeOff){
 				settings.fadeTime = 0;
+			}
+			if (settings.responsive) {
+				responsiveOn();
 			}
 			
 
@@ -75,19 +79,29 @@
 
 
 				//Status
-				$img.runned = false;
-				$img.processed = false;
-				$img.error_ = false;
-				$img.loaded_ = false;
+				$img.ILrunned = false;
+				$img.ILprocessed = false;
+				$img.ILerror = false;
+				$img.ILloaded = false;
+
+
+
+				if (settings.responsive) {
+					$imgBox.resize(function (e) {
+						var $$imgBox = $imgBox;
+						var $$img = $('img:first', $$imgBox);
+						process($$imgBox, $$img);
+					});
+				}
 
 
 				//OnLoad
 				$img.load(function () {
 					if (!Boolean($img.width() === 0 && $img.height() === 0)) {
-						$img.loaded_ = true;
+						$img.ILloaded = true;
 						setTimeout(function() {
 							process($imgBox, $img);
-							$img.runned = true;
+							$img.ILrunned = true;
 						}, $i * settings.delay );
 					}
 				}).each(function () {
@@ -96,19 +110,16 @@
 					}
 				});
 				$img.error(function () {
-					$img.error_ = true;
-					$img.runned = true;
+					$img.ILerror = true;
+					$img.ILrunned = true;
 					$imgBox.css('visibility', 'hidden');
 					return null;
 				});
 
 
-
-
                 //Process
 				//___________________________________________________________________
 				function process($imgBox, $img){
-					if (settings.removeBoxBackground) $imgBox.css('background-image', 'none');
 
 					//Prportions
 					var imgBoxProp = $imgBox.width() /  $imgBox.height();
@@ -138,7 +149,7 @@
 					settings.horizontalAlign = settings.horizontalAlign.toLowerCase();
 					var hdif = $imgBox.width() - $img.width();
 					var margL = 0;
-					if (settings.horizontalAlign == 'center'){
+					if (settings.horizontalAlign == 'center' || settings.verticalAlign == 'middle'){
 						margL = hdif/2;
 					}
 					else if (settings.horizontalAlign == 'right'){
@@ -161,10 +172,26 @@
 
 
 					//FadeIn
-					$img.fadeTo(settings.fadeTime, 1);
-					$img.processed = true;
+					if (!$img.ILprocessed){
+						if (settings.removeBoxBackground) $imgBox.css('background-image', 'none');
+						$img.fadeTo(settings.fadeTime, 1);
+						$img.ILprocessed = true;
+					}
 				}
 			});
-		}
-	});
+}
+});
 })(jQuery);
+/*
+* jQuery resize event - v1.1 - 3/14/2010
+* http://benalman.com/projects/jquery-resize-plugin/
+* Copyright (c) 2010 "Cowboy" Ben Alman
+* Dual licensed under the MIT and GPL licenses.
+* http://benalman.com/about/license/
+*/
+var responPluginInit = false;
+function responsiveOn(){
+	if (responPluginInit) return;
+	responPluginInit = true;
+	(function($,h,c){var a=$([]),e=$.resize=$.extend($.resize,{}),i,k="setTimeout",j="resize",d=j+"-special-event",b="delay",f="throttleWindow";e[b]=250;e[f]=true;$.event.special[j]={setup:function(){if(!e[f]&&this[k]){return false}var l=$(this);a=a.add(l);$.data(this,d,{w:l.width(),h:l.height()});if(a.length===1){g()}},teardown:function(){if(!e[f]&&this[k]){return false}var l=$(this);a=a.not(l);l.removeData(d);if(!a.length){clearTimeout(i)}},add:function(l){if(!e[f]&&this[k]){return false}var n;function m(s,o,p){var q=$(this),r=$.data(this,d);r.w=o!==c?o:q.width();r.h=p!==c?p:q.height();n.apply(this,arguments)}if($.isFunction(l)){n=l;return m}else{n=l.handler;l.handler=m}}};function g(){i=h[k](function(){a.each(function(){var n=$(this),m=n.width(),l=n.height(),o=$.data(this,d);if(m!==o.w||l!==o.h){n.trigger(j,[o.w=m,o.h=l])}});g()},e[b])}})(jQuery,this);
+}
