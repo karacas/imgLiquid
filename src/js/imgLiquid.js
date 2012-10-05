@@ -1,6 +1,5 @@
 /*
-	jQuery Plugnin: imgLiquid v0.6
-	http://www.proyectiva.com
+	jQuery Plugin: imgLiquid v0.6
 	@krc_ale
 	
 		ex:
@@ -10,12 +9,12 @@
 		fill: true,
 		verticalAlign: 'center', //'top' // 'bottom'
 		horizontalAlign: 'center', // 'left' // 'right'
-		fadeTime: 0,
+		fadeInTime: 0,
 		responsive: false,
-		delay: 0,
+		delay: 0
 
 
-	Copyright (c) 2012 Alejandro Emparan (karacas), http://www.proyectiva.com
+	Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
 	
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files (the
@@ -35,7 +34,7 @@
 	LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 	OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 	WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-	*/
+*/
 //
 ;(function($){
 	$.fn.extend({
@@ -52,7 +51,7 @@
 				fill: true,
 				verticalAlign: 'center', //'top' // 'bottom'
 				horizontalAlign: 'center', // 'left' // 'right'
-				fadeTime: 0,
+				fadeInTime: 0,
 				responsive: false,
 				delay: 0,
 				/**/
@@ -63,7 +62,7 @@
 
 			//ie OffAnims
 			if (isIE && settings.ieFadeInDisabled){
-				settings.fadeTime = 0;
+				settings.fadeInTime = 0;
 			}
 			if (settings.responsive) {
 				responsiveOn();
@@ -185,7 +184,7 @@
 					//FadeIn
 					if (!$img.ILprocessed){
 						if (settings.removeBoxBackground) $imgBox.css('background-image', 'none');
-						$img.fadeTo(settings.fadeTime, 1);
+						$img.fadeTo(settings.fadeInTime, 1);
 						$img.ILprocessed = true;
 					}
 				}
