@@ -27,19 +27,32 @@
 //
 ;(function($){
 	$.fn.extend({
+
 		imgLiquid: function(options) {
+
+			var isIE = /*@cc_on!@*/false;
 			this.defaultOptions = {};
+
 
 			//Settings
 			//___________________________________________________________________
 			var settings = $.extend({
 				fill: true,
-				fadeTime: 500,
+				fadeTime: 0,
 				verticalAlign: 'center',
-				horizontalAlign: 'center'
+				horizontalAlign: 'center',
+				delay: 0,
+				ieFadeOff: true,
+				imageRendering: 'auto',
+				removeBoxBackground: true
 			}, this.defaultOptions, options);
 
+			//ie OffAnims
+			if (isIE && settings.ieFadeOff){
+				settings.fadeTime = 0;
+			}
 			
+
 			//each
 			//___________________________________________________________________
 			return this.each(function($i) {
@@ -52,10 +65,14 @@
 				$img.fadeTo(0, 0);
 				$img.css('visibility', 'visible');
 				$img.css('display',  'block');
+				$img.css('image-rendering',  settings.imageRendering);
+				if (settings.imageRendering == 'optimizeQuality') $img.css('-ms-interpolation-mode',  'bicubic');
+
 
 				//OverFlow
 				$imgBox.css('display', 'block');
 				$imgBox.css('overflow', 'hidden');
+
 
 				//Status
 				$img.runned = false;
@@ -63,12 +80,15 @@
 				$img.error_ = false;
 				$img.loaded_ = false;
 
+
 				//OnLoad
 				$img.load(function () {
 					if (!Boolean($img.width() === 0 && $img.height() === 0)) {
 						$img.loaded_ = true;
-						process($imgBox, $img);
-						$img.runned = true;
+						setTimeout(function() {
+							process($imgBox, $img);
+							$img.runned = true;
+						}, $i * settings.delay );
 					}
 				}).each(function () {
 					if (this.complete) {
@@ -76,17 +96,20 @@
 					}
 				});
 				$img.error(function () {
-                    $img.error_ = true;
-                    $img.runned = true;
-                    $imgBox.css('visibility', 'hidden');
-                    return null;
-                });
+					$img.error_ = true;
+					$img.runned = true;
+					$imgBox.css('visibility', 'hidden');
+					return null;
+				});
+
+
 
 
                 //Process
 				//___________________________________________________________________
 				function process($imgBox, $img){
-					
+					if (settings.removeBoxBackground) $imgBox.css('background-image', 'none');
+
 					//Prportions
 					var imgBoxProp = $imgBox.width() /  $imgBox.height();
 					var imgProp    = $img.width() / $img.height();
@@ -142,6 +165,6 @@
 					$img.processed = true;
 				}
 			});
-}
-});
+		}
+	});
 })(jQuery);
