@@ -11,8 +11,7 @@ or
 	verticalAlign: 'center', //'top' // 'bottom'
 	horizontalAlign: 'center', // 'left' // 'right'
 	fadeInTime: 0,
-	responsive: false,
-	delay: 0
+	responsive: false
 
 Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
 Dual licensed under the MIT and GPL licenses.
@@ -123,7 +122,6 @@ Dual licensed under the MIT and GPL licenses.
 					if (ha == 'right') margL = hdif;
 					$img.css('margin-left', Math.round(margL));
 
-
 					//align Y
 					var va = settings.verticalAlign.toLowerCase();
 					var vdif = $imgBox.height() - $img.height();
@@ -131,7 +129,6 @@ Dual licensed under the MIT and GPL licenses.
 					if (va == 'center' || va == 'middle') margT = vdif/2;
 					if (va == 'bottom') margT = vdif;
 					$img.css('margin-top', Math.round(margT));
-
 
 					//FadeIn
 					if (!$img.ILprocessed){

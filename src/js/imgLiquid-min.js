@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.62 / 06-10-12
+jQuery Plugin: imgLiquid v0.63 / 06-10-12
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
@@ -11,8 +11,7 @@ or
 	verticalAlign: 'center', //'top' // 'bottom'
 	horizontalAlign: 'center', // 'left' // 'right'
 	fadeInTime: 0,
-	responsive: false,
-	delay: 0
+	responsive: false
 
 Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
 Dual licensed under the MIT and GPL licenses.
