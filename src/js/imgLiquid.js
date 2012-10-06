@@ -42,7 +42,7 @@ Dual licensed under the MIT and GPL licenses.
 				verticalAlign: 'center', //'top' // 'bottom'
 				horizontalAlign: 'center', // 'left' // 'right'
 				fadeInTime: 0,
-				responsive: true,
+				responsive: false,
 				delay: 0,
 				/**/
 				removeBoxBackground: true,
