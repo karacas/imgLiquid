@@ -118,7 +118,6 @@ Dual licensed under the MIT and GPL licenses.
 					//align X
 					var ha = settings.horizontalAlign.toLowerCase();
 					var cha = $imgBox.css('text-align');
-					console.log($imgBox.css('-fill'));
 					if(settings.useCssAligns && (cha == 'left' || cha == 'center' || cha == 'right'))
 						ha =cha;
 					var hdif = $imgBox.width() - $img.width();
