@@ -64,8 +64,6 @@ Dual licensed under the MIT and GPL licenses.
 				imageRendering: 'auto'
 			}, this.defaultOptions, options);
 
-			//ie OffAnims
-			if (isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
 			if (settings.responsive)responsiveOn();
 
 			//each
@@ -117,6 +115,9 @@ Dual licensed under the MIT and GPL licenses.
 					if (ha == 'left' || ha == 'center' || ha == 'right') settings.horizontalAlign = ha;
 					if (va == 'top' || va == 'middle' || va == 'bottom' || va == 'center') settings.verticalAlign = va;
 				}
+				
+				//ie OffAnims
+				if (isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
 				
 				if (settings.responsive) {
 					$imgBox.resize(function (e) {
