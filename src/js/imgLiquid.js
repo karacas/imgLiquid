@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.63 / 06-10-12
+jQuery Plugin: imgLiquid v0.64 / 06-10-12
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
@@ -42,10 +42,11 @@ Dual licensed under the MIT and GPL licenses.
 				horizontalAlign: 'center', // 'left' // 'right'
 				fadeInTime: 0,
 				responsive: false,
-				delay: 0,
+				delay: 1,
 				/**/
 				removeBoxBackground: true,
 				ieFadeInDisabled: true,
+				useCssAligns: false,
 				imageRendering: 'auto'
 			}, this.defaultOptions, options);
 
@@ -116,6 +117,10 @@ Dual licensed under the MIT and GPL licenses.
 
 					//align X
 					var ha = settings.horizontalAlign.toLowerCase();
+					var cha = $imgBox.css('text-align');
+					console.log($imgBox.css('-fill'));
+					if(settings.useCssAligns && (cha == 'left' || cha == 'center' || cha == 'right'))
+						ha =cha;
 					var hdif = $imgBox.width() - $img.width();
 					var margL = 0;
 					if (ha == 'center' || ha == 'middle')margL = hdif/2;
@@ -124,6 +129,9 @@ Dual licensed under the MIT and GPL licenses.
 
 					//align Y
 					var va = settings.verticalAlign.toLowerCase();
+					var cva = $imgBox.css('vertical-align');
+					if(settings.useCssAligns && (cva == 'top' || cva == 'middle' || cva == 'bottom' || cva == 'center'))
+						va = cva;
 					var vdif = $imgBox.height() - $img.height();
 					var margT = 0;
 					if (va == 'center' || va == 'middle') margT = vdif/2;
