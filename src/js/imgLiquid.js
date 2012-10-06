@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.62 / 06-10-12
+jQuery Plugin: imgLiquid v0.63 / 06-10-12
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
@@ -51,7 +51,7 @@ Dual licensed under the MIT and GPL licenses.
 			}, this.defaultOptions, options);
 
 			//ie OffAnims
-			if (isIE && settings.ieFadeInDisabled)settings.fadeInTime = 0;
+			if (isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
 			if (settings.responsive)responsiveOn();
 
 			//each
@@ -62,7 +62,7 @@ Dual licensed under the MIT and GPL licenses.
 				var $imgBox = $(this);
 				var $img = $('img:first', $imgBox);
 
-				if (!$img || $img === null || $img.size() ===0 ){
+				if (!$img || $img === null || $img.size() ===0){
 					onError();
 					return null;
 				}
@@ -108,22 +108,11 @@ Dual licensed under the MIT and GPL licenses.
 				//___________________________________________________________________
 				function process($imgBox, $img){
 
-					//Prportions
-					var propImgisBig = ($imgBox.width() /  $imgBox.height()) >= ($img.width() / $img.height());
-
-					//Size
-					if (settings.fill){
-						if (propImgisBig){
-							$img.css({'width':'100%', 'height':'auto'});
-						}else{
-							$img.css({'width':'auto', 'height':'100%'});
-						}
+					//Size OPTIMIZED
+					if (settings.fill == ($imgBox.width() / $imgBox.height()) >= ($img.width() / $img.height())){
+						$img.css({'width':'100%', 'height':'auto'});
 					}else{
-						if (!propImgisBig){
-							$img.css({'width':'100%', 'height':'auto'});
-						}else{
-							$img.css({'width':'auto', 'height':'100%'});
-						}
+						$img.css({'width':'auto', 'height':'100%'});
 					}
 
 					//align X
