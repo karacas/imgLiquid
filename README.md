@@ -3,7 +3,9 @@ A jQuery Plugin to resize images to fit in a container
 
 
 06-10-12
+
 Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
+
 Dual licensed under the MIT and GPL licenses.
 
 
