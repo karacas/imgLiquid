@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.61 / 06-10-12
+jQuery Plugin: imgLiquid v0.62 / 06-10-12
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
@@ -15,27 +15,9 @@ or
 	delay: 0
 
 Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Dual licensed under the MIT and GPL licenses.
 */
-//
+/**/
 ;(function($){
 	$.fn.extend({
 		imgLiquidLive: function(options) {
@@ -53,7 +35,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			var isIE = /*@cc_on!@*/false;
 			this.defaultOptions = {};
 
-
 			//Settings
 			//___________________________________________________________________
 			var settings = $.extend({
@@ -61,7 +42,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 				verticalAlign: 'center', //'top' // 'bottom'
 				horizontalAlign: 'center', // 'left' // 'right'
 				fadeInTime: 0,
-				responsive: false,
+				responsive: true,
 				delay: 0,
 				/**/
 				removeBoxBackground: true,
@@ -70,13 +51,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			}, this.defaultOptions, options);
 
 			//ie OffAnims
-			if (isIE && settings.ieFadeInDisabled){
-				settings.fadeInTime = 0;
-			}
-			if (settings.responsive) {
-				responsiveOn();
-			}
-			
+			if (isIE && settings.ieFadeInDisabled)settings.fadeInTime = 0;
+			if (settings.responsive)responsiveOn();
 
 			//each
 			//___________________________________________________________________
@@ -86,107 +62,85 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 				var $imgBox = $(this);
 				var $img = $('img:first', $imgBox);
 
+				if (!$img || $img === null || $img.size() ===0 ){
+					onError();
+					return null;
+				}
+
 				//Alpha to 0
 				$img.fadeTo(0, 0);
-				$img.css('visibility', 'visible');
-				$img.css('display',  'block');
-				$img.css('image-rendering',  settings.imageRendering);
-				if (settings.imageRendering == 'optimizeQuality') $img.css('-ms-interpolation-mode',  'bicubic');
+				$('img:not(:first)', $imgBox).css('display','none');
+				$img.css({'visibility':'visible', 'display':'block', 'image-rendering':settings.imageRendering });
+				if (isIE && settings.imageRendering == 'optimizeQuality') $img.css('-ms-interpolation-mode',  'bicubic');
 
 				//OverFlow
-				$imgBox.css('display', 'block');
-				$imgBox.css('overflow', 'hidden');
+				$imgBox.css({'overflow':'hidden'});
 
 				//Status
-				$img.ILrunned = false;
 				$img.ILprocessed = false;
 				$img.ILerror = false;
-				$img.ILloaded = false;
-
 
 				if (settings.responsive) {
 					$imgBox.resize(function (e) {
-						var $$imgBox = $imgBox;
-						var $$img = $('img:first', $$imgBox);
-						process($$imgBox, $$img);
+						process($imgBox, $img);
 					});
 				}
 
 				//OnLoad
 				$img.load(function () {
 					if (!Boolean($img.width() === 0 && $img.height() === 0)) {
-						$img.ILloaded = true;
 						setTimeout(function() {
 							process($imgBox, $img);
-							$img.ILrunned = true;
 						}, $i * settings.delay );
 					}
 				}).each(function () {
-					if (this.complete) {
-						$img.trigger('load');
-					}
-				});
-				$img.error(function () {
-					$img.ILerror = true;
-					$img.ILrunned = true;
-					$imgBox.css('visibility', 'hidden');
+					if (this.complete) $img.trigger('load');
+				}).error(function () {
+					onError();
 					return null;
 				});
-
+				function onError(){
+					$img.ILerror = true;
+					$imgBox.css('visibility', 'hidden');
+				}
 
                 //Process
 				//___________________________________________________________________
 				function process($imgBox, $img){
 
 					//Prportions
-					var imgBoxProp = $imgBox.width() /  $imgBox.height();
-					var imgProp    = $img.width() / $img.height();
+					var propImgisBig = ($imgBox.width() /  $imgBox.height()) >= ($img.width() / $img.height());
 
 					//Size
 					if (settings.fill){
-						//Fill
-						if (imgBoxProp >= imgProp){
-							$img.css('width', '100%');
-							$img.css('height', 'auto');
+						if (propImgisBig){
+							$img.css({'width':'100%', 'height':'auto'});
 						}else{
-							$img.css('width', 'auto');
-							$img.css('height', '100%');
+							$img.css({'width':'auto', 'height':'100%'});
 						}
 					}else{
-						//no Fill
-						if (imgBoxProp <= imgProp){
-							$img.css('width', '100%');
-							$img.css('height', 'auto');
+						if (!propImgisBig){
+							$img.css({'width':'100%', 'height':'auto'});
 						}else{
-							$img.css('width', 'auto');
-							$img.css('height', '100%');
+							$img.css({'width':'auto', 'height':'100%'});
 						}
 					}
 
-
 					//align X
-					settings.horizontalAlign = settings.horizontalAlign.toLowerCase();
+					var ha = settings.horizontalAlign.toLowerCase();
 					var hdif = $imgBox.width() - $img.width();
 					var margL = 0;
-					if (settings.horizontalAlign == 'center' || settings.verticalAlign == 'middle'){
-						margL = hdif/2;
-					}
-					else if (settings.horizontalAlign == 'right'){
-						margL = hdif;
-					}
+					if (ha == 'center' || ha == 'middle')margL = hdif/2;
+					if (ha == 'right') margL = hdif;
 					$img.css('margin-left', Math.round(margL));
 
 
 					//align Y
-					settings.verticalAlign = settings.verticalAlign.toLowerCase();
+					var va = settings.verticalAlign.toLowerCase();
 					var vdif = $imgBox.height() - $img.height();
 					var margT = 0;
-					if (settings.verticalAlign == 'center' || settings.verticalAlign == 'middle'){
-						margT = vdif/2;
-					}
-					else if (settings.verticalAlign == 'bottom'){
-						margT = vdif;
-					}
+					if (va == 'center' || va == 'middle') margT = vdif/2;
+					if (va == 'bottom') margT = vdif;
 					$img.css('margin-top', Math.round(margT));
 
 

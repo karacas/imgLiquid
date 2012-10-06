@@ -1,6 +1,5 @@
 .imgLiquid {
 	display:block;
-	overflow:hidden;
 	background:transparent url('../gfx/loadingd_imgLiquid.js.gif') no-repeat center center;
 }
 .imgLiquid img{
