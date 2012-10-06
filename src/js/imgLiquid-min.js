@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.63 / 06-10-12
+jQuery Plugin: imgLiquid v0.64 / 06-10-12
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
