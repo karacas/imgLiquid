@@ -1,40 +1,21 @@
 /*
-	jQuery Plugin: imgLiquid v0.6
-	@krc_ale
-	
-		ex:
-		$(".imgLiquid").imgLiquid({fill:true});
+jQuery Plugin: imgLiquid v0.61 / 06-10-12
 
-		//Settings:
-		fill: true,
-		verticalAlign: 'center', //'top' // 'bottom'
-		horizontalAlign: 'center', // 'left' // 'right'
-		fadeInTime: 0,
-		responsive: false,
-		delay: 0,
+ex:
+	$(".imgLiquid").imgLiquid({fill:true});
+or
+	$(".imgLiquid").imgLiquidLive({fill:true});
 
+//Settings:
+	fill: true,
+	verticalAlign: 'center', //'top' // 'bottom'
+	horizontalAlign: 'center', // 'left' // 'right'
+	fadeInTime: 0,
+	responsive: false,
+	delay: 0
 
-	Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
-	
-	Permission is hereby granted, free of charge, to any person obtaining
-	a copy of this software and associated documentation files (the
-	"Software"), to deal in the Software without restriction, including
-	without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to
-	permit persons to whom the Software is furnished to do so, subject to
-	the following conditions:
-	
-	The above copyright notice and this permission notice shall be
-	included in all copies or substantial portions of the Software.
-	
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-	LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-	OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-	WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
+Dual licensed under the MIT and GPL licenses.
 //
 /*
 * jQuery resize event - v1.1 - 3/14/2010
@@ -43,4 +24,14 @@
 * Dual licensed under the MIT and GPL licenses.
 * http://benalman.com/about/license/
 */
-(function($){$.fn.extend({imgLiquid:function(options){var isIE=/*@cc_on!@*/false;this.defaultOptions={};var settings=$.extend({fill:true,fadeInTime:0,verticalAlign:"center",horizontalAlign:"center",delay:0,removeBoxBackground:true,ieFadeOff:true,imageRendering:"auto",responsive:false},this.defaultOptions,options);if(isIE&&settings.ieFadeOff){settings.fadeInTime=0}if(settings.responsive){responsiveOn()}return this.each(function($i){var $imgBox=$(this);var $img=$("img:first",$imgBox);$img.fadeTo(0,0);$img.css("visibility","visible");$img.css("display","block");$img.css("image-rendering",settings.imageRendering);if(settings.imageRendering=="optimizeQuality"){$img.css("-ms-interpolation-mode","bicubic")}$imgBox.css("display","block");$imgBox.css("overflow","hidden");$img.ILrunned=false;$img.ILprocessed=false;$img.ILerror=false;$img.ILloaded=false;if(settings.responsive){$imgBox.resize(function(e){var $$imgBox=$imgBox;var $$img=$("img:first",$$imgBox);process($$imgBox,$$img)})}$img.load(function(){if(!Boolean($img.width()===0&&$img.height()===0)){$img.ILloaded=true;setTimeout(function(){process($imgBox,$img);$img.ILrunned=true},$i*settings.delay)}}).each(function(){if(this.complete){$img.trigger("load")}});$img.error(function(){$img.ILerror=true;$img.ILrunned=true;$imgBox.css("visibility","hidden");return null});function process($imgBox,$img){var imgBoxProp=$imgBox.width()/$imgBox.height();var imgProp=$img.width()/$img.height();if(settings.fill){if(imgBoxProp>=imgProp){$img.css("width","100%");$img.css("height","auto")}else{$img.css("width","auto");$img.css("height","100%")}}else{if(imgBoxProp<=imgProp){$img.css("width","100%");$img.css("height","auto")}else{$img.css("width","auto");$img.css("height","100%")}}settings.horizontalAlign=settings.horizontalAlign.toLowerCase();var hdif=$imgBox.width()-$img.width();var margL=0;if(settings.horizontalAlign=="center"||settings.verticalAlign=="middle"){margL=hdif/2}else{if(settings.horizontalAlign=="right"){margL=hdif}}$img.css("margin-left",Math.round(margL));settings.verticalAlign=settings.verticalAlign.toLowerCase();var vdif=$imgBox.height()-$img.height();var margT=0;if(settings.verticalAlign=="center"||settings.verticalAlign=="middle"){margT=vdif/2}else{if(settings.verticalAlign=="bottom"){margT=vdif}}$img.css("margin-top",Math.round(margT));if(!$img.ILprocessed){if(settings.removeBoxBackground){$imgBox.css("background-image","none")}$img.fadeTo(settings.fadeInTime,1);$img.ILprocessed=true}}})}})})(jQuery);var responPluginInit=false;function responsiveOn(){if(responPluginInit){return}responPluginInit=true;(function(n,p,u){var w=n([]),s=n.resize=n.extend(n.resize,{}),o,l="setTimeout",m="resize",t=m+"-special-event",v="delay",r="throttleWindow";s[v]=250;s[r]=true;n.event.special[m]={setup:function(){if(!s[r]&&this[l]){return false}var a=n(this);w=w.add(a);n.data(this,t,{w:a.width(),h:a.height()});if(w.length===1){q()}},teardown:function(){if(!s[r]&&this[l]){return false}var a=n(this);w=w.not(a);a.removeData(t);if(!w.length){clearTimeout(o)}},add:function(b){if(!s[r]&&this[l]){return false}var c;function a(d,h,g){var f=n(this),e=n.data(this,t);e.w=h!==u?h:f.width();e.h=g!==u?g:f.height();c.apply(this,arguments)}if(n.isFunction(b)){c=b;return a}else{c=b.handler;b.handler=a}}};function q(){o=p[l](function(){w.each(function(){var d=n(this),a=d.width(),b=d.height(),c=n.data(this,t);if(a!==c.w||b!==c.h){d.trigger(m,[c.w=a,c.h=b])}});q()},s[v])}})(jQuery,this)};
+//
+/** jQuery livequery - v1.1.1
+* Copyright (c) 2010 Brandon Aaron (http://brandonaaron.net)
+* Dual licensed under the MIT (MIT_LICENSE.txt)
+* and GPL Version 2 (GPL_LICENSE.txt) licenses.
+*
+* Version: 1.1.1
+* Requires jQuery 1.3+
+* Docs: http://docs.jquery.com/Plugins/livequery
+*/
+(function(a){a.fn.extend({imgLiquidLive:function(b){return this.livequeryIL(function(){a(this).imgLiquid(b)})}})})(jQuery);(function($){$.fn.extend({imgLiquid:function(options){var isIE=/*@cc_on!@*/false;this.defaultOptions={};var settings=$.extend({fill:true,verticalAlign:"center",horizontalAlign:"center",fadeInTime:0,responsive:false,delay:0,removeBoxBackground:true,ieFadeInDisabled:true,imageRendering:"auto"},this.defaultOptions,options);if(isIE&&settings.ieFadeInDisabled){settings.fadeInTime=0}if(settings.responsive){responsiveOn()}return this.each(function($i){var $imgBox=$(this);var $img=$("img:first",$imgBox);$img.fadeTo(0,0);$img.css("visibility","visible");$img.css("display","block");$img.css("image-rendering",settings.imageRendering);if(settings.imageRendering=="optimizeQuality"){$img.css("-ms-interpolation-mode","bicubic")}$imgBox.css("display","block");$imgBox.css("overflow","hidden");$img.ILrunned=false;$img.ILprocessed=false;$img.ILerror=false;$img.ILloaded=false;if(settings.responsive){$imgBox.resize(function(e){var $$imgBox=$imgBox;var $$img=$("img:first",$$imgBox);process($$imgBox,$$img)})}$img.load(function(){if(!Boolean($img.width()===0&&$img.height()===0)){$img.ILloaded=true;setTimeout(function(){process($imgBox,$img);$img.ILrunned=true},$i*settings.delay)}}).each(function(){if(this.complete){$img.trigger("load")}});$img.error(function(){$img.ILerror=true;$img.ILrunned=true;$imgBox.css("visibility","hidden");return null});function process($imgBox,$img){var imgBoxProp=$imgBox.width()/$imgBox.height();var imgProp=$img.width()/$img.height();if(settings.fill){if(imgBoxProp>=imgProp){$img.css("width","100%");$img.css("height","auto")}else{$img.css("width","auto");$img.css("height","100%")}}else{if(imgBoxProp<=imgProp){$img.css("width","100%");$img.css("height","auto")}else{$img.css("width","auto");$img.css("height","100%")}}settings.horizontalAlign=settings.horizontalAlign.toLowerCase();var hdif=$imgBox.width()-$img.width();var margL=0;if(settings.horizontalAlign=="center"||settings.verticalAlign=="middle"){margL=hdif/2}else{if(settings.horizontalAlign=="right"){margL=hdif}}$img.css("margin-left",Math.round(margL));settings.verticalAlign=settings.verticalAlign.toLowerCase();var vdif=$imgBox.height()-$img.height();var margT=0;if(settings.verticalAlign=="center"||settings.verticalAlign=="middle"){margT=vdif/2}else{if(settings.verticalAlign=="bottom"){margT=vdif}}$img.css("margin-top",Math.round(margT));if(!$img.ILprocessed){if(settings.removeBoxBackground){$imgBox.css("background-image","none")}$img.fadeTo(settings.fadeInTime,1);$img.ILprocessed=true}}})}})})(jQuery);var responPluginInit=false;function responsiveOn(){if(responPluginInit){return}responPluginInit=true;(function(n,p,u){var w=n([]),s=n.resize=n.extend(n.resize,{}),o,l="setTimeout",m="resize",t=m+"-special-event",v="delay",r="throttleWindow";s[v]=250;s[r]=true;n.event.special[m]={setup:function(){if(!s[r]&&this[l]){return false}var a=n(this);w=w.add(a);n.data(this,t,{w:a.width(),h:a.height()});if(w.length===1){q()}},teardown:function(){if(!s[r]&&this[l]){return false}var a=n(this);w=w.not(a);a.removeData(t);if(!w.length){clearTimeout(o)}},add:function(b){if(!s[r]&&this[l]){return false}var c;function a(d,h,g){var f=n(this),e=n.data(this,t);e.w=h!==u?h:f.width();e.h=g!==u?g:f.height();c.apply(this,arguments)}if(n.isFunction(b)){c=b;return a}else{c=b.handler;b.handler=a}}};function q(){o=p[l](function(){w.each(function(){var d=n(this),a=d.width(),b=d.height(),c=n.data(this,t);if(a!==c.w||b!==c.h){d.trigger(m,[c.w=a,c.h=b])}});q()},s[v])}})(jQuery,this)}(function(a){a.extend(a.fn,{livequeryIL:function(e,d,c){var b=this,f;if(a.isFunction(e)){c=d,d=e,e=undefined}a.each(a.livequeryIL.queries,function(g,h){if(b.selector==h.selector&&b.context==h.context&&e==h.type&&(!d||d.$lqguid==h.fn.$lqguid)&&(!c||c.$lqguid==h.fn2.$lqguid)){return(f=h)&&false}});f=f||new a.livequeryIL(this.selector,this.context,e,d,c);f.stopped=false;f.run();return this},expire:function(e,d,c){var b=this;if(a.isFunction(e)){c=d,d=e,e=undefined}a.each(a.livequeryIL.queries,function(f,g){if(b.selector==g.selector&&b.context==g.context&&(!e||e==g.type)&&(!d||d.$lqguid==g.fn.$lqguid)&&(!c||c.$lqguid==g.fn2.$lqguid)&&!this.stopped){a.livequeryIL.stop(g.id)}});return this}});a.livequeryIL=function(b,d,f,e,c){this.selector=b;this.context=d;this.type=f;this.fn=e;this.fn2=c;this.elements=[];this.stopped=false;this.id=a.livequeryIL.queries.push(this)-1;e.$lqguid=e.$lqguid||a.livequeryIL.guid++;if(c){c.$lqguid=c.$lqguid||a.livequeryIL.guid++}return this};a.livequeryIL.prototype={stop:function(){var b=this;if(this.type){this.elements.unbind(this.type,this.fn)}else{if(this.fn2){this.elements.each(function(c,d){b.fn2.apply(d)})}}this.elements=[];this.stopped=true},run:function(){if(this.stopped){return}var d=this;var e=this.elements,c=a(this.selector,this.context),b=c.not(e);this.elements=c;if(this.type){b.bind(this.type,this.fn);if(e.length>0){a.each(e,function(f,g){if(a.inArray(g,c)<0){a.event.remove(g,d.type,d.fn)}})}}else{b.each(function(){d.fn.apply(this)});if(this.fn2&&e.length>0){a.each(e,function(f,g){if(a.inArray(g,c)<0){d.fn2.apply(g)}})}}}};a.extend(a.livequeryIL,{guid:0,queries:[],queue:[],running:false,timeout:null,checkQueue:function(){if(a.livequeryIL.running&&a.livequeryIL.queue.length){var b=a.livequeryIL.queue.length;while(b--){a.livequeryIL.queries[a.livequeryIL.queue.shift()].run()}}},pause:function(){a.livequeryIL.running=false},play:function(){a.livequeryIL.running=true;a.livequeryIL.run()},registerPlugin:function(){a.each(arguments,function(c,d){if(!a.fn[d]){return}var b=a.fn[d];a.fn[d]=function(){var e=b.apply(this,arguments);a.livequeryIL.run();return e}})},run:function(b){if(b!==undefined){if(a.inArray(b,a.livequeryIL.queue)<0){a.livequeryIL.queue.push(b)}}else{a.each(a.livequeryIL.queries,function(c){if(a.inArray(c,a.livequeryIL.queue)<0){a.livequeryIL.queue.push(c)}})}if(a.livequeryIL.timeout){clearTimeout(a.livequeryIL.timeout)}a.livequeryIL.timeout=setTimeout(a.livequeryIL.checkQueue,20)},stop:function(b){if(b!==undefined){a.livequeryIL.queries[b].stop()}else{a.each(a.livequeryIL.queries,function(c){a.livequeryIL.queries[c].stop()})}}});a.livequeryIL.registerPlugin("append","prepend","after","before","wrap","attr","removeAttr","addClass","removeClass","toggleClass","empty","remove","html");a(function(){a.livequeryIL.play()})})(jQuery);
