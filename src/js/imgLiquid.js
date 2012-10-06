@@ -8,18 +8,18 @@ or
 
 //Settings:
 	
-	>js
+	>>js
 	fill: true,
 	verticalAlign: 'center', //'top' // 'bottom'
 	horizontalAlign: 'center', // 'left' // 'right'
 	fadeInTime: 0,
 	responsive: false
 	
-	>css (overwrite js)
+	>>css (set useCssAligns: true) (overwrite js)
 	text-align: center
 	vertical-align : middle
 
-	>hml5 data attr (overwrite all)
+	>>hml5 data attr (overwrite all)
 	data-imgLiquid-fill='true'
 	data-imgLiquid-horizontalAlign ='center'
 	data-imgLiquid-verticalAlign' ='center'
@@ -60,7 +60,7 @@ Dual licensed under the MIT and GPL licenses.
 				removeBoxBackground: true,
 				ieFadeInDisabled: true,
 				useDataHtmlAttr: true,
-				useCssAligns: true,
+				useCssAligns: false,
 				imageRendering: 'auto'
 			}, this.defaultOptions, options);
 
