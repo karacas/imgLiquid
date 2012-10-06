@@ -12,7 +12,7 @@ Dual licensed under the MIT and GPL licenses.
 #Ej:
 ```
 	HTML:
-	<div id="container" class="imgLiquid" style="width:300px; height:200px;" data-imgLiquid-fill="false">
+	<div class="imgLiquid" id="container" style="width:300px; height:200px;" data-imgLiquid-fill="false">
 		<img alt="" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg" />
 	</div>
 
