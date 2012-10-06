@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.64 / 06-10-12
+jQuery Plugin: imgLiquid v0.65 / 06-10-12
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
@@ -7,11 +7,21 @@ or
 	$(".imgLiquid").imgLiquidLive({fill:true});
 
 //Settings:
+	
+	js
 	fill: true,
 	verticalAlign: 'center', //'top' // 'bottom'
 	horizontalAlign: 'center', // 'left' // 'right'
 	fadeInTime: 0,
 	responsive: false
+	
+	hml5 data attr (overwrite js if exist)
+	data-imgLiquid-fill='true'
+
+	css (useCssAligns = true)
+	text-align: center
+	vertical-align : middle
+
 
 Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
 Dual licensed under the MIT and GPL licenses.
@@ -46,6 +56,7 @@ Dual licensed under the MIT and GPL licenses.
 				/**/
 				removeBoxBackground: true,
 				ieFadeInDisabled: true,
+				useDataHtmlAttr: true,
 				useCssAligns: false,
 				imageRendering: 'auto'
 			}, this.defaultOptions, options);
@@ -72,6 +83,8 @@ Dual licensed under the MIT and GPL licenses.
 				$('img:not(:first)', $imgBox).css('display','none');
 				$img.css({'visibility':'visible', 'display':'block', 'image-rendering':settings.imageRendering });
 				if (isIE && settings.imageRendering == 'optimizeQuality') $img.css('-ms-interpolation-mode',  'bicubic');
+				if (settings.useDataHtmlAttr && $imgBox.attr('data-imgLiquid-fill') =='true' ) settings.fill = true;
+				if (settings.useDataHtmlAttr && $imgBox.attr('data-imgLiquid-fill') =='false' ) settings.fill = false;
 
 				//OverFlow
 				$imgBox.css({'overflow':'hidden'});

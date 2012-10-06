@@ -1,4 +1,4 @@
-#jQuery  Plugin: imgLiquid v0.64
+#jQuery  Plugin: imgLiquid v0.65
 06-10-12
 Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
 Licensed under the MIT
@@ -8,8 +8,8 @@ Licensed under the MIT
 ##Ej:
 ```
 	HTML:
-	<div id="container" class="imgLiquid" style="width:300px; height:200px;">
-		<img alt="" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
+	<div id="container" class="imgLiquid" style="width:300px; height:200px;" data-imgLiquid-fill="false">
+		<img alt="" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg" />
 	</div>
 
 	JS:
