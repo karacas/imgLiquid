@@ -1,11 +1,13 @@
 #jQuery  Plugin: imgLiquid v0.66
+A jQuery Plugin to resize images to fit in a container
+
+
 06-10-12
 Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
-Licensed under the MIT
+Dual licensed under the MIT and GPL licenses.
 
-#A jQuery Plugin to resize images to fit in a container
 
-##Ej:
+#Ej:
 ```
 	HTML:
 	<div id="container" class="imgLiquid" style="width:300px; height:200px;" data-imgLiquid-fill="false">
@@ -22,7 +24,7 @@ view in action:		http://goo.gl/Wk8bU
 or play with it:	http://jsfiddle.net/karacas/3CRx7/#base
 
 
-##Fatures:
+#Fatures:
 ```
 	- Align
 	- Crop/Fill
@@ -31,7 +33,7 @@ or play with it:	http://jsfiddle.net/karacas/3CRx7/#base
 ```
 
 
-##Options:
+#Options:
 ```
 	>js
 	fill: true,
