@@ -92,6 +92,8 @@ Dual licensed under the MIT and GPL licenses.
 				$img.fadeTo(0, 0);
 				$('img:not(:first)', $imgBox).css('display','none');
 				$img.css({'visibility':'visible', 'display':'block', 'image-rendering':settings.imageRendering });
+				$img.removeAttr("width");
+                $img.removeAttr("height");
 				
 				//OverFlow
 				$imgBox.css({'overflow':'hidden'});
@@ -115,7 +117,7 @@ Dual licensed under the MIT and GPL licenses.
 					if (ha == 'left' || ha == 'center' || ha == 'right') settings.horizontalAlign = ha;
 					if (va == 'top' || va == 'middle' || va == 'bottom' || va == 'center') settings.verticalAlign = va;
 				}
-				
+
 				//ie OffAnims
 				if (isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
 				
