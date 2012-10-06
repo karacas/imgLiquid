@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.65 / 06-10-12
+jQuery Plugin: imgLiquid v0.66 / 06-10-12
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
@@ -8,19 +8,22 @@ or
 
 //Settings:
 	
-	js
+	>js
 	fill: true,
 	verticalAlign: 'center', //'top' // 'bottom'
 	horizontalAlign: 'center', // 'left' // 'right'
 	fadeInTime: 0,
 	responsive: false
 	
-	hml5 data attr (overwrite js if exist)
-	data-imgLiquid-fill='true'
-
-	css (useCssAligns = true)
+	>css (overwrite js)
 	text-align: center
 	vertical-align : middle
+
+	>hml5 data attr (overwrite all)
+	data-imgLiquid-fill='true'
+	data-imgLiquid-horizontalAlign ='center'
+	data-imgLiquid-verticalAlign' ='center'
+	data-imgLiquid-fadeInTime = '1000'
 
 
 Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
@@ -57,7 +60,7 @@ Dual licensed under the MIT and GPL licenses.
 				removeBoxBackground: true,
 				ieFadeInDisabled: true,
 				useDataHtmlAttr: true,
-				useCssAligns: false,
+				useCssAligns: true,
 				imageRendering: 'auto'
 			}, this.defaultOptions, options);
 
@@ -78,21 +81,43 @@ Dual licensed under the MIT and GPL licenses.
 					return null;
 				}
 
-				//Alpha to 0
-				$img.fadeTo(0, 0);
-				$('img:not(:first)', $imgBox).css('display','none');
-				$img.css({'visibility':'visible', 'display':'block', 'image-rendering':settings.imageRendering });
-				if (isIE && settings.imageRendering == 'optimizeQuality') $img.css('-ms-interpolation-mode',  'bicubic');
-				if (settings.useDataHtmlAttr && $imgBox.attr('data-imgLiquid-fill') =='true' ) settings.fill = true;
-				if (settings.useDataHtmlAttr && $imgBox.attr('data-imgLiquid-fill') =='false' ) settings.fill = false;
-
-				//OverFlow
-				$imgBox.css({'overflow':'hidden'});
+				if ($img.ILprocessed){
+					process($imgBox, $img);
+					return;
+				}
 
 				//Status
 				$img.ILprocessed = false;
 				$img.ILerror = false;
 
+				//Alpha to 0
+				$img.fadeTo(0, 0);
+				$('img:not(:first)', $imgBox).css('display','none');
+				$img.css({'visibility':'visible', 'display':'block', 'image-rendering':settings.imageRendering });
+				
+				//OverFlow
+				$imgBox.css({'overflow':'hidden'});
+
+				//Settings overwrite
+				if (isIE && settings.imageRendering == 'optimizeQuality') $img.css('-ms-interpolation-mode',  'bicubic');
+				if (settings.useCssAligns) {
+					var cha = $imgBox.css('text-align');
+					var cva = $imgBox.css('vertical-align');
+					if(cha == 'left' || cha == 'center' || cha == 'right') settings.horizontalAlign = cha;
+					if (cva == 'top' || cva == 'middle' || cva == 'bottom' || cva == 'center') settings.verticalAlign = cva;
+				}
+				if (settings.useDataHtmlAttr) {
+					if ($imgBox.attr('data-imgLiquid-fill') =='true') settings.fill = true;
+					if ($imgBox.attr('data-imgLiquid-fill') =='false' ) settings.fill = false;
+					if ($imgBox.attr('data-imgLiquid-responsive') =='true') settings.responsive = true;
+					if ($imgBox.attr('data-imgLiquid-responsive') =='false' ) settings.responsive = false;
+					if ( Number ($imgBox.attr('data-imgLiquid-fadeInTime')) > 0) settings.fadeInTime = Number ($imgBox.attr('data-imgLiquid-fadeInTime'));
+					var ha = $imgBox.attr('data-imgLiquid-horizontalAlign');
+					var va = $imgBox.attr('data-imgLiquid-verticalAlign');
+					if (ha == 'left' || ha == 'center' || ha == 'right') settings.horizontalAlign = ha;
+					if (va == 'top' || va == 'middle' || va == 'bottom' || va == 'center') settings.verticalAlign = va;
+				}
+				
 				if (settings.responsive) {
 					$imgBox.resize(function (e) {
 						process($imgBox, $img);
@@ -130,9 +155,6 @@ Dual licensed under the MIT and GPL licenses.
 
 					//align X
 					var ha = settings.horizontalAlign.toLowerCase();
-					var cha = $imgBox.css('text-align');
-					if(settings.useCssAligns && (cha == 'left' || cha == 'center' || cha == 'right'))
-						ha =cha;
 					var hdif = $imgBox.width() - $img.width();
 					var margL = 0;
 					if (ha == 'center' || ha == 'middle')margL = hdif/2;
@@ -141,9 +163,6 @@ Dual licensed under the MIT and GPL licenses.
 
 					//align Y
 					var va = settings.verticalAlign.toLowerCase();
-					var cva = $imgBox.css('vertical-align');
-					if(settings.useCssAligns && (cva == 'top' || cva == 'middle' || cva == 'bottom' || cva == 'center'))
-						va = cva;
 					var vdif = $imgBox.height() - $img.height();
 					var margT = 0;
 					if (va == 'center' || va == 'middle') margT = vdif/2;
@@ -158,8 +177,8 @@ Dual licensed under the MIT and GPL licenses.
 					}
 				}
 			});
-		}
-	});
+}
+});
 })(jQuery);
 /*
 * jQuery resize event - v1.1 - 3/14/2010

@@ -22,7 +22,7 @@
 		$(".imgLiquidNoFill").imgLiquidLive({fill:false, fadeInTime:500});
 
 		setTimeout(function() {	
-			$('body').append('<div class="boxSep" ><div class="imgLiquidNoFill imgLiquid" style="width:100px; height:200px;"><a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank"  title="test"><img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/></a></div></div>')
+			$('body').append('<div class="boxSep" ><div data-imgLiquid-fill="true" class="imgLiquidNoFill imgLiquid" style="width:100px; height:200px;"><a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank"  title="test"><img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/></a></div></div>')
 		}, 1000);
 		
 	});
@@ -64,8 +64,8 @@
 		margin-top:80px;
 	}
 	.imgLiquidFill, .imgLiquidNoFill{
-		text-align: right;
-		vertical-align: bottom;
+		text-align: center;
+		vertical-align: center;
 	}
 	</style>
 
@@ -76,7 +76,7 @@
 
 	<h2 style='clear:both'>ImageBox typeOut: true</h2>
 	<div class="boxSep">
-		<div class="imgLiquidFill imgLiquid" style="width:200px; height:200px;"  data-imgLiquid-fill="false" >
+		<div class="imgLiquidFill imgLiquid" style="width:200px; height:200px;" data-imgLiquid-verticalAlign ='top'  data-imgLiquid-fill="false" >
 			<a href="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"  target="_blank"  title="test">
 				<img alt="TEST" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg"/>
 			</a>
