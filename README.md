@@ -1,4 +1,4 @@
-#jQuery  Plugin: imgLiquid v0.62
+#jQuery  Plugin: imgLiquid v0.63
 06-10-12
 Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
 Licensed under the MIT
