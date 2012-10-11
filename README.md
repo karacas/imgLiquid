@@ -21,6 +21,14 @@ Dual licensed under the MIT and GPL licenses.
 
 	//+ Options:
 	$(".imgLiquid").imgLiquid({fill : true, fadeInTime: 300, verticalAlign: 'center', horizontalAlign: 'center'})
+	
+	CSS:
+	Important:
+	Put visibility:hidden css, ej:
+	.imgLiquid img{
+	    visibility:hidden;
+	}
+
 ```
 view in action:		http://goo.gl/Wk8bU
 or play with it:	http://jsfiddle.net/karacas/3CRx7/#base
