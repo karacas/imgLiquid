@@ -26,7 +26,7 @@ Dual licensed under the MIT and GPL licenses.
 	
 
 	[CSS]:
-	/*Important: Put "visibility:hidden" css > ej:*/
+	/*Important: Put "visibility:hidden" css: */
 	.imgLiquid img{
 	    visibility:hidden;
 	}
