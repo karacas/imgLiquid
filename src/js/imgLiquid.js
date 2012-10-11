@@ -1,5 +1,6 @@
 /*
 jQuery Plugin: imgLiquid v0.66 / 06-10-12
+jQuery plugin to resize images to fit in a container.
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
@@ -149,7 +150,7 @@ Dual licensed under the MIT and GPL licenses.
 				//___________________________________________________________________
 				function process($imgBox, $img){
 
-					//Size OPTIMIZED
+					//resize OPTIMIZED
 					if (settings.fill == ($imgBox.width() / $imgBox.height()) >= ($img.width() / $img.height())){
 						$img.css({'width':'100%', 'height':'auto'});
 					}else{
