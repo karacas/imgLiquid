@@ -37,7 +37,7 @@ view in action:		http://goo.gl/Wk8bU
 or play with it:	http://jsfiddle.net/karacas/3CRx7/#base
 
 
-#Fatures:
+#Features:
 ```
 	- Align
 	- Crop/Fill
