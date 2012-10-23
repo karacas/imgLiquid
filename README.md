@@ -26,7 +26,7 @@ Dual licensed under the MIT and GPL licenses.
 	
 
 	[CSS]:
-	/*Important: Put "visibility:hidden" css: */
+	/*Important: set "visibility:hidden" */
 	.imgLiquid img{
 	    visibility:hidden;
 	}
