@@ -34,7 +34,7 @@ Dual licensed under the MIT and GPL licenses.
 
 ```
 view in action:		http://goo.gl/Wk8bU
-or play with it:	http://jsfiddle.net/karacas/3CRx7/#base
+or play with it:	http://jsfiddle.net/karacas/3CRx7/#base | http://codepen.io/karacas/pen/nlugd
 
 
 #Features:
