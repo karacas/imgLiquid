@@ -9,6 +9,13 @@ Dual licensed under the MIT and GPL licenses.
 ####Include:
 ```html
 <script src="js/imgLiquid-min.js"></script>
+```  
+
+####js:
+```js
+$(document).ready(function() {
+	$(".imgLiquid").imgLiquid();
+});
 ```
 
 ####Html:
@@ -16,11 +23,6 @@ Dual licensed under the MIT and GPL licenses.
 <div class="imgLiquid" style="width:300px; height:200px;">
 	<img alt="Woody" src="Woody.jpg" />
 </div>
-```
-  
-####js:
-```js
-$(".imgLiquid").imgLiquid();
 ```
   
 ####css:
