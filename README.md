@@ -12,30 +12,33 @@ Dual licensed under the MIT and GPL licenses.
 #Ej:
 
 
-	[HTML]:
-```
-	<div class="imgLiquid" id="container" style="width:300px; height:200px;" data-imgLiquid-fill="false">
-		<img alt="" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg" />
-	</div>
+HTML:
+```html
+<div class="imgLiquid" id="container" style="width:300px; height:200px;" data-imgLiquid-fill="false">
+	<img alt="" src="http://www.juegostoystory.net/files/image/2010_Toy_Story_3_USLC12_Woody.jpg" />
+</div>
 ```
 
 
-	[JS]:
-```
-	$(".imgLiquid").imgLiquid()
 
-	//[+] Options:
-	$(".imgLiquid").imgLiquid({fill : true, fadeInTime: 300, verticalAlign: 'center', horizontalAlign: 'center'})
-```	
+JS:
+```js
+$(".imgLiquid").imgLiquid()
 
-	[CSS]:
+//[+] or Options:
+$(".imgLiquid").imgLiquid({fill : true, fadeInTime: 300, verticalAlign: 'center', horizontalAlign: 'center'})
 ```
-	/*Important: set "visibility:hidden" */
-	.imgLiquid img{
-	    visibility:hidden;
-	}
 
+
+
+CSS:
+```css
+/*Important: set "visibility:hidden" */
+.imgLiquid img{
+    visibility:hidden;
+}
 ```
+
 
 view in action:		http://goo.gl/Wk8bU
 or play with it:	http://jsfiddle.net/karacas/3CRx7/#base | http://codepen.io/karacas/pen/nlugd
