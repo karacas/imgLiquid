@@ -1,27 +1,19 @@
-#jQuery  Plugin: imgLiquid v0.67
-A jQuery Plugin to resize images to fit in a container
-
-
-18-10-12
-
-Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
-
+#jQuery  Plugin: imgLiquid v0.67  
+A jQuery Plugin to resize images to fit in a container  
+18-10-12  
+Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale  
 Dual licensed under the MIT and GPL licenses.
-  
-- - - -
-  
-
-#Ej:
-
-
-HTML:
+ 
+------------------------
+#Usage  
+####HTML:
 ```html
 <div class="imgLiquid" style="width:300px; height:200px;">
 	<img alt="Woody" src="Woody.jpg" />
 </div>
 ```
   
-JS:
+####JS:
 ```js
 $(".imgLiquid").imgLiquid();
 
@@ -29,30 +21,30 @@ $(".imgLiquid").imgLiquid();
 $(".imgLiquid").imgLiquid({fill : true, fadeInTime: 300, verticalAlign: 'center', horizontalAlign: 'center'});
 ```
   
-CSS:
+####CSS:
 ```css
 /*Important: set "visibility:hidden" for better results */
 .imgLiquid img{
     visibility:hidden;
 }
 ```
-  
-view in action:		http://goo.gl/Wk8bU  
-or play with it:	http://jsfiddle.net/karacas/3CRx7/#base | http://codepen.io/karacas/pen/nlugd
-  
-  
-* * *
-  
-#Features:
+   
+####View in action:  		
+http://goo.gl/Wk8bU  
+####or play with it:  	
+http://jsfiddle.net/karacas/3CRx7/#base  
+http://codepen.io/karacas/pen/nlugd
+ 
+------------------------
+###Features:
 ```
 	- Align
 	- Crop/Fill
 	- FadeIn
 	- All browsers (Incl. ie6)
 ```
-
-
-#Options:
+   
+###Options:
 ```
 	>js
 	fill: true,
@@ -71,4 +63,5 @@ or play with it:	http://jsfiddle.net/karacas/3CRx7/#base | http://codepen.io/kar
 	data-imgLiquid-verticalAlign' ='center'
 	data-imgLiquid-fadeInTime = '1000'
 ```
+   
 
