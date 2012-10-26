@@ -5,24 +5,31 @@ Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
 Dual licensed under the MIT and GPL licenses.
 ## 
 #Usage  
-####HTML:
+
+####Include:
+```html
+<script src="js/imgLiquid-min.js"></script>
+```
+
+####Html:
 ```html
 <div class="imgLiquid" style="width:300px; height:200px;">
 	<img alt="Woody" src="Woody.jpg" />
 </div>
 ```
   
-####JS:
+####js:
 ```js
 $(".imgLiquid").imgLiquid();
-
-//[+] Alternative options:
-$(".imgLiquid").imgLiquid({fill : true, fadeInTime: 300, verticalAlign: 'center', horizontalAlign: 'center'});
 ```
   
-####CSS:
+####css:
 ```css
-/*Important: set "visibility:hidden" for better results */
+/*
+Important: 	
+	set "visibility:hidden" for better results
+	or use src/css/imgLiquid.js.css
+*/
 .imgLiquid img{
     visibility:hidden;
 }
@@ -52,8 +59,8 @@ http://codepen.io/karacas/pen/nlugd
 	responsive: false
 	
 	>css (set useCssAligns: true) (overwrite js)
-	text-align: center
-	vertical-align : middle
+	text-align: center;
+	vertical-align : middle;
 
 	>hml5 data attr (overwrite all)
 	data-imgLiquid-fill='true'
