@@ -3,8 +3,7 @@ A jQuery Plugin to resize images to fit in a container
 18-10-12  
 Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale  
 Dual licensed under the MIT and GPL licenses.
- 
-------------------------
+## 
 #Usage  
 ####HTML:
 ```html
@@ -28,14 +27,13 @@ $(".imgLiquid").imgLiquid({fill : true, fadeInTime: 300, verticalAlign: 'center'
     visibility:hidden;
 }
 ```
-   
+ 
 ####View in action:  		
 http://goo.gl/Wk8bU  
 ####or play with it:  	
 http://jsfiddle.net/karacas/3CRx7/#base  
 http://codepen.io/karacas/pen/nlugd
- 
-------------------------
+## 
 ###Features:
 ```
 	- Align
@@ -62,6 +60,4 @@ http://codepen.io/karacas/pen/nlugd
 	data-imgLiquid-horizontalAlign ='center'
 	data-imgLiquid-verticalAlign' ='center'
 	data-imgLiquid-fadeInTime = '1000'
-```
-   
-
+```  
