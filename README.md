@@ -49,8 +49,8 @@ http://codepen.io/karacas/pen/nlugd
 	- Align
 	- Fill/Crop
 	- FadeIn Anim
-	- Svg
-	- Responsive
+	- Svg support
+	- Responsive (Optional, default is off)
 	- All browsers (Incl. ie6)
 ```
    
