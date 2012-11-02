@@ -25,6 +25,8 @@
 
 	<!-- CSS  ========================================-->
 	<style type="text/css">
+	/*github-ribbon*/
+	.github-ribbon{background-color:#121621;top:3.2em;right:-3.7em;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg);-webkit-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;-moz-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;-ms-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;-o-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;color:rgba(255,255,255,0.90);display:block;padding:.6em 3.5em;position:absolute;font:bold .82em sans-serif;text-align:center;text-decoration:none;text-shadow:1px -1px 8px rgba(0,0,0,0.60);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none}
 	body {
 		margin:0;
 		padding:0;
@@ -39,6 +41,9 @@
 		margin:10px;
 		float:left;
 		margin-right:30px;
+	}
+	.LogSep{
+		margin:10px;
 	}
 	h1{
 		margin:10px;
@@ -57,14 +62,18 @@
 		color:#bbb;
 		margin-top:80px;
 	}
-
-	.github-ribbon{background-color:#121621;top:3.2em;right:-3.7em;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg);-webkit-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;-moz-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;-ms-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;-o-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;color:rgba(255,255,255,0.90);display:block;padding:.6em 3.5em;position:absolute;font:bold .82em sans-serif;text-align:center;text-decoration:none;text-shadow:1px -1px 8px rgba(0,0,0,0.60);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none}
 	</style>
 
 </head>
 <body>
+
 	<a href="https://github.com/karacas/imgLiquid" class="github-ribbon">Fork me on GitHub</a>
-	<h1 style='clear:both'>imgLiquid Jquery Plugin</h1>
+	<div class="LogSep" >
+		<img src="logoimgliquid.png" alt="imgliquid"><br><br>
+		<p>jQuery plugin to resize images to fit in a container. <br><br>All of the images src Woodys are the same.</p>
+	</div>
+
+
 	<h2 style='clear:both'>ImageBox fill: true</h2>
 	<div class="boxSep" >
 		<div class="imgLiquidFill imgLiquid" style="width:200px; height:200px;" data-imgLiquid-fill="true">
@@ -90,9 +99,8 @@
 		</div>
 	</div>
 
+
 	<div style='clear:both'></div>
-
-
 	<h2 style='clear:both'>ImageBox fill: false</h2>
 	<div class="boxSep" >
 		<div class="imgLiquidNoFill imgLiquid" style="width:200px; height:200px;">
