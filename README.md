@@ -47,8 +47,10 @@ http://codepen.io/karacas/pen/nlugd
 ###Features:
 ```
 	- Align
-	- Crop/Fill
-	- FadeIn
+	- Fill/Crop
+	- FadeIn Anim
+	- Svg
+	- Responsive
 	- All browsers (Incl. ie6)
 ```
    
