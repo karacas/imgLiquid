@@ -46,12 +46,13 @@ http://codepen.io/karacas/pen/nlugd
 ## 
 ###Features:
 ```
-	- Align
-	- Fill/Crop
-	- FadeIn Anim
-	- Svg support
-	- Responsive (Optional, default is off)
-	- All browsers (Incl. ie6)
+	- Lightweight: less than 2KBs gzipped.
+	- Align.
+	- Fill/Crop.
+	- Svg support.
+	- FadeIn Anim (Optional, default is off).
+	- Responsive (Optional, default is off).
+	- All browsers (Incl. ie6).
 ```
    
 ###Options:
