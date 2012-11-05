@@ -1,30 +1,32 @@
 /*
 jQuery Plugin: imgLiquid v0.68 / 05-11-12
 jQuery plugin to resize images to fit in a container.
+https://github.com/karacas/imgLiquid
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
 
-//Settings:
+	//OPTIONS:
 	
- 	//js
-    fill: true,
-    verticalAlign: 'center', //'top' // 'bottom'
-    horizontalAlign: 'center', // 'left' // 'right'
-    fadeInTime: 0,
-    responsive: false
+	 	//js
+	    fill: true,
+	    verticalAlign: 'center', //'top' // 'bottom'
+	    horizontalAlign: 'center', // 'left' // 'right'
+	    fadeInTime: 0,
+	    responsive: false
 
-    //css (set useCssAligns: true) (overwrite js)
-    text-align: center;
-    vertical-align : middle;
+	    //css (set useCssAligns: true) (overwrite js)
+	    text-align: center;
+	    vertical-align : middle;
 
-    //hml5 data attr (overwrite all)
-    data-imgLiquid-fill='true'
-    data-imgLiquid-horizontalAlign ='center'
-    data-imgLiquid-verticalAlign' ='center'
-    data-imgLiquid-fadeInTime = '1000'
-Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
-Dual licensed under the MIT and GPL licenses.
+	    //hml5 data attr (overwrite all)
+	    data-imgLiquid-fill='true'
+	    data-imgLiquid-horizontalAlign ='center'
+	    data-imgLiquid-verticalAlign' ='center'
+	    data-imgLiquid-fadeInTime = '1000'
+
+		Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
+		Dual licensed under the MIT and GPL licenses.
 */
 ;(function($){
 	$.fn.extend({
