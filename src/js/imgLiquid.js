@@ -32,10 +32,11 @@ ex:
 	$.fn.extend({
 		imgLiquid: function(options) {
 
+			//is ie?
 			var isIE = /*@cc_on!@*/false;
-			this.defaultOptions = {};
 
-			//Settings
+			//Options
+			this.defaultOptions = {};
 			//___________________________________________________________________
 			var settings = $.extend({
 				fill: true,
@@ -51,8 +52,8 @@ ex:
 				useCssAligns: false,
 				imageRendering: 'auto'
 			}, this.defaultOptions, options);
-
 			if (settings.responsive)responsiveOn();
+
 
 			//each
 			//___________________________________________________________________
@@ -76,15 +77,17 @@ ex:
 				$img.ILprocessed = false;
 				$img.ILerror = false;
 
-				//Alpha to 0
+				//Alpha to 0 & removes
 				$img.fadeTo(0, 0);
 				$('img:not(:first)', $imgBox).css('display','none');
 				$img.css({'visibility':'visible', 'max-width':'none', 'max-height':'none', 'width':'auto', 'height':'auto', 'display':'block', 'image-rendering':settings.imageRendering });
 				$img.removeAttr("width");
                 $img.removeAttr("height");
 				
-				//OverFlow
+
+				//set OverFlow
 				$imgBox.css({'overflow':'hidden'});
+
 
 				//Settings overwrite
 				if (isIE && settings.imageRendering == 'optimizeQuality') $img.css('-ms-interpolation-mode',  'bicubic');
@@ -106,6 +109,7 @@ ex:
 					if (va == 'top' || va == 'middle' || va == 'bottom' || va == 'center') settings.verticalAlign = va;
 				}
 
+
 				//ie OffAnims
 				if (isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
 				
@@ -114,6 +118,7 @@ ex:
 						process($imgBox, $img);
 					});
 				}
+
 
 				//OnLoad
 				$img.load(function () {
@@ -133,6 +138,7 @@ ex:
 					$imgBox.css('visibility', 'hidden');
 				}
 
+
                 //Process
 				//___________________________________________________________________
 				function process($imgBox, $img){
@@ -144,6 +150,7 @@ ex:
 						$img.css({'width':'auto', 'height':'100%'});
 					}
 
+
 					//align X
 					var ha = settings.horizontalAlign.toLowerCase();
 					var hdif = $imgBox.width() - $img.width();
@@ -151,6 +158,7 @@ ex:
 					if (ha == 'center' || ha == 'middle')margL = hdif/2;
 					if (ha == 'right') margL = hdif;
 					$img.css('margin-left', Math.round(margL));
+
 
 					//align Y
 					var va = settings.verticalAlign.toLowerCase();
@@ -160,6 +168,7 @@ ex:
 					if (va == 'bottom') margT = vdif;
 					$img.css('margin-top', Math.round(margT));
 
+
 					//FadeIn
 					if (!$img.ILprocessed){
 						if (settings.removeBoxBackground) $imgBox.css('background-image', 'none');
@@ -168,9 +177,10 @@ ex:
 					}
 				}
 			});
-}
-});
+		}
+	});
 })(jQuery);
+
 /*
 * jQuery resize event - v1.1 - 3/14/2010
 * http://benalman.com/projects/jquery-resize-plugin/
