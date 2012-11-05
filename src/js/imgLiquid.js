@@ -1,32 +1,31 @@
 /*
-jQuery Plugin: imgLiquid v0.68 / 05-11-12
+jQuery Plugin: imgLiquid v0.70 / 05-11-12
 jQuery plugin to resize images to fit in a container.
+Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
+Dual licensed under the MIT and GPL licenses
 https://github.com/karacas/imgLiquid
 
 ex:
-	$(".imgLiquid").imgLiquid({fill:true});
-
-	//OPTIONS:
+    $(".imgLiquid").imgLiquid({fill:true});
 	
-	 	//js
-	    fill: true,
-	    verticalAlign: 'center', //'top' // 'bottom'
-	    horizontalAlign: 'center', // 'left' // 'right'
-	    fadeInTime: 0,
-	    responsive: false
+    //OPTIONS:
+    
+        //js
+        fill: true,
+        verticalAlign: 'center', //'top' // 'bottom'
+        horizontalAlign: 'center', // 'left' // 'right'
+        fadeInTime: 0,
+        responsive: false
 
-	    //css (set useCssAligns: true) (overwrite js)
-	    text-align: center;
-	    vertical-align : middle;
+        //css (set useCssAligns: true) (overwrite js)
+        text-align: center;
+        vertical-align : middle;
 
-	    //hml5 data attr (overwrite all)
-	    data-imgLiquid-fill='true'
-	    data-imgLiquid-horizontalAlign ='center'
-	    data-imgLiquid-verticalAlign' ='center'
-	    data-imgLiquid-fadeInTime = '1000'
-
-		Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
-		Dual licensed under the MIT and GPL licenses.
+        //hml5 data attr (overwrite all)
+        data-imgLiquid-fill='true'
+        data-imgLiquid-horizontalAlign ='center'
+        data-imgLiquid-verticalAlign' ='center'
+        data-imgLiquid-fadeInTime = '1000'
 */
 ;(function($){
 	$.fn.extend({
@@ -44,6 +43,7 @@ ex:
 				horizontalAlign: 'center', // 'left' // 'right'
 				fadeInTime: 0,
 				responsive: false,
+				responsiveCheckTime: 500, /*time to check div resize, default 2fps > 1000/500*/
 				delay: 1,
 				/**/
 				removeBoxBackground: true,
@@ -52,7 +52,6 @@ ex:
 				useCssAligns: false,
 				imageRendering: 'auto'
 			}, this.defaultOptions, options);
-			if (settings.responsive)responsiveOn();
 
 
 			//each
@@ -82,7 +81,7 @@ ex:
 				$('img:not(:first)', $imgBox).css('display','none');
 				$img.css({'visibility':'visible', 'max-width':'none', 'max-height':'none', 'width':'auto', 'height':'auto', 'display':'block', 'image-rendering':settings.imageRendering });
 				$img.removeAttr("width");
-                $img.removeAttr("height");
+				$img.removeAttr("height");
 				
 
 				//set OverFlow
@@ -113,11 +112,21 @@ ex:
 				//ie OffAnims
 				if (isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
 				
-				if (settings.responsive) {
-					$imgBox.resize(function (e) {
-						process($imgBox, $img);
-					});
+
+
+				//RESPONSIVE
+				function checkElementSize(){
+					setTimeout(function() {
+						var actualSize = $imgBox.width() + ($imgBox.height()/100000);
+						if (actualSize !== $imgBox.sizeOld){
+							$imgBox.sizeOld = actualSize;
+							process($imgBox, $img);
+						}
+						checkElementSize();
+					}, settings.responsiveCheckTime);
 				}
+				if (settings.responsive) checkElementSize();
+
 
 
 				//OnLoad
@@ -180,17 +189,3 @@ ex:
 		}
 	});
 })(jQuery);
-
-/*
-* jQuery resize event - v1.1 - 3/14/2010
-* http://benalman.com/projects/jquery-resize-plugin/
-* Copyright (c) 2010 "Cowboy" Ben Alman
-* Dual licensed under the MIT and GPL licenses.
-* http://benalman.com/about/license/
-*/
-var responPluginInit = false;
-function responsiveOn(){
-	if (responPluginInit) return;
-	responPluginInit = true;
-	(function($,h,c){var a=$([]),e=$.resize=$.extend($.resize,{}),i,k="setTimeout",j="resize",d=j+"-special-event",b="delay",f="throttleWindow";e[b]=250;e[f]=true;$.event.special[j]={setup:function(){if(!e[f]&&this[k]){return false}var l=$(this);a=a.add(l);$.data(this,d,{w:l.width(),h:l.height()});if(a.length===1){g()}},teardown:function(){if(!e[f]&&this[k]){return false}var l=$(this);a=a.not(l);l.removeData(d);if(!a.length){clearTimeout(i)}},add:function(l){if(!e[f]&&this[k]){return false}var n;function m(s,o,p){var q=$(this),r=$.data(this,d);r.w=o!==c?o:q.width();r.h=p!==c?p:q.height();n.apply(this,arguments)}if($.isFunction(l)){n=l;return m}else{n=l.handler;l.handler=m}}};function g(){i=h[k](function(){a.each(function(){var n=$(this),m=n.width(),l=n.height(),o=$.data(this,d);if(m!==o.w||l!==o.h){n.trigger(j,[o.w=m,o.h=l])}});g()},e[b])}})(jQuery,this);
-}
