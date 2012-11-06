@@ -58,19 +58,19 @@ http://codepen.io/karacas/pen/nlugd
 ###Options:
 ```
 	>js
-	fill: true,
-	verticalAlign: 'center', //'top' // 'bottom'
-	horizontalAlign: 'center', // 'left' // 'right'
-	fadeInTime: 0,
-	responsive: false
+		fill: false,
+		verticalAlign: 'center', //'top' // 'bottom' // 'middle'
+		horizontalAlign: 'center', // 'left' // 'right'
+		fadeInTime: 500,
+		responsive: true
 	
 	>css (set useCssAligns: true) (overwrite js)
-	text-align: center;
-	vertical-align : middle;
+		text-align: center;
+		vertical-align : middle;
 
 	>hml5 data attr (overwrite all)
-	data-imgLiquid-fill='true'
-	data-imgLiquid-horizontalAlign ='center'
-	data-imgLiquid-verticalAlign' ='center'
-	data-imgLiquid-fadeInTime = '1000'
+		data-imgLiquid-fill='true'
+		data-imgLiquid-horizontalAlign ='center'
+		data-imgLiquid-verticalAlign' ='center'
+		data-imgLiquid-fadeInTime = '500'
 ```  
