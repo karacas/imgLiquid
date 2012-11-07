@@ -69,8 +69,8 @@ http://codepen.io/karacas/pen/nlugd
 		vertical-align : middle;
 
 	>hml5 data attr (overwrite all)
-		data-imgLiquid-fill='true'
-		data-imgLiquid-horizontalAlign ='center'
-		data-imgLiquid-verticalAlign' ='center'
-		data-imgLiquid-fadeInTime = '500'
+		data-imgLiquid-fill="true"
+		data-imgLiquid-horizontalAlign="center"
+		data-imgLiquid-verticalAlign="center"
+		data-imgLiquid-fadeInTime="500"
 ```  
