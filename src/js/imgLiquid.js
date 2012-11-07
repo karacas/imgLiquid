@@ -7,9 +7,9 @@ https://github.com/karacas/imgLiquid
 
 ex:
     $(".imgLiquid").imgLiquid({fill:true});
-	
+
     //OPTIONS:
-    
+
         //js
         fill: true,
         verticalAlign: 'center', //'top' // 'bottom'
@@ -56,8 +56,8 @@ ex:
 
 			//each
 			//___________________________________________________________________
-			return this.each(function($i) {
-				
+			var elems = this.each(function($i) {
+
 				//Obj
 				var $imgBox = $(this);
 				var $img = $('img:first', $imgBox);
@@ -82,7 +82,7 @@ ex:
 				$img.css({'visibility':'visible', 'max-width':'none', 'max-height':'none', 'width':'auto', 'height':'auto', 'display':'block', 'image-rendering':settings.imageRendering });
 				$img.removeAttr("width");
 				$img.removeAttr("height");
-				
+
 
 				//set OverFlow
 				$imgBox.css({'overflow':'hidden'});
@@ -111,7 +111,7 @@ ex:
 
 				//ie OffAnims
 				if (isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
-				
+
 
 
 				//RESPONSIVE
@@ -186,6 +186,19 @@ ex:
 					}
 				}
 			});
+
+			if (arguments.length < 2 && $.isFunction(options)) {
+			  callback = options;
+			  options = null;
+			}
+
+			// Apply callback function
+			if (typeof callback !== 'undefined' && $.isFunction(callback)) {
+			  callback.call(this);
+			}
+
+			return elems;
+
 		}
 	});
 })(jQuery);
