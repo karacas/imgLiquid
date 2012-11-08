@@ -60,10 +60,10 @@ http://codepen.io/karacas/pen/nlugd
 ```
     >js
         fill: true,
-        verticalAlign: 		//'center' //'top' 	// 'bottom'
-        horizontalAlign: 	//'center' //'left'	// 'right'
+        verticalAlign: 		//'center' //'top' 	//'bottom'
+        horizontalAlign: 	//'center' //'left'	//'right'
         fadeInTime: 0,
-        delay: 100,			//time to process next image milliseconds
+        delay: 0,			//time to process next image in milliseconds
         responsive: false,
         responsiveCheckTime: 500, 	//time to check resize in milliseconds
         
