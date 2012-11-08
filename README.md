@@ -51,7 +51,7 @@ http://codepen.io/karacas/pen/nlugd
 	- Fill/Crop.
 	- Responsive (Optional, default is off).
 	- Svg support.
-	- callBacks.
+	- CallBacks.
 	- FadeIn Anim (Optional, default is off).
 	- All browsers (Incl. ie6).
 ```
