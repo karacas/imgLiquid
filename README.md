@@ -1,6 +1,6 @@
 ![ScreenShot](https://raw.github.com/karacas/imgLiquid/master/dev/logoimgliquid.png)
   
-imgLiquid.js v0.71 - 07-11-12
+imgLiquid.js v0.75 - 07-11-12
 #####A jQuery Plugin to resize images to fit in a container.  
 Alejandro Emparan (karacas), twitter: @krc_ale  
 Dual licensed under the MIT and GPL licenses.  
@@ -57,12 +57,21 @@ http://codepen.io/karacas/pen/nlugd
    
 ###Options:
 ```
-	>js
-		fill: false,
-		verticalAlign: 'center', //'top' // 'bottom' // 'middle'
-		horizontalAlign: 'center', // 'left' // 'right'
-		fadeInTime: 500,
-		responsive: true
+    >js
+        fill: true,
+        verticalAlign: 		//'center' //'top' 	// 'bottom'
+        horizontalAlign: 	//'center' //'left'	// 'right'
+        fadeInTime: 0,
+        delay: 100,			//time to process next image milliseconds
+        responsive: false,
+        responsiveCheckTime: 500, 	//time to check resize in milliseconds
+        
+	>js callBakcs
+		onStart:		function(){},
+		onFinish:		function(){},
+		onItemResize:	function(index, container, img){},
+		onItemStart:	function(index, container, img){},
+		onItemFinish:	function(index, container, img){}
 	
 	>css (set useCssAligns: true) (overwrite js)
 		text-align: center;

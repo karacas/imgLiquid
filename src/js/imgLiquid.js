@@ -1,7 +1,7 @@
 /*
-jQuery Plugin: imgLiquid v0.71 / 07-11-12
+jQuery Plugin: imgLiquid v0.75 / 07-11-12
 jQuery plugin to resize images to fit in a container.
-Copyright (c) 2012 Alejandro Emparan (karacas), @krc_ale
+Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
 https://github.com/karacas/imgLiquid
 
@@ -10,22 +10,31 @@ ex:
 
     //OPTIONS:
 
-        //js
+    >js
         fill: true,
-        verticalAlign: 'center', //'top' // 'bottom'
-        horizontalAlign: 'center', // 'left' // 'right'
+        verticalAlign: 		//'center' //'top' 	// 'bottom'
+        horizontalAlign: 	//'center' //'left'	// 'right'
         fadeInTime: 0,
-        responsive: false
+        delay: 100,			//time to process next image milliseconds
+        responsive: false,
+        responsiveCheckTime: 500, 	//time to check resize in milliseconds
+        
+	>js callBakcs
+		onStart:		function(){},
+		onFinish:		function(){},
+		onItemResize:	function(index, container, img){},
+		onItemStart:	function(index, container, img){},
+		onItemFinish:	function(index, container, img){}
+	
+	>css (set useCssAligns: true) (overwrite js)
+		text-align: center;
+		vertical-align : middle;
 
-        //css (set useCssAligns: true) (overwrite js)
-        text-align: center;
-        vertical-align : middle;
-
-        //hml5 data attr (overwrite all)
-        data-imgLiquid-fill='true'
-        data-imgLiquid-horizontalAlign ='center'
-        data-imgLiquid-verticalAlign' ='center'
-        data-imgLiquid-fadeInTime = '1000'
+	>hml5 data attr (overwrite all)
+		data-imgLiquid-fill="true"
+		data-imgLiquid-horizontalAlign="center"
+		data-imgLiquid-verticalAlign="center"
+		data-imgLiquid-fadeInTime="500"
 */
 ;(function($){
 	$.fn.extend({
@@ -34,29 +43,45 @@ ex:
 			//is ie?
 			var isIE = /*@cc_on!@*/false;
 
-			//Options
+			//Sizes
+			var totalItems = this.size();
+			var processedItems = 0;
+
+			//Ssettings / Options
 			this.defaultOptions = {};
+
 			//___________________________________________________________________
 			var settings = $.extend({
 				fill: true,
-				verticalAlign: 'center', //'top' // 'bottom'
-				horizontalAlign: 'center', // 'left' // 'right'
+				verticalAlign: 'center',	//'top' // 'bottom'
+				horizontalAlign: 'center',	// 'left' // 'right'
 				fadeInTime: 0,
 				responsive: false,
-				responsiveCheckTime: 500, /*time to check div resize, default 2fps > 1000/500*/
-				delay: 1,
+				responsiveCheckTime: 500,	/*time to check div resize, default 2fps > 1000/500*/
+				delay: 0,
 				/**/
 				removeBoxBackground: true,
 				ieFadeInDisabled: true,
 				useDataHtmlAttr: true,
 				useCssAligns: false,
-				imageRendering: 'auto'
+				imageRendering: 'auto',
+				/**/
+				//callBacks
+				onStart: null,			//no-params
+				onFinish: null,			//no-params
+				onItemResize: null,		//params: (index, container, img )
+				onItemStart: null,		//params: (index, container, img )
+				onItemFinish: null		//params: (index, container, img )
 			}, this.defaultOptions, options);
+
+			
+			//callBack
+			if (settings.onStart) settings.onStart();
 
 
 			//each
 			//___________________________________________________________________
-			var elems = this.each(function($i) {
+			return this.each(function($i) {
 				
 				//Obj
 				var $imgBox = $(this);
@@ -68,7 +93,7 @@ ex:
 				}
 
 				if ($img.ILprocessed){
-					process($imgBox, $img);
+					process($imgBox, $img, $i);
 					return;
 				}
 
@@ -76,13 +101,18 @@ ex:
 				$img.ILprocessed = false;
 				$img.ILerror = false;
 
+				//callBack ItemStart (index, container, img )
+				if (settings.onItemStart) settings.onItemStart($i , $imgBox , $img);
+
 				//Alpha to 0 & removes
 				$img.fadeTo(0, 0);
 				$('img:not(:first)', $imgBox).css('display','none');
 				$img.css({'visibility':'visible', 'max-width':'none', 'max-height':'none', 'width':'auto', 'height':'auto', 'display':'block', 'image-rendering':settings.imageRendering });
 				$img.removeAttr("width");
 				$img.removeAttr("height");
-				
+
+				//Delay > 1
+				if (settings.delay <1) settings.delay = 1;
 
 				//set OverFlow
 				$imgBox.css({'overflow':'hidden'});
@@ -113,27 +143,32 @@ ex:
 				if (isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
 				
 
-
-				//RESPONSIVE
+				//Responsive
 				function checkElementSize(){
 					setTimeout(function() {
-						var actualSize = $imgBox.width() + ($imgBox.height()/100000);
-						if (actualSize !== $imgBox.sizeOld){
-							$imgBox.sizeOld = actualSize;
-							process($imgBox, $img);
+						$imgBox.actualSize = $imgBox.width() + ($imgBox.height()/100000);
+						if ($imgBox.actualSize !== $imgBox.sizeOld){
+							if ($img.ILprocessed && $imgBox.sizeOld !== undefined){
+
+								//callBack onItemResize (index, container, img )
+								if (settings.onItemResize) settings.onItemResize($i , $imgBox , $img);
+								
+								//Process again
+								if (settings.responsive) process($imgBox, $img, $i);
+							}
 						}
+						$imgBox.sizeOld = $imgBox.actualSize;
 						checkElementSize();
 					}, settings.responsiveCheckTime);
 				}
-				if (settings.responsive) checkElementSize();
-
-
+				if (settings.responsive || settings.onItemResize!==null) checkElementSize();
+				
 
 				//OnLoad
 				$img.load(function () {
 					if (!Boolean($img.width() === 0 && $img.height() === 0)) {
 						setTimeout(function() {
-							process($imgBox, $img);
+							process($imgBox, $img, $i);
 						}, $i * settings.delay );
 					}
 				}).each(function () {
@@ -144,14 +179,15 @@ ex:
 				});
 				function onError(){
 					$img.ILerror = true;
+					checkFinish($imgBox, $img, $i);
 					$imgBox.css('visibility', 'hidden');
 				}
 
 
                 //Process
 				//___________________________________________________________________
-				function process($imgBox, $img){
-
+				function process($imgBox, $img, $i){
+					
 					//resize OPTIMIZED
 					if (settings.fill == ($imgBox.width() / $imgBox.height()) >= ($img.width() / $img.height())){
 						$img.css({'width':'100%', 'height':'auto'});
@@ -182,23 +218,27 @@ ex:
 					if (!$img.ILprocessed){
 						if (settings.removeBoxBackground) $imgBox.css('background-image', 'none');
 						$img.fadeTo(settings.fadeInTime, 1);
+						
 						$img.ILprocessed = true;
+						
+						//callBack onItemFinish (index, container, img )
+						if (settings.onItemFinish) settings.onItemFinish($i , $imgBox , $img);
+
+						checkFinish($imgBox, $img, $i);
 					}
 				}
-			});
-			
-			
-			// Apply callback function
-			if (arguments.length < 2 && $.isFunction(options)) {
-			  callback = options;
-			  options = null;
-			}
-			if (typeof callback !== 'undefined' && $.isFunction(callback)) {
-			  callback.call(this);
-			}
-			
-			return elems;
 
+				//CheckFinish
+				//___________________________________________________________________
+				function checkFinish($imgBox, $img, $i){
+					processedItems ++;
+					//callBack onFinish
+					if (processedItems == totalItems){
+						if (settings.onFinish) settings.onFinish();
+					}
+				}
+
+			});
 		}
 	});
 })(jQuery);
