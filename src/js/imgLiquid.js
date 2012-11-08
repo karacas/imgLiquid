@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.75 / 07-11-12
+jQuery Plugin: imgLiquid v0.76 / 08-11-12
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -10,31 +10,32 @@ ex:
 
     //OPTIONS:
 
-    >js
+	>js
         fill: true,
-        verticalAlign: 		//'center' //'top' 	// 'bottom'
-        horizontalAlign: 	//'center' //'left'	// 'right'
+        verticalAlign:      //'center' //'top'  //'bottom'
+        horizontalAlign:    //'center' //'left' //'right'
         fadeInTime: 0,
-        delay: 100,			//time to process next image milliseconds
+        delay: 0,           //time to process next image in milliseconds
         responsive: false,
-        responsiveCheckTime: 500, 	//time to check resize in milliseconds
-        
-	>js callBakcs
-		onStart:		function(){},
-		onFinish:		function(){},
-		onItemResize:	function(index, container, img){},
-		onItemStart:	function(index, container, img){},
-		onItemFinish:	function(index, container, img){}
-	
-	>css (set useCssAligns: true) (overwrite js)
-		text-align: center;
-		vertical-align : middle;
+        responsiveCheckTime: 500,   //time to check resize in milliseconds
 
-	>hml5 data attr (overwrite all)
-		data-imgLiquid-fill="true"
-		data-imgLiquid-horizontalAlign="center"
-		data-imgLiquid-verticalAlign="center"
-		data-imgLiquid-fadeInTime="500"
+    >js callBakcs
+        onStart:        function(){},
+        onFinish:       function(){},
+        onItemResize:   function(index, container, img){},
+        onItemStart:    function(index, container, img){},
+        onItemFinish:   function(index, container, img){}
+
+    >css (set useCssAligns: true) (overwrite js)
+        text-align: center;
+        vertical-align : middle;
+
+    >hml5 data attr (overwrite all)
+        data-imgLiquid-fill="true"
+        data-imgLiquid-horizontalAlign="center"
+        data-imgLiquid-verticalAlign="center"
+        data-imgLiquid-fadeInTime="500"
+
 */
 ;(function($){
 	$.fn.extend({
@@ -57,7 +58,7 @@ ex:
 				horizontalAlign: 'center',	// 'left' // 'right'
 				fadeInTime: 0,
 				responsive: false,
-				responsiveCheckTime: 500,	/*time to check div resize, default 2fps > 1000/500*/
+				responsiveCheckTime: 100,	/*time to check div resize, default 10fps > 1000/100*/
 				delay: 0,
 				/**/
 				removeBoxBackground: true,
@@ -146,7 +147,9 @@ ex:
 				//Responsive
 				function checkElementSize(){
 					setTimeout(function() {
-						$imgBox.actualSize = $imgBox.width() + ($imgBox.height()/100000);
+						//$imgBox.actualSize = $imgBox.width() + ($imgBox.height()/100000);
+						//Js width is faaaaster
+						$imgBox.actualSize = $imgBox.get(0).offsetWidth + ($imgBox.get(0).offsetHeight/100000);
 						if ($imgBox.actualSize !== $imgBox.sizeOld){
 							if ($img.ILprocessed && $imgBox.sizeOld !== undefined){
 
