@@ -49,9 +49,10 @@ http://codepen.io/karacas/pen/nlugd
 	- Lightweight: less than 2KBs gzipped.
 	- Align.
 	- Fill/Crop.
-	- Svg support.
-	- FadeIn Anim (Optional, default is off).
 	- Responsive (Optional, default is off).
+	- Svg support.
+	- callBacks.
+	- FadeIn Anim (Optional, default is off).
 	- All browsers (Incl. ie6).
 ```
    
