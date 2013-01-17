@@ -1,0 +1,30 @@
+{
+    "name": "imgliquid",
+    "version": "0.7.6",
+    "title": "imgLiquid",
+    "description": "A jQuery Plugin to resize images to fit in a container.",
+    "homepage": "https://github.com/karacas/krc_imageResize",
+    "docs": "https://github.com/karacas/krc_imageResize",
+    "demo": "http://goo.gl/Wk8bU",
+    "licenses": [{
+        "type": "MIT",
+        "url": "https://raw.github.com/karacas/imgLiquid/master/license.txt"
+    }],
+    "keywords": ["resize", "image", "images", "fit", "responsive", "fill", "container", "img", "thumbnails"],
+    "author": {
+        "name": "Alejandro Emparan",
+        "url": "https://github.com/karacas"
+    },
+    "maintainers": [{
+        "name": "Alejandro Emparan",
+        "url": "https://github.com/karacas"
+    }],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/karacas/krc_imageResize.git"
+    },
+    "bugs": "https://github.com/karacas/krc_imageResize/issues",
+    "dependencies": {
+        "jquery": ">=1.4"
+    }
+}
