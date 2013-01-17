@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.76 / 08-11-12
+jQuery Plugin: imgLiquid v0.7.7 / 01-01-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -75,7 +75,7 @@ ex:
 				onItemFinish: null		//params: (index, container, img )
 			}, this.defaultOptions, options);
 
-			
+
 			//callBack
 			if (settings.onStart) settings.onStart();
 
@@ -83,7 +83,7 @@ ex:
 			//each
 			//___________________________________________________________________
 			return this.each(function($i) {
-				
+
 				//Obj
 				var $imgBox = $(this);
 				var $img = $('img:first', $imgBox);
@@ -142,7 +142,7 @@ ex:
 
 				//ie OffAnims
 				if (isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
-				
+
 
 				//Responsive
 				function checkElementSize(){
@@ -155,7 +155,7 @@ ex:
 
 								//callBack onItemResize (index, container, img )
 								if (settings.onItemResize) settings.onItemResize($i , $imgBox , $img);
-								
+
 								//Process again
 								if (settings.responsive) process($imgBox, $img, $i);
 							}
@@ -165,7 +165,7 @@ ex:
 					}, settings.responsiveCheckTime);
 				}
 				if (settings.responsive || settings.onItemResize!==null) checkElementSize();
-				
+
 
 				//OnLoad
 				$img.load(function () {
@@ -190,7 +190,7 @@ ex:
                 //Process
 				//___________________________________________________________________
 				function process($imgBox, $img, $i){
-					
+
 					//resize OPTIMIZED
 					if (settings.fill == ($imgBox.width() / $imgBox.height()) >= ($img.width() / $img.height())){
 						$img.css({'width':'100%', 'height':'auto'});
@@ -221,9 +221,9 @@ ex:
 					if (!$img.ILprocessed){
 						if (settings.removeBoxBackground) $imgBox.css('background-image', 'none');
 						$img.fadeTo(settings.fadeInTime, 1);
-						
+
 						$img.ILprocessed = true;
-						
+
 						//callBack onItemFinish (index, container, img )
 						if (settings.onItemFinish) settings.onItemFinish($i , $imgBox , $img);
 
