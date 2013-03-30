@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.8.1 / 30-03-13
+jQuery Plugin: imgLiquid v0.8.0 / 27-03-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -141,7 +141,7 @@ ex:
 
 				//OnLoad
 				$img.load(function () {
-					if (!Boolean($img.width() === 0 && $img.height() === 0)) {
+					if (!Boolean($img[0].width === 0 && $img[0].height === 0)) {
 						setTimeout(function() {
 							process($imgBox, $img);
 						}, $i * settings.delay );
@@ -163,7 +163,7 @@ ex:
 				function process($imgBox, $img){
 
 					//resize OPTIMIZED
-					if (settings.fill == ($imgBox.width() / $imgBox.height()) >= ($img.width() / $img.height())){
+					if (settings.fill == ($imgBox.width() / $imgBox.height()) >= ($img[0].width / $img[0].height)){
 						$img.css({'width':'100%', 'height':'auto'});
 					}else{
 						$img.css({'width':'auto', 'height':'100%'});
@@ -172,7 +172,7 @@ ex:
 
 					//align X
 					var ha = settings.horizontalAlign.toLowerCase();
-					var hdif = $imgBox.width() - $img.width();
+					var hdif = $imgBox.width() - $img[0].width;
 					var margL = 0;
 					if (ha == 'center' || ha == 'middle')margL = hdif/2;
 					if (ha == 'right') margL = hdif;
@@ -181,7 +181,7 @@ ex:
 
 					//align Y
 					var va = settings.verticalAlign.toLowerCase();
-					var vdif = $imgBox.height() - $img.height();
+					var vdif = $imgBox.height() - $img[0].height;
 					var margT = 0;
 					if (va == 'center' || va == 'middle') margT = vdif/2;
 					if (va == 'bottom') margT = vdif;
