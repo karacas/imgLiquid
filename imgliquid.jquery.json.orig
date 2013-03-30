@@ -1,6 +1,6 @@
 {
     "name": "imgliquid",
-    "version": "0.8.1",
+    "version": "0.8.2",
     "title": "imgLiquid",
     "description": "A jQuery Plugin to resize images to fit in a container.",
     "homepage": "https://github.com/karacas/imgLiquid",
