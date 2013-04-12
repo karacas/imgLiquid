@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.8.2 / 30-03-13
+jQuery Plugin: imgLiquid v0.8.4 / 12-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -92,13 +92,13 @@ ex:
                     return null;
                 }
 
-                if ($img.ILprocessed){
+                if ($img.data('ILprocessed')){
                     process($imgBox, $img, $i);
                     return;
                 }
 
                 //Status
-                $img.ILprocessed = false;
+                $img.data('ILprocessed', false);
                 $img.ILerror = false;
 
                 //callBack ItemStart (index, container, img )
@@ -149,7 +149,7 @@ ex:
                         //Js width is faaaaster
                         $imgBox.actualSize = $imgBox.get(0).offsetWidth + ($imgBox.get(0).offsetHeight/100000);
                         if ($imgBox.actualSize !== $imgBox.sizeOld){
-                            if ($img.ILprocessed && $imgBox.sizeOld !== undefined){
+                            if ($img.data('ILprocessed') && $imgBox.sizeOld !== undefined){
 
                                 //callBack onItemResize (index, container, img )
                                 if (settings.onItemResize) settings.onItemResize($i , $imgBox , $img);
@@ -218,11 +218,11 @@ ex:
 
 
                     //FadeIn
-                    if (!$img.ILprocessed){
+                    if (!$img.data('ILprocessed')){
                         if (settings.removeBoxBackground) $imgBox.css('background-image', 'none');
                         $img.fadeTo(settings.fadeInTime, 1);
 
-                        $img.ILprocessed = true;
+                        $img.data('ILprocessed', true) ;
 
                         //callBack onItemFinish (index, container, img )
                         if (settings.onItemFinish) settings.onItemFinish($i , $imgBox , $img);
