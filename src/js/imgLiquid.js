@@ -135,6 +135,7 @@ ex:
 
 				//Alpha to 0 & removes
 				$img.fadeTo(0, 0);
+				$imgBoxCont.css('display','block');
 				$('img:not(:first)', $imgBoxCont).css('display','none');
 				$img.css({'visibility':'visible', 'max-width':'none', 'max-height':'none', 'width':'auto', 'height':'auto', 'display':'block', 'image-rendering':settings.imageRendering });
 				$img.removeAttr("width");
