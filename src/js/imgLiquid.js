@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.0 / 18-04-13
+jQuery Plugin: imgLiquid v0.9.2 / 18-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -135,7 +135,6 @@ ex:
 
 				//Alpha to 0 & removes
 				$img.fadeTo(0, 0);
-				$imgBoxCont.css('display','block');
 				$('img:not(:first)', $imgBoxCont).css('display','none');
 				$img.css({'visibility':'visible', 'max-width':'none', 'max-height':'none', 'width':'auto', 'height':'auto', 'display':'block', 'image-rendering':settings.imageRendering });
 				$img.removeAttr("width");
@@ -233,7 +232,7 @@ ex:
 				function checkProcess(){
 					if ($img.data('ILprocessed')) return;
 					setTimeout(function() {
-						if ($imgBoxCont.parent().is(':visible')){
+						if ($imgBoxCont.is(':visible')){
 							setTimeout(function() {
 								process($imgBoxCont, $img, $i);
 							}, $i * settings.delay);
