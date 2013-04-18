@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.8.8 / 18-04-13
+jQuery Plugin: imgLiquid v0.9.0 / 18-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -39,6 +39,7 @@ ex:
 		data-imgLiquid-verticalAlign="center"
 		data-imgLiquid-fadeInTime="500"
 */
+//
 ;(function($){
 	$.fn.extend({
 		imgLiquid: function(options) {
@@ -77,7 +78,8 @@ ex:
 				useCssAligns: false,
 				imageRendering: 'auto',
 				hardPixels: false,
-
+				checkvisibility: true,
+				timecheckvisibility : 250,
 
 				//CALLBACKS
 				onStart: null,		//no-params
@@ -211,9 +213,14 @@ ex:
 				$img.on('load', onLoad).on('error', onError).load();
 				function onLoad(e){
 					if (!Boolean($img[0].width === 0 && $img[0].height === 0)) {
-						setTimeout(function() {
-							process($imgBoxCont, $img, $i);
-						}, $i * settings.delay );
+						if (settings.checkvisibility){
+							checkProcess();
+						}else{
+							//DIRECT > OLD VERSION TEST AND DELETE
+							setTimeout(function() {
+								process($imgBoxCont, $img, $i);
+							}, $i * settings.delay);
+						}
 					}
 					e.preventDefault();
 				}
@@ -222,7 +229,18 @@ ex:
 					checkFinish($imgBoxCont, $img, $i);
 					$imgBoxCont.css('visibility', 'hidden');
 				}
-
+				function checkProcess(){
+					if ($img.data('ILprocessed')) return;
+					setTimeout(function() {
+						if ($imgBoxCont.parent().is(':visible')){
+							setTimeout(function() {
+								process($imgBoxCont, $img, $i);
+							}, $i * settings.delay);
+						}else{
+							checkProcess();
+						}
+					}, settings.timecheckvisibility);
+				}
 
 
 
@@ -251,8 +269,7 @@ ex:
 
 
 					//TODO: Sacar trace
-					if (!true) console.log(w);
-
+					if (!true) console.log(w,h);
 
 
 					//align X
