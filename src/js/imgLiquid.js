@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.5 / 18-04-13
+jQuery Plugin: imgLiquid v0.9.6 / 19-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -80,6 +80,7 @@ ex:
 				hardPixels: false,
 				checkvisibility: true,
 				timecheckvisibility : 250,
+				addDatetoAvoidIeCache: true,
 
 				//CALLBACKS
 				onStart: null,		//no-params
@@ -203,13 +204,16 @@ ex:
 				if (settings.responsive || settings.onItemResize !== null) checkElementSize();
 
 
-
 				//SAVE FIRST TIME SETTINGS
 				self.data('settings', settings);
 
 
+				//IF ie avoid cache (cause onLoad bug)
+				if (isIE && settings.addDatetoAvoidIeCache) $img.attr("src", $img.attr("src") + "?" + new Date().getTime());
+
+
 				//LOAD
-				$img.on('load', onLoad).on('error', onError).load();
+				$img.on('load', onLoad).on('error', onError);
 				function onLoad(e){
 					if (!Boolean($img[0].width === 0 && $img[0].height === 0)) {
 						if (settings.checkvisibility){
@@ -266,11 +270,6 @@ ex:
 					$img.css({'width':w, 'height':h});
 
 
-
-					//TODO: Sacar trace
-					if (!true) console.log(w,h);
-
-
 					//align X
 					var ha = settings.horizontalAlign.toLowerCase();
 					var hdif = $imgBoxCont.width() - $img[0].width;
@@ -280,7 +279,6 @@ ex:
 					$img.css('margin-left', Math.floor(margL));
 
 
-
 					//align Y
 					var va = settings.verticalAlign.toLowerCase();
 					var vdif = $imgBoxCont.height() - $img[0].height;
@@ -288,7 +286,6 @@ ex:
 					if (va === 'center' || va === 'middle') margT = vdif/2;
 					if (va === 'bottom') margT = vdif;
 					$img.css('margin-top', Math.floor(margT));
-
 
 
 					//FadeIn
