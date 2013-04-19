@@ -208,7 +208,6 @@ ex:
 				self.data('settings', settings);
 
 
-
 				//LOAD
 				$img.on('load', onLoad).on('error', onError).load();
 				function onLoad(e){
