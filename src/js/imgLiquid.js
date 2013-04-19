@@ -71,7 +71,6 @@ ex:
 				responsiveCheckTime: 100,  /*time to check div resize, default 10fps > 1000/100*/
 				delay: 0,
 
-
 				removeBoxBackground: true,
 				ieFadeInDisabled: true,
 				useDataHtmlAttr: true,
@@ -80,7 +79,6 @@ ex:
 				hardPixels: false,
 				checkvisibility: true,
 				timecheckvisibility : 250,
-				addDatetoAvoidIeCache: true,
 
 				//CALLBACKS
 				onStart: null,		//no-params
