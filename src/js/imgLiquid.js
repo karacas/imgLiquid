@@ -159,6 +159,11 @@ ex:
 
 					if (settings.onItemFinish) settings.onItemFinish($i , $imgBoxCont , $img);
 					checkFinish();
+
+					//TODO: Ver que pasa con los a href que hab'ia adentro
+					//TODO: Probar Responsive
+					//TODO: Probar ReCall
+
 				}
 
 
