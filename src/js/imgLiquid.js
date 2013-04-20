@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.75 / 19-04-13
+jQuery Plugin: imgLiquid v0.9.8DEV / 20-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -38,27 +38,50 @@ ex:
 		data-imgLiquid-horizontalAlign="center"
 		data-imgLiquid-verticalAlign="center"
 		data-imgLiquid-fadeInTime="500"
-*/
+		*/
 //
+//
+
+
 ;(function($){
-	$.fn.extend({
-		imgLiquid: function(options) {
 
-			//is ie?
-			var isIE = /*@cc_on!@*/false;
 
+	var imgLiquid = imgLiquid || {VER:'0.9.8'};
+	imgLiquid.isIE = /*@cc_on!@*/false;
+	imgLiquid.backgroundSizeAvaiable = false
+
+
+	//___________________________________________________________________
+	function checkbackgroundSize(){
+		$('body').append('<span id="modernizrIl" style="background-size:cover"></span>')
+		!function(){
+			var bsCheck = $('#modernizrIl')[0];
+			if (!bsCheck) return;
+			if (!window.getComputedStyle) return;
+			var compStyle = window.getComputedStyle (bsCheck, null);
+			if (!compStyle) return;
+			if (!compStyle.backgroundSize) return;
+			if (compStyle.backgroundSize === 'cover') imgLiquid.backgroundSizeAvaiable = true
+		}();
+	$('#modernizrIl').remove()
+}
+$(checkbackgroundSize);
+
+
+
+
+	 //___________________________________________________________________
+	 $.fn.extend({
+	 	imgLiquid: function(options) {
 
 			//Sizes
 			var totalItems = this.length;
 			var processedItems = 0;
 
-
 			//Settings - Options
 			this.defaultOptions = {};
 
-
 			var self = this;
-
 
 			//___________________________________________________________________
 			var settings = $.extend({
@@ -70,6 +93,7 @@ ex:
 				responsive: false,
 				responsiveCheckTime: 100,  /*time to check div resize, default 10fps > 1000/100*/
 				delay: 0,
+				useBackgroundSize: true,
 
 				removeBoxBackground: true,
 				ieFadeInDisabled: true,
@@ -110,79 +134,100 @@ ex:
 				//Obj
 				var $imgBoxCont = $(this);
 				var $img = $('img:first', $imgBoxCont);
-
-				if (!$img || $img === null || $img.size() ===0){
+				if (!$img || $img === null || $img.size() === 0){
 					onError();
-					return null;
+					return;
 				}
-
 				if ($img.data('ILprocessed')){
 					settings = $.extend(self.data('settings'));
 					process($imgBoxCont, $img, $i);
 					return;
 				}
 
-
-				//STATUS
 				$img.data('ILprocessed', false);
 				$img.ILerror = false;
-
-
-				//CALLBACK > ItemStart (index, container, img )
 				if (settings.onItemStart) settings.onItemStart($i , $imgBoxCont , $img);
 
 
-				//Alpha to 0 & removes
-				$img.fadeTo(0, 0);
-				$('img:not(:first)', $imgBoxCont).css('display','none');
-				$img.css({'visibility':'visible', 'max-width':'none', 'max-height':'none', 'width':'auto', 'height':'auto', 'display':'block', 'image-rendering':settings.imageRendering });
-				$img.removeAttr("width");
-				$img.removeAttr("height");
+				setSettingsOverwrite()
 
 
-				//Delay > 1
-				if (settings.delay <1) settings.delay = 1;
-
-
-				//set OverFlow
-				$imgBoxCont.css({'overflow':'hidden'});
-
-
-				//SETTINGS OVERWRITE
-				if (isIE && settings.imageRendering === 'optimizeQuality') $img.css('-ms-interpolation-mode', 'bicubic');
-				if (settings.useCssAligns) {
-					var cha = $imgBoxCont.css('text-align');
-					var cva = $imgBoxCont.css('vertical-align');
-					if(cha === 'left' || cha === 'center' || cha === 'right') settings.horizontalAlign = cha;
-					if (cva === 'top' || cva === 'middle' || cva === 'bottom' || cva === 'center') settings.verticalAlign = cva;
-				}
-				if (settings.useDataHtmlAttr) {
-					if ($imgBoxCont.attr('data-imgLiquid-fill') === 'true') settings.fill = true;
-					if ($imgBoxCont.attr('data-imgLiquid-fill') === 'false' ) settings.fill = false;
-					if ($imgBoxCont.attr('data-imgLiquid-responsive') === 'true') settings.responsive = true;
-					if ($imgBoxCont.attr('data-imgLiquid-responsive') === 'false' ) settings.responsive = false;
-					if ( Number ($imgBoxCont.attr('data-imgLiquid-fadeInTime')) > 0) settings.fadeInTime = Number ($imgBoxCont.attr('data-imgLiquid-fadeInTime'));
-					var ha = $imgBoxCont.attr('data-imgLiquid-horizontalAlign');
-					var va = $imgBoxCont.attr('data-imgLiquid-verticalAlign');
-					if (ha === 'left' || ha === 'center' || ha === 'right') settings.horizontalAlign = ha;
-					if (va === 'top' || va === 'middle' || va === 'bottom' || va === 'center') settings.verticalAlign = va;
+				if (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize){
+					setWithbackgroundSize()
+				}else{
+					setCss()
+					onLoad()
+					checkResponsive()
 				}
 
 
-				//ie no anims > (muere ie, muere!)
-				if (isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
+				//___________________________________________________________________
+				function setWithbackgroundSize(){
+					var bsVale = (settings.fill) ? 'cover' : 'contain'
+					var bpos = settings.horizontalAlign + " " + settings.verticalAlign
+					$imgBoxCont.css({'background-size':bsVale, 'background-image': 'url(' +$img.attr('src') + ')', 'background-position' :bpos})
+					$('img', $imgBoxCont).css('display','none');
 
-
-
-				//RESPONSIVE
-				function checkElementSize(){
-					setTimeout(checkElementSizeDelay, settings.responsiveCheckTime);
+					if (settings.onItemFinish) settings.onItemFinish($i , $imgBoxCont , $img);
+					checkFinish($imgBoxCont, $img, $i);
 				}
-				function checkElementSizeDelay(){
 
-					//UPDATE SETTINGS
+
+				//___________________________________________________________________
+				function setCss(){
+					//Alpha to 0 & removes
+					$img.fadeTo(0, 0);
+					$('img:not(:first)', $imgBoxCont).css('display','none');
+					$img.css({'visibility':'visible', 'max-width':'none', 'max-height':'none', 'width':'auto', 'height':'auto', 'display':'block', 'image-rendering':settings.imageRendering });
+					$img.removeAttr("width");
+					$img.removeAttr("height");
+
+					//set OverFlow
+					$imgBoxCont.css({'overflow':'hidden'});
+				}
+
+
+				//___________________________________________________________________
+				function setSettingsOverwrite(){
+					//SETTINGS OVERWRITE
+
+					//Delay > 1
+					if (settings.delay <1) settings.delay = 1;
+
+					if (imgLiquid.isIE && settings.imageRendering === 'optimizeQuality') $img.css('-ms-interpolation-mode', 'bicubic');
+
+					if (settings.useCssAligns) {
+						var cha = $imgBoxCont.css('text-align');
+						var cva = $imgBoxCont.css('vertical-align');
+						if(cha === 'left' || cha === 'center' || cha === 'right') settings.horizontalAlign = cha;
+						if (cva === 'top' || cva === 'middle' || cva === 'bottom' || cva === 'center') settings.verticalAlign = cva;
+					}
+					if (settings.useDataHtmlAttr) {
+						if ($imgBoxCont.attr('data-imgLiquid-fill') === 'true') settings.fill = true;
+						if ($imgBoxCont.attr('data-imgLiquid-fill') === 'false' ) settings.fill = false;
+						if ($imgBoxCont.attr('data-imgLiquid-responsive') === 'true') settings.responsive = true;
+						if ($imgBoxCont.attr('data-imgLiquid-responsive') === 'false' ) settings.responsive = false;
+						if ( Number ($imgBoxCont.attr('data-imgLiquid-fadeInTime')) > 0) settings.fadeInTime = Number ($imgBoxCont.attr('data-imgLiquid-fadeInTime'));
+						var ha = $imgBoxCont.attr('data-imgLiquid-horizontalAlign');
+						var va = $imgBoxCont.attr('data-imgLiquid-verticalAlign');
+						if (ha === 'left' || ha === 'center' || ha === 'right') settings.horizontalAlign = ha;
+						if (va === 'top' || va === 'middle' || va === 'bottom' || va === 'center') settings.verticalAlign = va;
+					}
+
+					//ie no anims > (muere ie, muere!)
+					if (imgLiquid.isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
+
+					if (settings.responsive) settings.hardPixels = true;
+
+					//SAVE FIRST TIME SETTINGS
+					self.data('settings', settings);
+				}
+
+
+				//___________________________________________________________________
+				function checkResponsive(){
+					if (!settings.responsive) return;
 					settings = $.extend(self.data('settings'));
-
 					$imgBoxCont.actualSize = $imgBoxCont.get(0).offsetWidth + ($imgBoxCont.get(0).offsetHeight/100000);
 					if ($imgBoxCont.actualSize !== $imgBoxCont.sizeOld){
 						if ($img.data('ILprocessed') && $imgBoxCont.sizeOld !== undefined){
@@ -195,50 +240,49 @@ ex:
 						}
 					}
 					$imgBoxCont.sizeOld = $imgBoxCont.actualSize;
-					checkElementSize();
-
+					setTimeout(checkResponsive, settings.responsiveCheckTime);
 				}
-				if (settings.responsive) settings.hardPixels = true;
-				if (settings.responsive || settings.onItemResize !== null) checkElementSize();
 
 
-				//SAVE FIRST TIME SETTINGS
-				self.data('settings', settings);
-
-				//LOAD
-				$img.on('load', onLoad).on('error', onError);
-				if($img[0].complete)$img.load();
-
-
-				function onLoad(e){
-					if (!Boolean($img[0].width === 0 && $img[0].height === 0)) {
-						if (settings.checkvisibility){
-							checkProcess();
-						}else{
-							//DIRECT > OLD VERSION TEST AND DELETE
-							setTimeout(function() {
-								process($imgBoxCont, $img, $i);
-							}, $i * settings.delay);
+				//___________________________________________________________________
+				function onLoad(){
+					//LOAD
+					$img.on('load', loaded).on('error', onError);
+					if($img[0].complete)$img.load();
+					function loaded(e){
+						if (!Boolean($img[0].width === 0 && $img[0].height === 0)) {
+							if (settings.checkvisibility){
+								checkProcess();
+							}else{
+								//DIRECT > OLD VERSION TEST AND DELETE
+								setTimeout(function() {
+									process($imgBoxCont, $img, $i);
+								}, $i * settings.delay);
+							}
 						}
+						if (e) e.preventDefault();
 					}
-					if (e) e.preventDefault();
+					function checkProcess(){
+						if ($img.data('ILprocessed')) return;
+						setTimeout(function() {
+							if ($imgBoxCont.is(':visible')){
+								setTimeout(function() {
+									process($imgBoxCont, $img, $i);
+								}, $i * settings.delay);
+							}else{
+								checkProcess();
+							}
+						}, settings.timecheckvisibility);
+					}
 				}
+
+
+
+				//___________________________________________________________________
 				function onError(){
 					$img.ILerror = true;
 					checkFinish($imgBoxCont, $img, $i);
 					$imgBoxCont.css('visibility', 'hidden');
-				}
-				function checkProcess(){
-					if ($img.data('ILprocessed')) return;
-					setTimeout(function() {
-						if ($imgBoxCont.is(':visible')){
-							setTimeout(function() {
-								process($imgBoxCont, $img, $i);
-							}, $i * settings.delay);
-						}else{
-							checkProcess();
-						}
-					}, settings.timecheckvisibility);
 				}
 
 
@@ -293,23 +337,18 @@ ex:
 						//CALLBACK > onItemFinish (index, container, img )
 						if (settings.onItemFinish) settings.onItemFinish($i , $imgBoxCont , $img);
 
-						checkFinish($imgBoxCont, $img, $i);
+						checkFinish();
 					}
 				}
 
 
-
-
-
 				//___________________________________________________________________
-				function checkFinish($imgBoxCont, $img, $i){
+				function checkFinish(){
 					processedItems ++;
-					//CALLBACK > onFinish
 					if (processedItems === totalItems){
 						if (settings.onFinish) settings.onFinish();
 					}
 				}
-
 
 
 			});
