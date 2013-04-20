@@ -14,11 +14,7 @@ ex:
 		fill: true,
 		verticalAlign:		//'center' //'top' //'bottom'
 		horizontalAlign:	//'center' //'left' //'right'
-		fadeInTime: 0,
-		delay: 0,			//time to process next image in milliseconds
-		responsive: false,
-		responsiveCheckTime: 500,	//time to check resize in milliseconds
-
+		useBackgroundSize: true // Uses cssBackgroundSize if is available
 
 	>js callBakcs
 		onStart:		function(){},
@@ -48,31 +44,23 @@ ex:
 
 	var imgLiquid = imgLiquid || {VER:'0.9.8'};
 	imgLiquid.isIE = /*@cc_on!@*/false;
-	imgLiquid.backgroundSizeAvaiable = false
+	imgLiquid.backgroundSizeAvaiable = false;
 
 
 	//___________________________________________________________________
 	function checkbackgroundSize(){
-		$('body').append('<span id="modernizrIl" style="background-size:cover"></span>')
-		!function(){
-			var bsCheck = $('#modernizrIl')[0];
-			if (!bsCheck) return;
-			if (!window.getComputedStyle) return;
-			var compStyle = window.getComputedStyle (bsCheck, null);
-			if (!compStyle) return;
-			if (!compStyle.backgroundSize) return;
-			if (compStyle.backgroundSize === 'cover') imgLiquid.backgroundSizeAvaiable = true
-		}();
-	$('#modernizrIl').remove()
-}
-$(checkbackgroundSize);
+		$('body').append('<span id="modernizrIl" style="background-size:cover"></span>');
+		if ($('#modernizrIl').css('background-size') === 'cover') imgLiquid.backgroundSizeAvaiable = true;
+		$('#modernizrIl').remove();
+	}
+	$(checkbackgroundSize);
 
 
 
 
-	 //___________________________________________________________________
-	 $.fn.extend({
-	 	imgLiquid: function(options) {
+	//___________________________________________________________________
+	$.fn.extend({
+		imgLiquid: function(options) {
 
 			//Sizes
 			var totalItems = this.length;
@@ -89,11 +77,12 @@ $(checkbackgroundSize);
 				fill: true,
 				verticalAlign: 'center',	// 'top'	// 'bottom'
 				horizontalAlign: 'center',	// 'left'	// 'right'
+				useBackgroundSize: true,
+
 				fadeInTime: 0,
 				responsive: false,
 				responsiveCheckTime: 100,  /*time to check div resize, default 10fps > 1000/100*/
 				delay: 0,
-				useBackgroundSize: true,
 
 				removeBoxBackground: true,
 				ieFadeInDisabled: true,
@@ -149,27 +138,27 @@ $(checkbackgroundSize);
 				if (settings.onItemStart) settings.onItemStart($i , $imgBoxCont , $img);
 
 
-				setSettingsOverwrite()
+				setSettingsOverwrite();
 
 
 				if (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize){
-					setWithbackgroundSize()
+					setWithbackgroundSize();
 				}else{
-					setCss()
-					onLoad()
-					checkResponsive()
+					setCss();
+					onLoad();
+					checkResponsive();
 				}
 
 
 				//___________________________________________________________________
 				function setWithbackgroundSize(){
-					var bsVale = (settings.fill) ? 'cover' : 'contain'
-					var bpos = settings.horizontalAlign + " " + settings.verticalAlign
-					$imgBoxCont.css({'background-size':bsVale, 'background-image': 'url(' +$img.attr('src') + ')', 'background-position' :bpos})
+					var bsVale = (settings.fill) ? 'cover' : 'contain';
+					var bpos = settings.horizontalAlign + " " + settings.verticalAlign;
+					$imgBoxCont.css({'background-size':bsVale, 'background-image': 'url(' +$img.attr('src') + ')', 'background-position' :bpos});
 					$('img', $imgBoxCont).css('display','none');
 
 					if (settings.onItemFinish) settings.onItemFinish($i , $imgBoxCont , $img);
-					checkFinish($imgBoxCont, $img, $i);
+					checkFinish();
 				}
 
 
@@ -203,6 +192,7 @@ $(checkbackgroundSize);
 						if (cva === 'top' || cva === 'middle' || cva === 'bottom' || cva === 'center') settings.verticalAlign = cva;
 					}
 					if (settings.useDataHtmlAttr) {
+						//TODO: Que no sebreesciba todos los items
 						if ($imgBoxCont.attr('data-imgLiquid-fill') === 'true') settings.fill = true;
 						if ($imgBoxCont.attr('data-imgLiquid-fill') === 'false' ) settings.fill = false;
 						if ($imgBoxCont.attr('data-imgLiquid-responsive') === 'true') settings.responsive = true;
@@ -281,7 +271,7 @@ $(checkbackgroundSize);
 				//___________________________________________________________________
 				function onError(){
 					$img.ILerror = true;
-					checkFinish($imgBoxCont, $img, $i);
+					checkFinish();
 					$imgBoxCont.css('visibility', 'hidden');
 				}
 
