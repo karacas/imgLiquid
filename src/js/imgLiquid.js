@@ -12,12 +12,12 @@ ex:
 
 	>js
 		fill: true,
-		verticalAlign:	  //'center' //'top' //'bottom'
+		verticalAlign:		//'center' //'top' //'bottom'
 		horizontalAlign:	//'center' //'left' //'right'
 
 	>js callBakcs
 		onStart:		function(){},
-		onFinish:	   function(){},
+		onFinish:		function(){},
 		onItemResize:   function(index, container, img){},
 		onItemStart:	function(index, container, img){},
 		onItemFinish:   function(index, container, img){}
@@ -27,13 +27,13 @@ ex:
 		data-imgLiquid-horizontalAlign="center"
 		data-imgLiquid-verticalAlign="center"
 
-*/
+		*/
 //
 
 //TODO: RecallOptions y  no sebreesciba todos los items
 
 var imgLiquid = imgLiquid || {VER:'0.9.81'};
-;(function($){
+(function($){
 
 	imgLiquid.isIE = /*@cc_on!@*/false;
 	imgLiquid.backgroundSizeAvaiable = false;
@@ -51,11 +51,11 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 	$.fn.extend({
 		imgLiquid: function(options) {
 
-			var totalItems = this.length;
-			var processedItems = 0;
-
 			var self = this;
 			this.defaultOptions = {};
+
+			var totalItems = this.length;
+			var processedItems = 0;
 
 			//___________________________________________________________________
 			this.defaults =  {
@@ -64,9 +64,9 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 				horizontalAlign: 'center',  // 'left'   // 'right'
 
 				useBackgroundSize: true,
-				fadeInTime: 0,
 				responsive: true,
 				delay: 0,
+				fadeInTime: 0,
 				removeBoxBackground: true,
 				ieFadeInDisabled: true,
 				useDataHtmlAttr: true,
@@ -75,22 +75,24 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 				timecheckvisibility : 250,
 
 				//CALLBACKS
-				onStart: null,	 	//no-params
-				onFinish: null,	 	//no-params
+				onStart: null,		//no-params
+				onFinish: null,		//no-params
 				onItemResize: null, //params: (index, container, img )
 				onItemStart: null,  //params: (index, container, img )
 				onItemFinish: null  //params: (index, container, img )
-			}
+			};
 
 
-			var self = this;
+
 			this.settings = {};
 			this.options = {};
-			$.extend(this.options,  options)
+			$.extend(this.options,  options);
 			$.extend(this.settings, this.defaults, options);
+
 
 			//CALLBACK > Start
 			if (this.settings.onStart) this.settings.onStart();
+
 
 
 			//___________________________________________________________________
@@ -106,19 +108,26 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 
 
 				//EXTEND OPTIONS
-				var settings = {}
+				var settings = {};
 				if ($img.data('imgLiquid_settings')){
+					//Recall
 					$.extend(settings, $img.data('imgLiquid_settings'), self.options);
 				}else{
+					//1st time
 					$.extend(settings, self.settings, self.options);
 				}
-				$img.data('imgLiquid_settings', settings)
+				$img.data('imgLiquid_settings', settings);
 
 
 
-				//ReProcess
+				//CHECK REPROCESS
 				if ($img.data('imgLiquid_oldProcessed')){
+					//(OLD)
 					if (! (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize)) oldProcess();
+					return;
+				}
+				if ($img.data('imgLiquid_Processed')){
+					setWithbackgroundSize();
 					return;
 				}
 
@@ -127,6 +136,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 				$img.data('imgLiquid_error', false);
 				setSettingsOverwrite();
 				if (settings.onItemStart) settings.onItemStart($i , $imgBoxCont , $img);
+
 
 
 				if (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize){
@@ -139,6 +149,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 				}
 
 
+
 				//___________________________________________________________________
 				function setWithbackgroundSize(){
 					var bsVale = (settings.fill) ? 'cover' : 'contain';
@@ -148,14 +159,15 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 						'background-image': 'url(' + $img.attr('src') + ')',
 						'background-position' :bpos
 					});
-					$('img', $imgBoxCont).css({'display':'none'});
-					$('a', $imgBoxCont).css({
+					$('a:first', $imgBoxCont).css({
 						'display':'block',
 						'width':'100%',
 						'height':'100%'
 					});
+					$('img', $imgBoxCont).css({'display':'none'});
 					if (settings.onItemFinish) settings.onItemFinish($i , $imgBoxCont , $img);
 					checkFinish();
+					$img.data('imgLiquid_Processed', true);
 				}
 
 
@@ -193,7 +205,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 						if (va === 'top' || va === 'middle' || va === 'bottom' || va === 'center') settings.verticalAlign = va;
 					}
 
-					//ie no anims > (muere ie, muere!)
+					//ie no anims
 					if (imgLiquid.isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
 				}
 
@@ -209,7 +221,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 					if ($imgBoxCont.sizeOld){
 						if ($imgBoxCont.actualSize !== $imgBoxCont.sizeOld){
 							oldProcess();
-							//CALLBACK > onItemResize (index, container, img )
+							//CALLBACK
 							if (settings.onItemResize) settings.onItemResize($i , $imgBoxCont , $img);
 						}
 					}
@@ -223,8 +235,8 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 				//___________________________________________________________________
 				function onLoad(){
 					if ($img.data('imgLiquid_loaded') || $img.data('imgLiquid_oldProcessed')) return;
-					if ($img[0].complete && $img[0].width > 0 && $img[0].height > 0){
-						$img.data('imgLiquid_loaded', true)
+					if ($imgBoxCont.is(':visible') && $img[0].complete && $img[0].complete && $img[0].width > 0 && $img[0].height > 0){
+						$img.data('imgLiquid_loaded', true);
 						setTimeout(oldProcess, $i * settings.delay);
 					}else{
 						setTimeout(onLoad, settings.timecheckvisibility);
@@ -299,6 +311,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 					processedItems ++;
 					if (processedItems === totalItems) if (settings.onFinish) settings.onFinish();
 				}
+
 
 			});
 		}
