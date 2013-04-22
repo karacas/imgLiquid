@@ -63,7 +63,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 				verticalAlign: 'center',	// 'top'	// 'bottom'
 				horizontalAlign: 'center',  // 'left'   // 'right'
 
-				useBackgroundSize: true,
+				useBackgroundSize: !true,
 				fadeInTime: 0,
 				responsive: true,
 				delay: 0,
