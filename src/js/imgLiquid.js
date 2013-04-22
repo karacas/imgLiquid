@@ -111,14 +111,14 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 					onError();
 					return;
 				}
-				if ($img.data('imgLiquid_processed')){
+				if ($img.data('imgLiquid_oldProcessed')){
 					settings = $.extend(self.data('settings'));
-					if (! (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize)) process();
+					if (! (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize)) oldProcess();
 					return;
 				}
 
 
-				$img.data('imgLiquid_processed', false);
+				$img.data('imgLiquid_oldProcessed', false);
 				$img.data('imgLiquid_error', false);
 				setSettingsOverwrite();
 				if (settings.onItemStart) settings.onItemStart($i , $imgBoxCont , $img);
@@ -127,6 +127,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 				if (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize){
 					setWithbackgroundSize();
 				}else{
+					//Old browsers whitout backgroundSize
 					setCss();
 					onLoad();
 					checkResponsive();
@@ -198,12 +199,12 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 
 				//___________________________________________________________________
 				function checkResponsive(){
-					if (!settings.responsive && !$img.data('imgLiquid_processed')) return;
+					if (!settings.responsive && !$img.data('imgLiquid_oldProcessed')) return;
 					settings = $.extend(self.data('settings'));
 					$imgBoxCont.actualSize = $imgBoxCont.get(0).offsetWidth + ($imgBoxCont.get(0).offsetHeight/100000);
 					if ($imgBoxCont.sizeOld){
 						if ($imgBoxCont.actualSize !== $imgBoxCont.sizeOld){
-							process();
+							oldProcess();
 							//CALLBACK > onItemResize (index, container, img )
 							if (settings.onItemResize) settings.onItemResize($i , $imgBoxCont , $img);
 						}
@@ -216,10 +217,10 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 
 				//___________________________________________________________________
 				function onLoad(){
-					if ($img.data('imgLiquid_loaded') || $img.data('imgLiquid_processed')) return;
+					if ($img.data('imgLiquid_loaded') || $img.data('imgLiquid_oldProcessed')) return;
 					if ($img[0].complete && $img[0].width > 0 && $img[0].height > 0){
 						$img.data('imgLiquid_loaded', true)
-						setTimeout(process, $i * settings.delay);
+						setTimeout(oldProcess, $i * settings.delay);
 					}else{
 						setTimeout(onLoad, settings.timecheckvisibility);
 					}
@@ -235,7 +236,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 
 
 				//___________________________________________________________________
-				function process(){
+				function oldProcess(){
 
 					//RESIZE
 					var w,h;
@@ -276,10 +277,10 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 
 
 					//FadeIn
-					if (!$img.data('imgLiquid_processed')){
+					if (!$img.data('imgLiquid_oldProcessed')){
 						if (settings.removeBoxBackground) $imgBoxCont.css('background-image', 'none');
 						$img.fadeTo(settings.fadeInTime, 1);
-						$img.data('imgLiquid_processed', true) ;
+						$img.data('imgLiquid_oldProcessed', true) ;
 						if (settings.onItemFinish) settings.onItemFinish($i , $imgBoxCont , $img);
 						checkFinish();
 					}
