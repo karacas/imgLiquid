@@ -48,12 +48,13 @@ http://codepen.io/karacas/pen/nlugd
 ```
 	- Uses CSS Background-size when is available. (new)
     - Bootstrap compatible
-    - Lightweight: less than 2.5KBs gzipped.
-	- Align.
+    - Lightweight: 2.0KBs gzipped.
 	- Fill/Crop.
+    - Align.
 	- Responsive.
 	- Svg support.
 	- CallBacks.
+    - HTML5 data-* attributes
 	- All browsers (Incl. ie6).
 ```
  
