@@ -6,26 +6,26 @@ Dual licensed under the MIT and GPL licenses
 https://github.com/karacas/imgLiquid
 
 ex:
-    $(".imgLiquid").imgLiquid({fill:true});
+	$(".imgLiquid").imgLiquid({fill:true});
 
-    //OPTIONS:
+	//OPTIONS:
 
-    >js
-        fill: true,
-        verticalAlign:      //'center' //'top' //'bottom'
-        horizontalAlign:    //'center' //'left' //'right'
+	>js
+		fill: true,
+		verticalAlign:	  	//'center' //'top' //'bottom'
+		horizontalAlign:	//'center' //'left' //'right'
 
-    >js callBakcs
-        onStart:        function(){},
-        onFinish:       function(){},
-        onItemResize:   function(index, container, img){},
-        onItemStart:    function(index, container, img){},
-        onItemFinish:   function(index, container, img){}
+	>js callBakcs
+		onStart:		function(){},
+		onFinish:	   	function(){},
+		onItemResize:   function(index, container, img){},
+		onItemStart:	function(index, container, img){},
+		onItemFinish:   function(index, container, img){}
 
-    >hml5 data attr (overwrite all)
-        data-imgLiquid-fill="true"
-        data-imgLiquid-horizontalAlign="center"
-        data-imgLiquid-verticalAlign="center"
+	>hml5 data attr (overwrite all)
+		data-imgLiquid-fill="true"
+		data-imgLiquid-horizontalAlign="center"
+		data-imgLiquid-verticalAlign="center"
 
 */
 //

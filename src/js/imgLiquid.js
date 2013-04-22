@@ -29,10 +29,7 @@ ex:
 
 */
 //
-
 var imgLiquid = imgLiquid || {VER:'0.9.84'};
-
-
 (function($){
 
 
