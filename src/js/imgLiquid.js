@@ -59,22 +59,23 @@ var imgLiquid = imgLiquid || {VER:'0.9.84'};
 			var processedItems = 0;
 
 
-			//___________________________________________________________________
+
 			this.defaults =  {
 				fill: true,
 				verticalAlign: 'center',	// 'top'	// 'bottom'
 				horizontalAlign: 'center',  // 'left'   // 'right'
 
 				useBackgroundSize: true,
-				responsive: true,
-				delay: 0,
-				fadeInTime: 0,
-				removeBoxBackground: true,
-				ieFadeInDisabled: true,
 				useDataHtmlAttr: true,
-				hardPixels: true,
-				responsiveCheckTime: 500,  /*time to check div resize*/
-				timecheckvisibility : 500,
+
+				responsive: true,			/*Only for use with BackgroundSize false (or old browsers)*/
+				delay: 0,					/*Only for use with BackgroundSize false (or old browsers)*/
+				fadeInTime: 0,				/*Only for use with BackgroundSize false (or old browsers)*/
+				removeBoxBackground: true, 	/*Only for use with BackgroundSize false (or old browsers)*/
+				ieFadeInDisabled: true,		/*Only for use with BackgroundSize false (or old browsers)*/
+				hardPixels: true,			/*Only for use with BackgroundSize false (or old browsers)*/
+				responsiveCheckTime: 500,   /*Only for use with BackgroundSize false (or old browsers)*/ /*time to check div resize*/
+				timecheckvisibility : 500,	/*Only for use with BackgroundSize false (or old browsers)*/ /*time to recheck if visible/loaded*/
 
 				//CALLBACKS
 				onStart: null,		//no-params
