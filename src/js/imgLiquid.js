@@ -88,7 +88,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 			$.extend(this.settings, this.defaults, options);
 
 			//CALLBACK > Start
-			if (this.settings.onStart) settings.onStart();
+			if (this.settings.onStart) this.settings.onStart();
 
 
 			//___________________________________________________________________
