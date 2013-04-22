@@ -31,7 +31,10 @@ ex:
 //
 
 var imgLiquid = imgLiquid || {VER:'0.9.84'};
+
+
 (function($){
+
 
 	imgLiquid.isIE = /*@cc_on!@*/false;
 	imgLiquid.backgroundSizeAvaiable = false;
@@ -55,6 +58,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.84'};
 			var totalItems = this.length;
 			var processedItems = 0;
 
+
 			//___________________________________________________________________
 			this.defaults =  {
 				fill: true,
@@ -70,7 +74,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.84'};
 				useDataHtmlAttr: true,
 				hardPixels: true,
 				responsiveCheckTime: 500,  /*time to check div resize*/
-				timecheckvisibility : 250,
+				timecheckvisibility : 500,
 
 				//CALLBACKS
 				onStart: null,		//no-params
@@ -86,6 +90,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.84'};
 			this.options = {};
 			$.extend(this.options,  options);
 			$.extend(this.settings, this.defaults, options);
+
 
 
 			//CALLBACK > Start
@@ -130,6 +135,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.84'};
 				}
 
 
+
 				$img.data('imgLiquid_oldProcessed', false);
 				$img.data('imgLiquid_error', false);
 				setSettingsOverwrite();
@@ -146,6 +152,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.84'};
 					onLoad();
 					checkResponsive();
 				}
+
 
 
 				//___________________________________________________________________
@@ -233,6 +240,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.84'};
 
 
 
+
 				//___________________________________________________________________
 				function onLoad(){
 					if ($img.data('imgLiquid_loaded') || $img.data('imgLiquid_oldProcessed')) return;
@@ -246,12 +254,14 @@ var imgLiquid = imgLiquid || {VER:'0.9.84'};
 
 
 
+
 				//___________________________________________________________________
 				function onError(){
 					$img.data('imgLiquid_error', true);
 					$imgBoxCont.css('visibility', 'hidden');
 					checkFinish();
 				}
+
 
 
 
@@ -307,11 +317,14 @@ var imgLiquid = imgLiquid || {VER:'0.9.84'};
 				}
 
 
+
+
 				//___________________________________________________________________
 				function checkFinish(){
 					processedItems ++;
 					if (processedItems === totalItems) if (settings.onFinish) settings.onFinish();
 				}
+
 
 
 			});
