@@ -58,8 +58,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 			this.defaultOptions = {};
 
 			//___________________________________________________________________
-			var settings = $.extend({
-
+			var defaults =  {
 				fill: true,
 				verticalAlign: 'center',	// 'top'	// 'bottom'
 				horizontalAlign: 'center',  // 'left'   // 'right'
@@ -76,19 +75,20 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 				timecheckvisibility : 250,
 
 				//CALLBACKS
-				onStart: null,	  //no-params
-				onFinish: null,	 //no-params
+				onStart: null,	 	//no-params
+				onFinish: null,	 	//no-params
 				onItemResize: null, //params: (index, container, img )
 				onItemStart: null,  //params: (index, container, img )
 				onItemFinish: null  //params: (index, container, img )
+			}
 
-			}, this.defaultOptions, options);
 
+			var settings = {};
+			$.extend(settings, defaults, options);
 
 
 			//CALLBACK > Start
 			if (settings.onStart) settings.onStart();
-
 
 
 			//___________________________________________________________________
