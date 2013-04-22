@@ -58,7 +58,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 			this.defaultOptions = {};
 
 			//___________________________________________________________________
-			var defaults =  {
+			this.defaults =  {
 				fill: true,
 				verticalAlign: 'center',	// 'top'	// 'bottom'
 				horizontalAlign: 'center',  // 'left'   // 'right'
@@ -83,16 +83,20 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 			}
 
 
-			var settings = {};
-			$.extend(settings, defaults, options);
-
+			var self = this;
+			this.settings = {};
+			$.extend(this.settings, this.defaults, options);
 
 			//CALLBACK > Start
-			if (settings.onStart) settings.onStart();
+			if (this.settings.onStart) settings.onStart();
 
 
 			//___________________________________________________________________
 			return this.each(function($i) {
+
+				//Extend Options
+				var settings = {}
+				$.extend(settings, self.settings);
 
 				//Obj
 				var $imgBoxCont = $(this);
