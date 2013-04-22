@@ -26,11 +26,19 @@
   	$(".imgLiquidFill").imgLiquid({fill:false, horizontalAlign:'right'});
   	$(".imgLiquidNoFill").imgLiquid({fill:false, horizontalAlign:'right'});
 
+
   	$('.recall').click(function(){
   		$(".imgLiquidFill").imgLiquid({fill:false, horizontalAlign:'left', verticalAlign: 'top'});
   		$(".imgLiquidNoFill").imgLiquid({fill:false, horizontalAlign:'left', verticalAlign: 'top'});
   		return false
   	})
+
+    $('.recall2').click(function(){
+      $(".imgLiquidFill").imgLiquid({fill:true});
+      $(".imgLiquidNoFill").imgLiquid({fill:true});
+      return false
+    })
+
 
   });
   </script>
@@ -89,6 +97,7 @@
 <body>
 
 	<a href="#" class='recall' title="">Recall</a>
+  <a href="#" class='recall2' title="">Recall2</a>
 	<div style='clear:both'></div>
 
 

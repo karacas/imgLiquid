@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.81DEV / 21-04-13
+jQuery Plugin: imgLiquid v0.9.84 / 22-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -27,12 +27,10 @@ ex:
 		data-imgLiquid-horizontalAlign="center"
 		data-imgLiquid-verticalAlign="center"
 
-		*/
+*/
 //
 
-//TODO: RecallOptions y  no sebreesciba todos los items
-
-var imgLiquid = imgLiquid || {VER:'0.9.81'};
+var imgLiquid = imgLiquid || {VER:'0.9.84'};
 (function($){
 
 	imgLiquid.isIE = /*@cc_on!@*/false;
@@ -140,6 +138,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 
 
 				if (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize){
+					//New browsers with backgroundSize
 					setWithbackgroundSize();
 				}else{
 					//Old browsers whitout backgroundSize
@@ -149,13 +148,13 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 				}
 
 
-
 				//___________________________________________________________________
 				function setWithbackgroundSize(){
 					var bsVale = (settings.fill) ? 'cover' : 'contain';
 					var bpos = settings.horizontalAlign.toLowerCase() + " " + settings.verticalAlign.toLowerCase();
 					$imgBoxCont.css({
 						'background-size': bsVale,
+						'background-repeat': 'no-repeat',
 						'background-image': 'url(' + $img.attr('src') + ')',
 						'background-position' :bpos
 					});
@@ -169,6 +168,8 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 					checkFinish();
 					$img.data('imgLiquid_Processed', true);
 				}
+
+
 
 
 
@@ -189,10 +190,10 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 
 
 
+
 				//___________________________________________________________________
 				function setSettingsOverwrite(){
 					if (settings.useDataHtmlAttr) {
-						//TODO: Que no sebreesciba todos los items
 						if ($imgBoxCont.attr('data-imgLiquid-fill') === 'true') settings.fill = true;
 						if ($imgBoxCont.attr('data-imgLiquid-fill') === 'false' ) settings.fill = false;
 						if ($imgBoxCont.attr('data-imgLiquid-responsive') === 'true') settings.responsive = true;
