@@ -63,7 +63,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 				verticalAlign: 'center',	// 'top'	// 'bottom'
 				horizontalAlign: 'center',  // 'left'   // 'right'
 
-				useBackgroundSize: !true,
+				useBackgroundSize: true,
 				fadeInTime: 0,
 				responsive: true,
 				delay: 0,
@@ -85,6 +85,8 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 
 			var self = this;
 			this.settings = {};
+			this.options = {};
+			$.extend(this.options,  options)
 			$.extend(this.settings, this.defaults, options);
 
 			//CALLBACK > Start
@@ -94,18 +96,27 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 			//___________________________________________________________________
 			return this.each(function($i) {
 
-				//Extend Options
-				var settings = {}
-				$.extend(settings, self.settings);
-
-				//Obj
+				//OBJ
 				var $imgBoxCont = $(this);
 				var $img = $('img:first', $imgBoxCont);
-
 				if (!$img || $img === null || $img.length === 0){
 					onError();
 					return;
 				}
+
+
+				//EXTEND OPTIONS
+				var settings = {}
+				if ($img.data('imgLiquid_settings')){
+					$.extend(settings, $img.data('imgLiquid_settings'), self.options);
+				}else{
+					$.extend(settings, self.settings, self.options);
+				}
+				$img.data('imgLiquid_settings', settings)
+
+
+
+				//ReProcess
 				if ($img.data('imgLiquid_oldProcessed')){
 					if (! (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize)) oldProcess();
 					return;
@@ -192,6 +203,8 @@ var imgLiquid = imgLiquid || {VER:'0.9.81'};
 				//___________________________________________________________________
 				function checkResponsive(){
 					if (!settings.responsive && !$img.data('imgLiquid_oldProcessed')) return;
+					$.extend(settings, $img.data('imgLiquid_settings'));
+
 					$imgBoxCont.actualSize = $imgBoxCont.get(0).offsetWidth + ($imgBoxCont.get(0).offsetHeight/100000);
 					if ($imgBoxCont.sizeOld){
 						if ($imgBoxCont.actualSize !== $imgBoxCont.sizeOld){
