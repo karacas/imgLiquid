@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.8DEV / 21-04-13
+jQuery Plugin: imgLiquid v0.9.81DEV / 21-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -14,7 +14,6 @@ ex:
 		fill: true,
 		verticalAlign:	  //'center' //'top' //'bottom'
 		horizontalAlign:	//'center' //'left' //'right'
-		useBackgroundSize: true // Uses cssBackgroundSize if is available
 
 	>js callBakcs
 		onStart:		function(){},
@@ -27,12 +26,13 @@ ex:
 		data-imgLiquid-fill="true"
 		data-imgLiquid-horizontalAlign="center"
 		data-imgLiquid-verticalAlign="center"
-		*/
+
+*/
 //
 
 //TODO: RecallOptions y  no sebreesciba todos los items
 
-var imgLiquid = imgLiquid || {VER:'0.9.8'};
+var imgLiquid = imgLiquid || {VER:'0.9.81'};
 ;(function($){
 
 	imgLiquid.isIE = /*@cc_on!@*/false;
@@ -63,17 +63,16 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 				fill: true,
 				verticalAlign: 'center',	// 'top'	// 'bottom'
 				horizontalAlign: 'center',  // 'left'   // 'right'
-				useBackgroundSize: !true,
 
+				useBackgroundSize: true,
 				fadeInTime: 0,
 				responsive: true,
-				responsiveCheckTime: 500,  /*time to check div resize*/
 				delay: 0,
-
 				removeBoxBackground: true,
 				ieFadeInDisabled: true,
 				useDataHtmlAttr: true,
 				hardPixels: true,
+				responsiveCheckTime: 500,  /*time to check div resize*/
 				timecheckvisibility : 250,
 
 				//CALLBACKS
@@ -89,7 +88,6 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 
 			//CALLBACK > Start
 			if (settings.onStart) settings.onStart();
-
 
 
 
