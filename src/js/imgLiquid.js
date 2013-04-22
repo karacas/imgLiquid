@@ -30,7 +30,7 @@ ex:
 		*/
 //
 
-//TODO: Probar ReCall
+//TODO: RecallOptions y  no sebreesciba todos los items
 
 var imgLiquid = imgLiquid || {VER:'0.9.8'};
 ;(function($){
@@ -63,7 +63,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 				fill: true,
 				verticalAlign: 'center',	// 'top'	// 'bottom'
 				horizontalAlign: 'center',  // 'left'   // 'right'
-				useBackgroundSize: true,
+				useBackgroundSize: !true,
 
 				fadeInTime: 0,
 				responsive: true,
@@ -92,13 +92,6 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 
 
 
-			//SAVES NEW SETTINGS
-			if (self.data('settings') !== undefined)  {
-				var settTmp = $.extend(self.data('settings'));
-				settTmp	 = $.extend(options);
-				self.data('settings',  settTmp);
-			}
-
 
 			//___________________________________________________________________
 			return this.each(function($i) {
@@ -112,7 +105,6 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 					return;
 				}
 				if ($img.data('imgLiquid_oldProcessed')){
-					settings = $.extend(self.data('settings'));
 					if (! (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize)) oldProcess();
 					return;
 				}
@@ -190,17 +182,14 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 
 					//ie no anims > (muere ie, muere!)
 					if (imgLiquid.isIE && settings.ieFadeInDisabled) settings.fadeInTime = 0;
-
-					//SAVE FIRST TIME SETTINGS
-					self.data('settings', settings);
 				}
+
 
 
 
 				//___________________________________________________________________
 				function checkResponsive(){
 					if (!settings.responsive && !$img.data('imgLiquid_oldProcessed')) return;
-					settings = $.extend(self.data('settings'));
 					$imgBoxCont.actualSize = $imgBoxCont.get(0).offsetWidth + ($imgBoxCont.get(0).offsetHeight/100000);
 					if ($imgBoxCont.sizeOld){
 						if ($imgBoxCont.actualSize !== $imgBoxCont.sizeOld){
@@ -212,6 +201,7 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 					$imgBoxCont.sizeOld = $imgBoxCont.actualSize;
 					setTimeout(checkResponsive, settings.responsiveCheckTime);
 				}
+
 
 
 
@@ -227,12 +217,14 @@ var imgLiquid = imgLiquid || {VER:'0.9.8'};
 				}
 
 
+
 				//___________________________________________________________________
 				function onError(){
 					$img.data('imgLiquid_error', true);
 					$imgBoxCont.css('visibility', 'hidden');
 					checkFinish();
 				}
+
 
 
 				//___________________________________________________________________
