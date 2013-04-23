@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.84 / 22-04-13
+jQuery Plugin: imgLiquid v0.9.85dev / 22-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -27,7 +27,7 @@ ex:
 		data-imgLiquid-horizontalAlign="center"
 		data-imgLiquid-verticalAlign="center"
 
-*/
+		*/
 //
 
 var imgLiquid = imgLiquid || {VER: '0.9.84'};
@@ -87,11 +87,8 @@ var imgLiquid = imgLiquid || {VER: '0.9.84'};
 
 
 			//EXTEND GLOBAL SETTINGS
-			this.settings = {};
-			this.options = {};
-			$.extend(this.options, options);
-			$.extend(this.settings, this.defaults, options);
-
+			this.options  = $.extend({}, options);
+			this.settings = $.extend({}, this.defaults, options);
 
 
 			//CALLBACK > Start
@@ -169,12 +166,18 @@ var imgLiquid = imgLiquid || {VER: '0.9.84'};
 				function setWithbackgroundSize() {
 					var bsVale = (settings.fill) ? 'cover' : 'contain';
 					var bpos = settings.horizontalAlign.toLowerCase() + " " + settings.verticalAlign.toLowerCase();
+
 					$imgBoxCont.css({
 						'background-size': bsVale,
 						'background-repeat': 'no-repeat',
-						'background-image': 'url(' + $img.attr('src') + ')',
 						'background-position': bpos
 					});
+
+					if ($imgBoxCont.css('background-image').indexOf($img.attr('src')) === -1){
+						//IF SRC CHANGE or 1st TIME
+						$imgBoxCont.css({'background-image': 'url(' + $img.attr('src') + ')'});
+					}
+
 					$('a:first', $imgBoxCont).css({
 						'display': 'block',
 						'width': '100%',
@@ -354,6 +357,6 @@ var imgLiquid = imgLiquid || {VER: '0.9.84'};
 
 
 			});
-		}
-	});
+}
+});
 })(jQuery);
