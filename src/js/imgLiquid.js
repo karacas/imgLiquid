@@ -30,7 +30,7 @@ ex:
 		*/
 //
 
-var imgLiquid = imgLiquid || {VER: '0.9.84'};
+var imgLiquid = imgLiquid || {VER: '0.9.85'};
 
 (function ($) {
 
@@ -57,8 +57,6 @@ var imgLiquid = imgLiquid || {VER: '0.9.84'};
 
 			var totalItems = this.length;
 			var processedItems = 0;
-
-
 
 			this.defaults = {
 				fill: true,
@@ -95,7 +93,6 @@ var imgLiquid = imgLiquid || {VER: '0.9.84'};
 			if (this.settings.onStart) this.settings.onStart();
 
 
-
 			//___________________________________________________________________
 
 			return this.each(function ($i) {
@@ -122,7 +119,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.84'};
 
 
 
-				//CHECK REPROCESS
+				//CHECK RE-PROCESS
 				if ($img.data('imgLiquid_Processed')) {
 					//NEW
 					setWithbackgroundSize();
@@ -139,9 +136,9 @@ var imgLiquid = imgLiquid || {VER: '0.9.84'};
 				$img.data('imgLiquid_oldProcessed', false);
 				$img.data('imgLiquid_error', false);
 
+
 				//START CALLBACK
 				if (settings.onItemStart) settings.onItemStart($i, $imgBoxCont, $img);
-
 
 
 				//CHECK backgroundSizeAvaiable
@@ -357,6 +354,6 @@ var imgLiquid = imgLiquid || {VER: '0.9.84'};
 
 
 			});
-}
-});
+		}
+	});
 })(jQuery);
