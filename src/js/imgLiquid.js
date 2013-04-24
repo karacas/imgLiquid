@@ -40,23 +40,17 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 
 	//___________________________________________________________________
 
-	function checkbackgroundSize() {
-		$('body').append('<span id="imgLiquidTest" style="background-size:cover"></span>');
-		if ($('#imgLiquidTest').css('background-size') === 'cover') imgLiquid.backgroundSizeAvaiable = true;
-		$('#imgLiquidTest').remove();
-	}
-	$(checkbackgroundSize);
-
+	$(function () {
+		imgLiquid.backgroundSizeAvaiable = $('<div style="background-size:cover"></div>').css('background-size') === 'cover';
+		//TODO: CHECKEAR EN IE
+		//console.log(imgLiquid.backgroundSizeAvaiable);
+	});
 
 	//___________________________________________________________________
 	$.fn.extend({
 		imgLiquid: function (options) {
 
-			var self = this;
-			this.defaultOptions = {};
-
-			var totalItems = this.length;
-			var processedItems = 0;
+			var imgLiquidRoot = this;
 
 			this.defaults = {
 				fill: true,
@@ -85,8 +79,8 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 
 
 			//EXTEND GLOBAL SETTINGS
-			this.options  = $.extend({}, options);
-			this.settings = $.extend({}, this.defaults, options);
+			this.options  = options;
+			this.settings = $.extend({}, this.defaults, this.options);
 
 
 			//CALLBACK > Start
@@ -107,13 +101,13 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 
 
 				//EXTEND OPTIONS
-				var settings = {};
+				var settings;
 				if ($img.data('imgLiquid_settings')) {
 					//Recall
-					$.extend(settings, $img.data('imgLiquid_settings'), self.options);
+					settings = $.extend({}, $img.data('imgLiquid_settings'), imgLiquidRoot.options);
 				} else {
 					//First time
-					$.extend(settings, self.settings, self.options);
+					settings = imgLiquidRoot.settings;
 				}
 				$img.data('imgLiquid_settings', settings);
 
@@ -347,8 +341,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 				//___________________________________________________________________
 
 				function checkFinish() {
-					processedItems++;
-					if (processedItems === totalItems) if (settings.onFinish) settings.onFinish() /*CallBack*/;
+					if ($i === imgLiquidRoot.length -1) if (settings.onFinish) settings.onFinish() /*CallBack*/;
 				}
 
 
