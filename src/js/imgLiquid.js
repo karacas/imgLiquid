@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.86 / 22-04-13
+jQuery Plugin: imgLiquid v0.9.87 / 22-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -27,18 +27,13 @@ ex:
 		data-imgLiquid-verticalAlign="center"
 
 */
-//
 
-var imgLiquid = imgLiquid || {VER: '0.9.86'};
+var imgLiquid = imgLiquid || {VER: '0.9.87'};
 
 (function ($) {
 
-
 	imgLiquid.isIE = /*@cc_on!@*/ false;
-
-	$(function () {
-		imgLiquid.backgroundSizeAvaiable = $('<div style="background-size:cover"></div>').css('background-size') === 'cover';
-	});
+	$(function () {imgLiquid.backgroundSizeAvaiable = $('<div style="background-size:cover"></div>').css('background-size') === 'cover'; });
 
 	//___________________________________________________________________
 	$.fn.extend({
@@ -87,12 +82,10 @@ var imgLiquid = imgLiquid || {VER: '0.9.86'};
 				//MAIN > each for image
 				//______________________
 
-				var $imgBoxCont = $(this);
-				var settings;
-				var $img = $('img:first', $imgBoxCont);
+				var $imgBoxCont = $(this), settings,
+				$img = $('img:first', $imgBoxCont);
 
 				if ($img.length === 0) {onError(); return;}
-
 
 				//Extend settings
 				if (!$img.data('imgLiquid_settings')) {
@@ -110,15 +103,18 @@ var imgLiquid = imgLiquid || {VER: '0.9.86'};
 				//Process
 				if (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize) processBgSize(); else processOldMethod();
 
+
 				//END MAIN
+
+
 
 
 
 				//___________________________________________________________________
 
 				function processBgSize() {
-					var bsVale = (settings.fill) ? 'cover' : 'contain';
-					var bpos = settings.horizontalAlign.toLowerCase() + " " + settings.verticalAlign.toLowerCase();
+					var bsVale = (settings.fill) ? 'cover' : 'contain',
+					bpos = settings.horizontalAlign.toLowerCase() + " " + settings.verticalAlign.toLowerCase();
 
 					//Background src = img src
 					if ($imgBoxCont.css('background-image').indexOf($img.attr('src')) === -1){
@@ -135,15 +131,13 @@ var imgLiquid = imgLiquid || {VER: '0.9.86'};
 
 
 
+
 				//___________________________________________________________________
 
 				function processOldMethod() {
 
 					//Reproceess?
-					if ($img.data('imgLiquid_oldProcessed')) {
-						if (!(imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize)) makeOldProcess();
-						return;
-					}
+					if ($img.data('imgLiquid_oldProcessed')) {makeOldProcess(); return;}
 
 					//set data
 					$img.data('imgLiquid_oldProcessed', false);
@@ -196,6 +190,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.86'};
 
 
 
+
 				//___________________________________________________________________
 
 				function onError() {
@@ -210,18 +205,21 @@ var imgLiquid = imgLiquid || {VER: '0.9.86'};
 
 				function getSettingsOverwrite() {
 					var SettingsOverwrite = {};
+
 					if (imgLiquidRoot.settings.useDataHtmlAttr) {
-						var dif = $imgBoxCont.attr('data-imgLiquid-fill');
-						var ha =  $imgBoxCont.attr('data-imgLiquid-horizontalAlign');
-						var va =  $imgBoxCont.attr('data-imgLiquid-verticalAlign');
+						var dif = $imgBoxCont.attr('data-imgLiquid-fill'),
+						ha =  $imgBoxCont.attr('data-imgLiquid-horizontalAlign'),
+						va =  $imgBoxCont.attr('data-imgLiquid-verticalAlign');
 
 						if (dif === 'true' || dif === 'false') SettingsOverwrite.fill = Boolean (dif === 'true');
 						if (ha === 'left' || ha === 'center' || ha === 'right') SettingsOverwrite.horizontalAlign = ha;
 						if (va === 'top' ||  va === 'bottom' || va === 'center') SettingsOverwrite.verticalAlign = va;
 					}
+
 					if (imgLiquid.isIE && imgLiquidRoot.settings.ieFadeInDisabled) SettingsOverwrite.fadeInTime = 0; //ie no anims
 					return SettingsOverwrite;
 				}
+
 
 
 
@@ -231,7 +229,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.86'};
 					/* Only for old browsers, or useBackgroundSize seted false*/
 
 					//Calculate size
-					var w, h, wn, hn, $imgCW, $imgCH;
+					var w, h, wn, hn, $imgCW, $imgCH, ha, va, hdif, vdif, margT=0, margL=0;
 
 					$imgCW = $imgBoxCont.width();
 					$imgCH = $imgBoxCont.height();
@@ -243,31 +241,26 @@ var imgLiquid = imgLiquid || {VER: '0.9.86'};
 
 					//Compare proportions
 					if (settings.fill === ($imgCW / $imgCH) >= ($img.data('owidth') / $img.data('oheight'))) {
-						w = '100%';
-						h = 'auto';
+						w = '100%'; h = 'auto';
 						wn = Math.floor($imgCW);
 						hn = Math.floor($imgCW * ($img.data('oheight') / $img.data('owidth')));
 					} else {
-						h = '100%';
-						w = 'auto';
+						h = '100%'; w = 'auto';
 						wn = Math.floor($imgCH * ($img.data('owidth') / $img.data('oheight')));
 						hn = Math.floor($imgCH);
 					}
 
-
 					//align X
-					var ha = settings.horizontalAlign.toLowerCase();
-					var hdif = $imgCW - wn;
-					var margL = 0;
-					if (ha === 'center') margL = hdif / 2;
+					ha = settings.horizontalAlign.toLowerCase();
+					hdif = $imgCW - wn;
+					if (ha === 'center') margL = hdif * .5;
 					if (ha === 'right') margL = hdif;
 
 
 					//align Y
-					var va = settings.verticalAlign.toLowerCase();
-					var vdif = $imgCH - hn;
-					var margT = 0;
-					if (va === 'center') margT = vdif / 2;
+					va = settings.verticalAlign.toLowerCase();
+					vdif = $imgCH - hn;
+					if (va === 'center') margT = vdif * .5;
 					if (va === 'bottom') margT = vdif;
 
 
@@ -300,6 +293,6 @@ var imgLiquid = imgLiquid || {VER: '0.9.86'};
 
 
 			});
-		}
-	});
+}
+});
 })(jQuery);
