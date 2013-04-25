@@ -35,14 +35,9 @@ var imgLiquid = imgLiquid || {VER: '0.9.86'};
 
 
 	imgLiquid.isIE = /*@cc_on!@*/ false;
-	imgLiquid.backgroundSizeAvaiable = false;
-
-	//___________________________________________________________________
 
 	$(function () {
 		imgLiquid.backgroundSizeAvaiable = $('<div style="background-size:cover"></div>').css('background-size') === 'cover';
-		//TODO: CHECKEAR EN IE
-		//console.log(imgLiquid.backgroundSizeAvaiable);
 	});
 
 	//___________________________________________________________________
@@ -224,7 +219,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.86'};
 						if (ha === 'left' || ha === 'center' || ha === 'right') SettingsOverwrite.horizontalAlign = ha;
 						if (va === 'top' ||  va === 'bottom' || va === 'center') SettingsOverwrite.verticalAlign = va;
 					}
-					if (imgLiquid.isIE && settings.ieFadeInDisabled) SettingsOverwrite.fadeInTime = 0; //ie no anims
+					if (imgLiquid.isIE && imgLiquidRoot.settings.ieFadeInDisabled) SettingsOverwrite.fadeInTime = 0; //ie no anims
 					return SettingsOverwrite;
 				}
 
