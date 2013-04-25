@@ -1,6 +1,6 @@
 ![ScreenShot](https://raw.github.com/karacas/imgLiquid/master/examples/logoimgliquid.png)
 
-imgLiquid.js v0.9.84 22-04-13
+imgLiquid.js v0.9.86 25-04-13
 #####A jQuery Plugin to resize images to fit in a container.
 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses.
@@ -14,7 +14,7 @@ Dual licensed under the MIT and GPL licenses.
 
 ####js:
 ```js
-$(function() {
+$(document).ready(function() {
 	$(".imgLiquid").imgLiquid();
 });
 ```
@@ -46,15 +46,15 @@ http://codepen.io/karacas/pen/nlugd
 ## 
 ###Features:
 ```
-	- Uses CSS Background-size when is available. (new)
-    - Bootstrap compatible
-    - Lightweight: 2.0KBs gzipped.
-	- Fill/Crop.
+	- Uses CSS Background-size when is available. (new!)
+    - Bootstrap compatible.
+    - Lightweight: < 2.0KBs gzipped.
+	- Fill / Crop.
     - Align.
 	- Responsive.
 	- Svg support.
 	- CallBacks.
-    - HTML5 data-* attributes
+    - HTML5 data-* attributes.
 	- All browsers (Incl. ie6).
 ```
  
@@ -66,10 +66,9 @@ http://codepen.io/karacas/pen/nlugd
         verticalAlign:      //'center' //'top' //'bottom'
         horizontalAlign:    //'center' //'left' //'right'
 
-    >js callBakcs
+        //CallBakcs
         onStart:        function(){},
         onFinish:       function(){},
-        onItemResize:   function(index, container, img){},
         onItemStart:    function(index, container, img){},
         onItemFinish:   function(index, container, img){}
 
