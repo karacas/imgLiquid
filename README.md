@@ -1,6 +1,6 @@
 ![ScreenShot](https://raw.github.com/karacas/imgLiquid/master/examples/logoimgliquid.png)
 
-imgLiquid.js v0.9.86 25-04-13
+imgLiquid.js v0.9.861 25-04-13
 #####A jQuery Plugin to resize images to fit in a container.
 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses.
