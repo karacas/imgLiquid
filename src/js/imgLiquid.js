@@ -26,7 +26,7 @@ ex:
 		data-imgLiquid-horizontalAlign="center"
 		data-imgLiquid-verticalAlign="center"
 
-		*/
+*/
 //
 
 var imgLiquid = imgLiquid || {VER: '0.9.85'};
@@ -85,19 +85,16 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 			if (this.settings.onStart) this.settings.onStart();
 
 
-
-
 			//___________________________________________________________________
 
 			return this.each(function ($i) {
 
-				//OBJ
 				var $imgBoxCont = $(this);
 				var $img = $('img:first', $imgBoxCont);
 				if ($img.length === 0) {onError(); return;}
 
 
-				//OPTIONS
+				//Settings
 				var settings;
 				if ($img.data('imgLiquid_settings')) {
 					//Recall
@@ -109,12 +106,12 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 				$img.data('imgLiquid_settings', settings);
 
 
-				/*CALLBACK*/
+				//Start Callback
 				if (settings.onItemStart) settings.onItemStart($i, $imgBoxCont, $img);
 
 
 
-				//PROCESS
+				//Process
 				if (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize) {
 					//New browsers with backgroundSize
 					processWbgSize();
@@ -135,30 +132,18 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 					var bsVale = (settings.fill) ? 'cover' : 'contain';
 					var bpos = settings.horizontalAlign.toLowerCase() + " " + settings.verticalAlign.toLowerCase();
 
-					$imgBoxCont.css({
-						'background-size': bsVale,
-						'background-repeat': 'no-repeat',
-						'background-position': bpos
-					});
-
+					//IF SRC CHANGE or 1st TIME
 					if ($imgBoxCont.css('background-image').indexOf($img.attr('src')) === -1){
-						//IF SRC CHANGE or 1st TIME
 						$imgBoxCont.css({'background-image': 'url(' + $img.attr('src') + ')'});
 					}
 
-					$('a:first', $imgBoxCont).css({
-						'display': 'block',
-						'width': '100%',
-						'height': '100%'
-					});
-					$('img', $imgBoxCont).css({
-						'display': 'none'
-					});
+					$imgBoxCont.css({'background-size': bsVale, 'background-repeat': 'no-repeat', 'background-position': bpos, });
+					$('a:first', $imgBoxCont).css({'display': 'block', 'width': '100%', 'height': '100%'});
+					$('img', $imgBoxCont).css({'display': 'none'});
+
 					if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img);
 					checkFinish();
-					$img.data('imgLiquid_Processed', true);
 				}
-
 
 
 				//___________________________________________________________________
@@ -327,6 +312,6 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 
 
 			});
-}
-});
+		}
+	});
 })(jQuery);
