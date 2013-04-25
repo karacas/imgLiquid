@@ -76,7 +76,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 			};
 
 
-			//EXTEND GLOBAL SETTINGS
+			//Extend global settings
 			this.options  = options;
 			this.settings = $.extend({}, this.defaults, this.options);
 
@@ -89,55 +89,48 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 
 			return this.each(function ($i) {
 
+				//MAIN > each for image
+				//______________________
+
 				var $imgBoxCont = $(this);
+				var settings;
 				var $img = $('img:first', $imgBoxCont);
+
 				if ($img.length === 0) {onError(); return;}
 
 
-				//Settings
-				var settings;
-				if ($img.data('imgLiquid_settings')) {
-					//Recall
-					settings = $.extend({}, $img.data('imgLiquid_settings'), imgLiquidRoot.options);
+				//Extend settings
+				if (!$img.data('imgLiquid_settings')) {
+					settings = $.extend({}, imgLiquidRoot.settings, getSettingsOverwrite()); //First time
 				} else {
-					//First time
-					settings = $.extend({}, imgLiquidRoot.settings, getSettingsOverwrite());
+					settings = $.extend({}, $img.data('imgLiquid_settings'), imgLiquidRoot.options); //Recall
 				}
 				$img.data('imgLiquid_settings', settings);
 
 
-				//Start Callback
+				//Start CallBack
 				if (settings.onItemStart) settings.onItemStart($i, $imgBoxCont, $img);
 
 
-
 				//Process
-				if (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize) {
-					//New browsers with backgroundSize
-					processWbgSize();
-				} else {
-					//Old browsers whitout backgroundSize
-					processWoldMethod();
-				}
-
+				if (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize) processBgSize(); else processOldMethod();
 
 				//END MAIN
-				return;
 
 
 
 				//___________________________________________________________________
 
-				function processWbgSize() {
+				function processBgSize() {
 					var bsVale = (settings.fill) ? 'cover' : 'contain';
 					var bpos = settings.horizontalAlign.toLowerCase() + " " + settings.verticalAlign.toLowerCase();
 
-					//IF SRC CHANGE or 1st TIME
+					//Background src = img src
 					if ($imgBoxCont.css('background-image').indexOf($img.attr('src')) === -1){
 						$imgBoxCont.css({'background-image': 'url(' + $img.attr('src') + ')'});
 					}
 
-					$imgBoxCont.css({'background-size': bsVale, 'background-repeat': 'no-repeat', 'background-position': bpos, });
+					$imgBoxCont.css({'background-size': bsVale, 'background-repeat': 'no-repeat', 'background-position': bpos });
 					$('a:first', $imgBoxCont).css({'display': 'block', 'width': '100%', 'height': '100%'});
 					$('img', $imgBoxCont).css({'display': 'none'});
 
@@ -146,22 +139,22 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 				}
 
 
+
 				//___________________________________________________________________
 
-				function processWoldMethod() {
+				function processOldMethod() {
 
-					//REPROCEESS?
+					//Reproceess?
 					if ($img.data('imgLiquid_oldProcessed')) {
 						if (!(imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize)) makeOldProcess();
 						return;
 					}
 
-					//DATA
+					//set data
 					$img.data('imgLiquid_oldProcessed', false);
-					$img.data('imgLiquid_error', false);
 
 
-					//CSS
+					//CSSs
 					$img.fadeTo(0, 0);
 					$('img:not(:first)', $imgBoxCont).css('display', 'none');
 					$img.removeAttr("width").removeAttr("height").css({
@@ -175,7 +168,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 					$imgBoxCont.css({'overflow': 'hidden'});
 
 
-					//LOOP ONLOAD
+					//loop until load
 					function onLoad() {
 						if ($img.data('imgLiquid_loaded') || $img.data('imgLiquid_oldProcessed')) return;
 						if ($imgBoxCont.is(':visible') && $img[0].complete && $img[0].width > 0 && $img[0].height > 0) {
@@ -186,7 +179,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 						}
 					}
 
-					onLoad()
+					onLoad();
 					checkResponsive();
 				}
 
@@ -197,14 +190,11 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 
 				function checkResponsive() {
 					if (!settings.responsive && !$img.data('imgLiquid_oldProcessed')) return;
-					$.extend(settings, $img.data('imgLiquid_settings'));
+					settings = $img.data('imgLiquid_settings');
 
-					$imgBoxCont.actualSize = $imgBoxCont.get(0).offsetWidth + ($imgBoxCont.get(0).offsetHeight / 100000);
-					if ($imgBoxCont.sizeOld) {
-						if ($imgBoxCont.actualSize !== $imgBoxCont.sizeOld) {
-							makeOldProcess();
-						}
-					}
+					$imgBoxCont.actualSize = $imgBoxCont.get(0).offsetWidth + ($imgBoxCont.get(0).offsetHeight / 10000);
+					if ($imgBoxCont.sizeOld && $imgBoxCont.actualSize !== $imgBoxCont.sizeOld)  makeOldProcess();
+
 					$imgBoxCont.sizeOld = $imgBoxCont.actualSize;
 					setTimeout(checkResponsive, settings.responsiveCheckTime);
 				}
@@ -214,31 +204,28 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 				//___________________________________________________________________
 
 				function onError() {
-					$img.data('imgLiquid_error', true);
 					$imgBoxCont.css('visibility', 'hidden');
 					checkFinish();
 				}
 
 
+
+
 				//___________________________________________________________________
 
 				function getSettingsOverwrite() {
-					var SettingsOverwrite = {}
+					var SettingsOverwrite = {};
 					if (imgLiquidRoot.settings.useDataHtmlAttr) {
-						if ($imgBoxCont.attr('data-imgLiquid-fill') === 'true') SettingsOverwrite.fill = true;
-						if ($imgBoxCont.attr('data-imgLiquid-fill') === 'false') SettingsOverwrite.fill = false;
-						if ($imgBoxCont.attr('data-imgLiquid-responsive') === 'true') SettingsOverwrite.responsive = true;
-						if ($imgBoxCont.attr('data-imgLiquid-responsive') === 'false') SettingsOverwrite.responsive = false;
-						if (Number($imgBoxCont.attr('data-imgLiquid-fadeInTime')) > 0) SettingsOverwrite.fadeInTime = Number($imgBoxCont.attr('data-imgLiquid-fadeInTime'));
+						var dif = $imgBoxCont.attr('data-imgLiquid-fill');
+						var ha =  $imgBoxCont.attr('data-imgLiquid-horizontalAlign');
+						var va =  $imgBoxCont.attr('data-imgLiquid-verticalAlign');
 
-						var ha = $imgBoxCont.attr('data-imgLiquid-horizontalAlign');
-						var va = $imgBoxCont.attr('data-imgLiquid-verticalAlign');
+						if (dif === 'true' || dif === 'false') SettingsOverwrite.fill = Boolean (dif === 'true');
 						if (ha === 'left' || ha === 'center' || ha === 'right') SettingsOverwrite.horizontalAlign = ha;
 						if (va === 'top' ||  va === 'bottom' || va === 'center') SettingsOverwrite.verticalAlign = va;
 					}
-					//ie no anims
-					if (imgLiquid.isIE && settings.ieFadeInDisabled) SettingsOverwrite.fadeInTime = 0;
-					return SettingsOverwrite
+					if (imgLiquid.isIE && settings.ieFadeInDisabled) SettingsOverwrite.fadeInTime = 0; //ie no anims
+					return SettingsOverwrite;
 				}
 
 
@@ -246,58 +233,63 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 				//___________________________________________________________________
 
 				function makeOldProcess() {
+					/* Only for old browsers, or useBackgroundSize seted false*/
 
-					//RESIZE
-					var w, h;
+					//Calculate size
+					var w, h, wn, hn, $imgCW, $imgCH;
+
+					$imgCW = $imgBoxCont.width();
+					$imgCH = $imgBoxCont.height();
+
+					//Save original sizes
 					if ($img.data('owidth') === undefined) $img.data('owidth', $img[0].width);
 					if ($img.data('oheight') === undefined) $img.data('oheight', $img[0].height);
-					if (settings.fill === ($imgBoxCont.width() / $imgBoxCont.height()) >= ($img.data('owidth') / $img.data('oheight'))) {
+
+
+					//Compare proportions
+					if (settings.fill === ($imgCW / $imgCH) >= ($img.data('owidth') / $img.data('oheight'))) {
 						w = '100%';
 						h = 'auto';
-						if (settings.hardPixels) {
-							w = Math.floor($imgBoxCont.width());
-							h = Math.floor($imgBoxCont.width() * ($img.data('oheight') / $img.data('owidth')));
-						}
+						wn = Math.floor($imgCW);
+						hn = Math.floor($imgCW * ($img.data('oheight') / $img.data('owidth')));
 					} else {
 						h = '100%';
 						w = 'auto';
-						if (settings.hardPixels) {
-							w = Math.floor($imgBoxCont.height() * ($img.data('owidth') / $img.data('oheight')));
-							h = Math.floor($imgBoxCont.height());
-						}
+						wn = Math.floor($imgCH * ($img.data('owidth') / $img.data('oheight')));
+						hn = Math.floor($imgCH);
 					}
-					$img.css({
-						'width': w,
-						'height': h
-					});
 
 
 					//align X
 					var ha = settings.horizontalAlign.toLowerCase();
-					var hdif = $imgBoxCont.width() - $img[0].width;
+					var hdif = $imgCW - wn;
 					var margL = 0;
 					if (ha === 'center') margL = hdif / 2;
 					if (ha === 'right') margL = hdif;
-					$img.css('margin-left', Math.floor(margL));
 
 
 					//align Y
 					var va = settings.verticalAlign.toLowerCase();
-					var vdif = $imgBoxCont.height() - $img[0].height;
+					var vdif = $imgCH - hn;
 					var margT = 0;
 					if (va === 'center') margT = vdif / 2;
 					if (va === 'bottom') margT = vdif;
-					$img.css('margin-top', Math.floor(margT));
 
 
-					//FadeIn
+					//Add Css
+					if (settings.hardPixels) {w = wn; h = hn;}
+					$img.css({'width': w, 'height': h, 'margin-left': Math.floor(margL), 'margin-top': Math.floor(margT)});
+
+
+					//FadeIn > Only first time
 					if (!$img.data('imgLiquid_oldProcessed')) {
-						$img.data('imgLiquid_oldProcessed', true);
 						if (settings.removeBoxBackground) $imgBoxCont.css('background-image', 'none');
 						$img.fadeTo(settings.fadeInTime, 1);
-						if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img);
-						checkFinish();
+						$img.data('imgLiquid_oldProcessed', true);
 					}
+
+					if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img);
+					checkFinish();
 				}
 
 
@@ -306,7 +298,8 @@ var imgLiquid = imgLiquid || {VER: '0.9.85'};
 				//___________________________________________________________________
 
 				function checkFinish() {
-					if ($i === imgLiquidRoot.length -1) if (settings.onFinish) settings.onFinish() /*CallBack*/;
+					//Check callBack
+					if ($i === imgLiquidRoot.length -1) if (imgLiquidRoot.settings.onFinish) imgLiquidRoot.settings.onFinish();
 				}
 
 
