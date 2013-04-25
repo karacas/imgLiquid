@@ -23,36 +23,41 @@
   <script type="text/javascript">
   $(document).ready(function () {
 
-  	$(".imgLiquidFill").imgLiquid({fill:false, horizontalAlign:'right'});
-  	$(".imgLiquidNoFill").imgLiquid({fill:false, horizontalAlign:'right'});
+  	$(".imgLiquidFill").imgLiquid({fill:false, horizontalAlign:'right', useBackgroundSize: false});
+  	$(".imgLiquidNoFill").imgLiquid({fill:false, horizontalAlign:'right', useBackgroundSize: !false});
 
 
   	$('.recall').click(function(){
   		$(".imgLiquidFill").imgLiquid({fill:false, horizontalAlign:'left', verticalAlign: 'top'});
   		$(".imgLiquidNoFill").imgLiquid({fill:false, horizontalAlign:'left', verticalAlign: 'top'});
+      console.log({fill:false, horizontalAlign:'left', verticalAlign: 'top'});
   		return false
   	})
 
     $('.recall2').click(function(){
       $(".imgLiquidFill").imgLiquid({fill:true});
       $(".imgLiquidNoFill").imgLiquid({fill:true});
+      console.log({fill:true});
       return false
     })
 
     $('.recall3').click(function(){
       $(".imgLiquidFill").imgLiquid();
       $(".imgLiquidNoFill").imgLiquid();
+      console.log({});
       return false
     })
 
     $('.recall4').click(function(){
       $(".imgLiquid").imgLiquid({fill:true, horizontalAlign:'center', verticalAlign:'center'});
+      console.log({fill:true, horizontalAlign:'center', verticalAlign:'center'});
       return false
     })
 
     $('.recall5').click(function(){
       $(".imgLiquidFill").imgLiquid({fill:!true});
       $(".imgLiquidNoFill").imgLiquid({fill:!true});
+      console.log({fill:!true});
       return false
     })
 
