@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.87 / 22-04-13
+jQuery Plugin: imgLiquid v0.9.88 / 22-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -26,19 +26,42 @@ ex:
 		data-imgLiquid-horizontalAlign="center"
 		data-imgLiquid-verticalAlign="center"
 
-*/
-
-var imgLiquid = imgLiquid || {VER: '0.9.87'};
+		*/
+//
+var imgLiquid = imgLiquid || {VER: '0.9.88'};
 
 (function ($) {
 
 	imgLiquid.isIE = /*@cc_on!@*/ false;
-	$(function () {imgLiquid.backgroundSizeAvaiable = $('<div style="background-size:cover"></div>').css('background-size') === 'cover'; });
+	imgLiquid.BSizeAvaiable = false;
+	imgLiquid.BSizeAvaiableRun = false;
+
+	//___________________________________________________________________
+	//CheckbackgroundSize
+	function checkBSizeAvaiable (){
+		if (imgLiquid.BSizeAvaiableRun) return;
+		imgLiquid.BSizeAvaiableRun = true;
+
+		function runCheck(){
+			var bsCheck = $('#imgLiquid_CheckBsize')[0];
+			if (!bsCheck) return;
+			if (!window.getComputedStyle) return;
+			var compStyle = window.getComputedStyle (bsCheck, null);
+			if (!compStyle) return;
+			if (!compStyle.backgroundSize) return;
+			imgLiquid.BSizeAvaiable = (compStyle.backgroundSize === 'cover');
+		}
+		$('body').append('<span id="imgLiquid_CheckBsize" style="background-size:cover"></span>');
+		runCheck();
+		$('#imgLiquid_CheckBsize').remove();
+	}
+
 
 	//___________________________________________________________________
 	$.fn.extend({
 		imgLiquid: function (options) {
 
+			checkBSizeAvaiable ();
 			var imgLiquidRoot = this;
 
 			this.defaults = {
@@ -101,7 +124,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.87'};
 
 
 				//Process
-				if (imgLiquid.backgroundSizeAvaiable && settings.useBackgroundSize) processBgSize(); else processOldMethod();
+				if (imgLiquid.BSizeAvaiable && settings.useBackgroundSize) processBgSize(); else processOldMethod();
 
 
 				//END MAIN
@@ -116,7 +139,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.87'};
 					var bsVale = (settings.fill) ? 'cover' : 'contain',
 					bpos = settings.horizontalAlign.toLowerCase() + " " + settings.verticalAlign.toLowerCase();
 
-					//Background src = img src
+					//Check change img src
 					if ($imgBoxCont.css('background-image').indexOf($img.attr('src')) === -1){
 						$imgBoxCont.css({'background-image': 'url(' + $img.attr('src') + ')'});
 					}
@@ -136,11 +159,23 @@ var imgLiquid = imgLiquid || {VER: '0.9.87'};
 
 				function processOldMethod() {
 
+					//Check change img src
+					if ($img.data('oldSrc') && $img.data('oldSrc') != $img.attr('src')){
+						//RESET DATA
+						$img.removeData('imgLiquid_oldProcessed');
+						$img.removeData('owidth');
+						$img.removeData('oheight');
+						$img.removeData('imgLiquid_loaded');
+					}
+
+
 					//Reproceess?
 					if ($img.data('imgLiquid_oldProcessed')) {makeOldProcess(); return;}
 
+
 					//set data
 					$img.data('imgLiquid_oldProcessed', false);
+					$img.data('oldSrc', $img.attr('src'));
 
 
 					//CSSs
@@ -253,14 +288,14 @@ var imgLiquid = imgLiquid || {VER: '0.9.87'};
 					//align X
 					ha = settings.horizontalAlign.toLowerCase();
 					hdif = $imgCW - wn;
-					if (ha === 'center') margL = hdif * .5;
+					if (ha === 'center') margL = hdif * 0.5;
 					if (ha === 'right') margL = hdif;
 
 
 					//align Y
 					va = settings.verticalAlign.toLowerCase();
 					vdif = $imgCH - hn;
-					if (va === 'center') margT = vdif * .5;
+					if (va === 'center') margT = vdif * 0.5;
 					if (va === 'bottom') margT = vdif;
 
 
@@ -293,6 +328,6 @@ var imgLiquid = imgLiquid || {VER: '0.9.87'};
 
 
 			});
-}
-});
+		}
+	});
 })(jQuery);
