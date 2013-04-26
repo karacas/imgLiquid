@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.89 / 26-04-13
+jQuery Plugin: imgLiquid v0.9.9 / 26-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -19,7 +19,7 @@ ex:
 		onStart:		function(){},
 		onFinish:		function(){},
 		onItemStart:	function(index, container, img){},
-		onItemFinish: function(index, container, img){}
+		onItemFinish:	function(index, container, img){}
 
 	>hml5 data attr (overwrite all)
 		data-imgLiquid-fill="true"
@@ -28,7 +28,7 @@ ex:
 
 */
 //
-var imgLiquid = imgLiquid || {VER: '0.9.89'};
+var imgLiquid = imgLiquid || {VER: '0.9.9'};
 (function ($) {
 
 	imgLiquid.isIE = /*@cc_on!@*/ false;
@@ -159,13 +159,18 @@ var imgLiquid = imgLiquid || {VER: '0.9.89'};
 
 					//Check change img src
 					if ($img.data('oldSrc') && $img.data('oldSrc') != $img.attr('src')){
-						//RESET DATA
-						$img.removeData('imgLiquid_oldProcessed');
-						$img.removeData('owidth');
-						$img.removeData('oheight');
-						$img.removeData('imgLiquid_loaded');
-						$img.removeData('oldSrc');
-						$img.removeAttr('style');
+						/*RESET IMG*/
+						var $imgCopy = $("<img/>")
+						.attr("src", $img.attr("src"))
+						.attr("css", 'visibility:hidden')
+						.attr("name", $img.attr("name"))
+						.attr("id", $img.attr("id"))
+						.attr("class", $img.attr("class"));
+
+						$imgCopy.data('imgLiquid_settings', $img.data('imgLiquid_settings'));
+						$img.parent().prepend($imgCopy);
+						$img.remove();
+						$img = $imgCopy;
 					}
 
 
