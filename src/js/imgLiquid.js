@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.883 / 22-04-13
+jQuery Plugin: imgLiquid v0.9.89 / 26-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -26,9 +26,9 @@ ex:
 		data-imgLiquid-horizontalAlign="center"
 		data-imgLiquid-verticalAlign="center"
 
-		*/
+*/
 //
-var imgLiquid = imgLiquid || {VER: '0.9.883'};
+var imgLiquid = imgLiquid || {VER: '0.9.89'};
 (function ($) {
 
 	imgLiquid.isIE = /*@cc_on!@*/ false;
@@ -40,7 +40,6 @@ var imgLiquid = imgLiquid || {VER: '0.9.883'};
 	function checkBSizeAvaiable (){
 		if (imgLiquid.BSizeAvaiableRun) return;
 		imgLiquid.BSizeAvaiableRun = true;
-
 		function runCheck(){
 			var bsCheck = $('#imgLiquid_CheckBsize')[0];
 			if (!bsCheck) return;
@@ -160,12 +159,13 @@ var imgLiquid = imgLiquid || {VER: '0.9.883'};
 
 					//Check change img src
 					if ($img.data('oldSrc') && $img.data('oldSrc') != $img.attr('src')){
-						/*RESET IMG*/
-						var $imgCopy = $("<img/>").attr("src", $img.attr("src")).attr("css", 'visibility:hidden').attr("name", $img.attr("name")).attr("id", $img.attr("id")).attr("class", $img.attr("class"));
-						$imgCopy.data('imgLiquid_settings', $img.data('imgLiquid_settings'));
-						$img.remove();
-						$imgBoxCont.append($imgCopy);
-						$img = $imgCopy;
+						//RESET DATA
+						$img.removeData('imgLiquid_oldProcessed');
+						$img.removeData('owidth');
+						$img.removeData('oheight');
+						$img.removeData('imgLiquid_loaded');
+						$img.removeData('oldSrc');
+						$img.removeAttr('style');
 					}
 
 
@@ -326,7 +326,6 @@ var imgLiquid = imgLiquid || {VER: '0.9.883'};
 					//Check callBack
 					if ($i === imgLiquidRoot.length -1) if (imgLiquidRoot.settings.onFinish) imgLiquidRoot.settings.onFinish();
 				}
-
 
 
 			});
