@@ -29,7 +29,7 @@ ex:
 */
 
 //TODO: Algigns with %
-//TODO: Mejorar nombre: BSizeAvaiableRun
+//TODO: Mejorar nombre: BgSizeCheckRunned
 //TODO: onError() CallBack
 //TODO: Ver más Callbacks
 
@@ -37,14 +37,13 @@ var imgLiquid = imgLiquid || {VER: '0.9.902'};
 (function ($) {
 
 	imgLiquid.isIE = /*@cc_on!@*/ false;
-	imgLiquid.BSizeAvaiable = false;
-	imgLiquid.BSizeAvaiableRun = false;
+	imgLiquid.BgSizeAvailable = false;
+	imgLiquid.BgSizeCheckRunned = false;
 
 	//___________________________________________________________________
 	//CheckbackgroundSize
-	function checkBSizeAvaiable (){
-		if (imgLiquid.BSizeAvaiableRun) return;
-		imgLiquid.BSizeAvaiableRun = true;
+	function checkBgSizeAvailable (){
+		if (!imgLiquid.BgSizeCheckRunned) imgLiquid.BgSizeCheckRunned = true; else return;
 		function runCheck(){
 			var bsCheck = $('#imgLiquid_CheckBsize')[0];
 			if (!bsCheck) return;
@@ -52,7 +51,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.902'};
 			var compStyle = window.getComputedStyle (bsCheck, null);
 			if (!compStyle) return;
 			if (!compStyle.backgroundSize) return;
-			imgLiquid.BSizeAvaiable = (compStyle.backgroundSize === 'cover');
+			imgLiquid.BgSizeAvailable = (compStyle.backgroundSize === 'cover');
 		}
 		$('body').append('<span id="imgLiquid_CheckBsize" style="background-size:cover"></span>');
 		runCheck();
@@ -64,7 +63,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.902'};
 	$.fn.extend({
 		imgLiquid: function (options) {
 
-			checkBSizeAvaiable ();
+			checkBgSizeAvailable ();
 			var imgLiquidRoot = this;
 
 			this.defaults = {
@@ -127,7 +126,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.902'};
 
 
 				//Process
-				if (imgLiquid.BSizeAvaiable && settings.useBackgroundSize) processBgSize(); else processOldMethod();
+				if (imgLiquid.BgSizeAvailable && settings.useBackgroundSize) processBgSize(); else processOldMethod();
 
 
 				//END MAIN
@@ -163,7 +162,7 @@ var imgLiquid = imgLiquid || {VER: '0.9.902'};
 				function processOldMethod() {
 
 					//Check change img src
-					if ($img.data('oldSrc') && $img.data('oldSrc') != $img.attr('src')){
+					if ($img.data('oldSrc') && $img.data('oldSrc') !== $img.attr('src')){
 						/*RESET IMG*/
 						var $imgCopy = $("<img/>")
 						.attr("src", $img.attr("src"))
