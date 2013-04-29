@@ -23,8 +23,8 @@
   <script type="text/javascript">
   $(document).ready(function () {
 
-  	$(".imgLiquidFill").imgLiquid({fill:false, horizontalAlign:'right', useBackgroundSize: false});
-  	$(".imgLiquidNoFill").imgLiquid({fill:false, horizontalAlign:'right', useBackgroundSize: true});
+  	$(".imgLiquidFill").imgLiquid({fill:false, horizontalAlign:'right', useBackgroundSize: !true, onItemError:function(i){console.log('Error__' + i)}});
+  	$(".imgLiquidNoFill").imgLiquid({fill:false, horizontalAlign:'right', useBackgroundSize: true, onItemError:function(i){console.log('Error__' + i)}});
 
 
   	$('.recall').click(function(){
