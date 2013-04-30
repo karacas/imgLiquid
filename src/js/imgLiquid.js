@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.903 dev / 26-04-13
+jQuery Plugin: imgLiquid v0.9.904 dev / 26-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -30,7 +30,7 @@ ex:
 //TODO: Algigns with %
 //TODO: Ver más Callbacks
 
-var imgLiquid = imgLiquid || {VER: '0.9.903'};
+var imgLiquid = imgLiquid || {VER: '0.9.904'};
 imgLiquid.isIE = /*@cc_on!@*/ false;
 imgLiquid.bgs_Available = false;
 imgLiquid.bgs_CheckRunned = false;
@@ -46,16 +46,16 @@ imgLiquid.bgs_CheckRunned = false;
 		else return;
 
 		function runCheck() {
-			var bgs_Check = $('#imgLiquid_CheckBsize')[0];
+			var bgs_Check = $('#iLq_CheckBgs')[0];
 			if (!bgs_Check || !window.getComputedStyle) return;
 			var compStyle = window.getComputedStyle(bgs_Check, null);
 			if (!compStyle || !compStyle.backgroundSize) return;
 			imgLiquid.bgs_Available = (compStyle.backgroundSize === 'cover');
 		}
 
-		$('body').append('<span id="imgLiquid_CheckBsize" style="background-size:cover"></span>');
+		$('body').append('<span id="iLq_CheckBgs" style="background-size:cover" />');
 		runCheck();
-		$('#imgLiquid_CheckBsize').remove();
+		$('#iLq_CheckBgs').remove();
 	}
 
 
@@ -71,7 +71,7 @@ imgLiquid.bgs_CheckRunned = false;
 			this.defaults = {
 				fill: true,
 				verticalAlign: 'center',			// 'top'	// 'bottom'
-				horizontalAlign: 'center',			// 'left' // 'right'
+				horizontalAlign: 'center',			// 'left'	// 'right'
 				useBackgroundSize: true,
 				useDataHtmlAttr: true,
 
@@ -103,17 +103,16 @@ imgLiquid.bgs_CheckRunned = false;
 			if (this.settings.onStart) this.settings.onStart();
 
 
-
-
-
 			//___________________________________________________________________
 
 			return this.each(function ($i) {
 
 				//MAIN > each for image
-				var $imgBoxCont = $(this), settings, $img = $('img:first', $imgBoxCont);
-				if ($img.length === 0) {onError(); return;}
+				var $imgBoxCont = $(this),
+				$img = $('img:first',$imgBoxCont),
+				settings;
 
+				if ($img.length === 0) {onError(); return;}
 
 				//Extend settings
 				if (!$img.data('imgLiquid_settings')) {
@@ -127,16 +126,14 @@ imgLiquid.bgs_CheckRunned = false;
 				//Start CallBack
 				if (settings.onItemStart) settings.onItemStart($i, $imgBoxCont, $img);
 
-
 				//Process
-				if (imgLiquid.bgs_Available && settings.useBackgroundSize) processBgSize();
-				else processOldMethod();
+				if (imgLiquid.bgs_Available && settings.useBackgroundSize)
+					processBgSize();
+				else
+					processOldMethod();
 
 
-				//END MAIN_______________________
-
-
-
+				//END MAIN
 
 				//___________________________________________________________________
 
@@ -203,10 +200,11 @@ imgLiquid.bgs_CheckRunned = false;
 					$img.data('imgLiquid_oldProcessed', false);
 					$img.data('oldSrc', $img.attr('src'));
 
+					//Hide others images
+					$('img:not(:first)', $imgBoxCont).css('display', 'none');
 
 					//CSSs
 					$img.fadeTo(0, 0);
-					$('img:not(:first)', $imgBoxCont).css('display', 'none');
 					$img.removeAttr("width").removeAttr("height").css({
 						'visibility': 'visible',
 						'max-width': 'none',
@@ -318,20 +316,20 @@ imgLiquid.bgs_CheckRunned = false;
 						wn = Math.floor($imgCW);
 						hn = Math.floor($imgCW * ($img.data('oheight') / $img.data('owidth')));
 					} else {
-						h = '100%';
 						w = 'auto';
+						h = '100%';
 						wn = Math.floor($imgCH * ($img.data('owidth') / $img.data('oheight')));
 						hn = Math.floor($imgCH);
 					}
 
-					//align X
+					//Align X
 					ha = settings.horizontalAlign.toLowerCase();
 					hdif = $imgCW - wn;
 					if (ha === 'center') margL = hdif * 0.5;
 					if (ha === 'right') margL = hdif;
 
 
-					//align Y
+					//Align Y
 					va = settings.verticalAlign.toLowerCase();
 					vdif = $imgCH - hn;
 					if (va === 'center') margT = vdif * 0.5;
