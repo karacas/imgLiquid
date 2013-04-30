@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.90 / 26-04-13
+jQuery Plugin: imgLiquid v0.9.92 / 26-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas), twitter: @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -28,7 +28,7 @@ ex:
 
 */
 //
-var imgLiquid = imgLiquid || {VER: '0.9.9'};
+var imgLiquid = imgLiquid || {VER: '0.9.92'};
 (function ($) {
 
 	imgLiquid.isIE = /*@cc_on!@*/ false;
@@ -138,8 +138,8 @@ var imgLiquid = imgLiquid || {VER: '0.9.9'};
 					bpos = settings.horizontalAlign.toLowerCase() + " " + settings.verticalAlign.toLowerCase();
 
 					//Check change img src
-					if ($imgBoxCont.css('background-image').indexOf($img.attr('src')) === -1){
-						$imgBoxCont.css({'background-image': 'url(' + $img.attr('src') + ')'});
+					if ($imgBoxCont.css('background-image').indexOf(encodeURI($img.attr('src'))) === -1){
+						$imgBoxCont.css({'background-image': 'url(' + encodeURI($img.attr('src')) + ')'});
 					}
 
 					$imgBoxCont.css({'background-size': bsVale, 'background-repeat': 'no-repeat', 'background-position': bpos });
