@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.905 dev / 26-04-13
+jQuery Plugin: imgLiquid v0.9.932 dev / 30-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -27,14 +27,15 @@ ex:
 		data-imgLiquid-verticalAlign="center"
 
 */
-//TODO: Hacer que no hagan falta los .css
 //TODO: Algigns with %
 //TODO: Ver más Callbacks
 
-var imgLiquid = imgLiquid || {VER: '0.9.905'};
+
+var imgLiquid = imgLiquid || {VER: '0.9.932'};
 imgLiquid.isIE = /*@cc_on!@*/ false;
 imgLiquid.bgs_Available = false;
 imgLiquid.bgs_CheckRunned = false;
+imgLiquid.injectCss = '.imgLiquid {overflow: hidden;} .imgLiquid img {visibility:hidden;} body {/*background-color: #0f0 !important;*/}';
 
 
 (function ($) {
@@ -101,6 +102,8 @@ imgLiquid.bgs_CheckRunned = false;
 
 
 			if (this.settings.onStart) this.settings.onStart(); /* << CallBack*/
+
+
 
 
 			//___________________________________________________________________
@@ -370,3 +373,21 @@ imgLiquid.bgs_CheckRunned = false;
 		}
 	});
 })(jQuery);
+
+
+
+//INJECT CSS STYLES______________________________________________________
+!function () {
+	var css = imgLiquid.injectCss,
+	head = document.getElementsByTagName('head')[0],
+	style = document.createElement('style');
+	style.type = 'text/css';
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		style.appendChild(document.createTextNode(css));
+	}
+
+	head.appendChild(style);
+}();
