@@ -27,6 +27,7 @@ ex:
 		data-imgLiquid-verticalAlign="center"
 
 */
+//TODO: Hacer que no hagan falta los .css
 //TODO: Algigns with %
 //TODO: Ver más Callbacks
 
