@@ -145,8 +145,8 @@ imgLiquid.bgs_CheckRunned = false;
 						bpos = (settings.horizontalAlign + " " + settings.verticalAlign).toLowerCase();
 
 					//Check change img src
-					if ($imgBoxCont.css('background-image').indexOf($img.attr('src')) === -1) {
-						$imgBoxCont.css({'background-image': 'url(' + $img.attr('src') + ')'});
+					if ($imgBoxCont.css('background-image').indexOf(encodeURI($img.attr('src'))) === -1) {
+						$imgBoxCont.css({'background-image': 'url(' + encodeURI($img.attr('src')) + ')'});
 					}
 
 					$imgBoxCont.css({
