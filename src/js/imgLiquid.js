@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.904 dev / 26-04-13
+jQuery Plugin: imgLiquid v0.9.905 dev / 26-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -30,7 +30,7 @@ ex:
 //TODO: Algigns with %
 //TODO: Ver más Callbacks
 
-var imgLiquid = imgLiquid || {VER: '0.9.904'};
+var imgLiquid = imgLiquid || {VER: '0.9.905'};
 imgLiquid.isIE = /*@cc_on!@*/ false;
 imgLiquid.bgs_Available = false;
 imgLiquid.bgs_CheckRunned = false;
@@ -38,24 +38,24 @@ imgLiquid.bgs_CheckRunned = false;
 
 (function ($) {
 
-
 	//___________________________________________________________________
 
 	function checkBgsIsavailable() {
-		if (!imgLiquid.bgs_CheckRunned) imgLiquid.bgs_CheckRunned = true;
-		else return;
+		if (imgLiquid.bgs_CheckRunned) return;
+		else imgLiquid.bgs_CheckRunned = true;
 
-		function runCheck() {
-			var bgs_Check = $('#iLq_CheckBgs')[0];
+		var spanBgs = $('<span style="background-size:cover" />');
+		$('body').append(spanBgs);
+
+		!function () {
+			var bgs_Check = spanBgs[0];
 			if (!bgs_Check || !window.getComputedStyle) return;
 			var compStyle = window.getComputedStyle(bgs_Check, null);
 			if (!compStyle || !compStyle.backgroundSize) return;
 			imgLiquid.bgs_Available = (compStyle.backgroundSize === 'cover');
-		}
+		}();
 
-		$('body').append('<span id="iLq_CheckBgs" style="background-size:cover" />');
-		runCheck();
-		$('#iLq_CheckBgs').remove();
+		spanBgs.remove();
 	}
 
 
@@ -99,15 +99,15 @@ imgLiquid.bgs_CheckRunned = false;
 			this.settings = $.extend({}, this.defaults, this.options);
 
 
-			//CALLBACK > Start
-			if (this.settings.onStart) this.settings.onStart();
+			if (this.settings.onStart) this.settings.onStart(); /* << CallBack*/
 
 
 			//___________________________________________________________________
 
 			return this.each(function ($i) {
 
-				//MAIN > each for image
+				//MAIN >> each for image
+
 				var $imgBoxCont = $(this),
 				$img = $('img:first',$imgBoxCont),
 				settings;
@@ -124,7 +124,7 @@ imgLiquid.bgs_CheckRunned = false;
 
 
 				//Start CallBack
-				if (settings.onItemStart) settings.onItemStart($i, $imgBoxCont, $img);
+				if (settings.onItemStart) settings.onItemStart($i, $imgBoxCont, $img); /* << CallBack*/
 
 				//Process
 				if (imgLiquid.bgs_Available && settings.useBackgroundSize)
@@ -132,15 +132,16 @@ imgLiquid.bgs_CheckRunned = false;
 				else
 					processOldMethod();
 
+				//END MAIN <<
 
-				//END MAIN
+
 
 				//___________________________________________________________________
 
 				function processBgSize() {
 
 					var bs_val = (settings.fill) ? 'cover' : 'contain',
-						bpos = settings.horizontalAlign.toLowerCase() + " " + settings.verticalAlign.toLowerCase();
+						bpos = (settings.horizontalAlign + " " + settings.verticalAlign).toLowerCase();
 
 					//Check change img src
 					if ($imgBoxCont.css('background-image').indexOf($img.attr('src')) === -1) {
@@ -149,19 +150,21 @@ imgLiquid.bgs_CheckRunned = false;
 
 					$imgBoxCont.css({
 						'background-size': bs_val,
-						'background-repeat': 'no-repeat',
-						'background-position': bpos
+						'background-position': bpos,
+						'background-repeat': 'no-repeat'
 					});
+
 					$('a:first', $imgBoxCont).css({
 						'display': 'block',
 						'width': '100%',
 						'height': '100%'
 					});
-					$('img', $imgBoxCont).css({
-						'display': 'none'
-					});
 
-					if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img);
+					$('img', $imgBoxCont).css({'display': 'none'});
+
+
+					if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img); /* << CallBack*/
+
 					checkFinish();
 				}
 
@@ -175,26 +178,23 @@ imgLiquid.bgs_CheckRunned = false;
 					//Check change img src
 					if ($img.data('oldSrc') && $img.data('oldSrc') !== $img.attr('src')) {
 
-						/*Reset img*/
-						var $imgCopy = $("<img/>").attr("src", $img.attr("src"))
-						.attr("css", 'visibility:hidden')
-						.attr("name", $img.attr("name"))
-						.attr("id", $img.attr("id"))
-						.attr("class", $img.attr("class"));
-
+						/*Clone & Reset img*/
+						var $imgCopy = $($img[0].outerHTML).removeAttr("style");
 						$imgCopy.data('imgLiquid_settings', $img.data('imgLiquid_settings'));
 						$img.parent().prepend($imgCopy);
 						$img.remove();
 						$img = $imgCopy;
-					}
+						$img[0].width = 0;
 
-
-					//Reproceess?
-					if ($img.data('imgLiquid_oldProcessed')) {
-						makeOldProcess();
+						//BUG IE with > if (!$img[0].complete && $img[0].width) onError();
+						setTimeout(processOldMethod, 10);
 						return;
 					}
 
+					//Reproceess?
+					if ($img.data('imgLiquid_oldProcessed')) {
+						makeOldProcess(); return;
+					}
 
 					//Set data
 					$img.data('imgLiquid_oldProcessed', false);
@@ -204,6 +204,7 @@ imgLiquid.bgs_CheckRunned = false;
 					$('img:not(:first)', $imgBoxCont).css('display', 'none');
 
 					//CSSs
+					$imgBoxCont.css({'overflow': 'hidden'});
 					$img.fadeTo(0, 0);
 					$img.removeAttr("width").removeAttr("height").css({
 						'visibility': 'visible',
@@ -213,16 +214,12 @@ imgLiquid.bgs_CheckRunned = false;
 						'height': 'auto',
 						'display': 'block'
 					});
-					$imgBoxCont.css({
-						'overflow': 'hidden'
-					});
 
 
 					//CheckErrors
 					$img.on('error', onError);
 					$img[0].onerror = onError;
-					if (!$img[0].complete && $img[0].width) onError(); // [OJO con este]
-
+					//if (!$img[0].complete && $img[0].width) onError(); //[EXPERIMENTAL]
 
 					//loop until load
 					function onLoad() {
@@ -263,8 +260,8 @@ imgLiquid.bgs_CheckRunned = false;
 				//___________________________________________________________________
 
 				function onError() {
+					if (settings.onItemError) settings.onItemError($i, $imgBoxCont, $img); /* << CallBack*/
 					$img.data('imgLiquid_error', true);
-					if (settings.onItemError) settings.onItemError($i, $imgBoxCont, $img);
 					checkFinish();
 				}
 
@@ -277,11 +274,11 @@ imgLiquid.bgs_CheckRunned = false;
 					var SettingsOverwrite = {};
 
 					if (imgLiquidRoot.settings.useDataHtmlAttr) {
-						var dif = $imgBoxCont.attr('data-imgLiquid-fill'),
+						var fll = $imgBoxCont.attr('data-imgLiquid-fill'),
 							ha = $imgBoxCont.attr('data-imgLiquid-horizontalAlign'),
 							va = $imgBoxCont.attr('data-imgLiquid-verticalAlign');
 
-						if (dif === 'true' || dif === 'false') SettingsOverwrite.fill = Boolean(dif === 'true');
+						if (fll === 'true' || fll === 'false') SettingsOverwrite.fill = Boolean(fll === 'true');
 						if (ha === 'left' || ha === 'center' || ha === 'right') SettingsOverwrite.horizontalAlign = ha;
 						if (va === 'top' || va === 'bottom' || va === 'center') SettingsOverwrite.verticalAlign = va;
 					}
@@ -353,7 +350,7 @@ imgLiquid.bgs_CheckRunned = false;
 						$img.data('imgLiquid_oldProcessed', true);
 					}
 
-					if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img);
+					if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img); /* << CallBack*/
 					checkFinish();
 				}
 
@@ -363,7 +360,7 @@ imgLiquid.bgs_CheckRunned = false;
 				//___________________________________________________________________
 
 				function checkFinish() { /*Check callBack*/
-					if ($i === imgLiquidRoot.length - 1) if (imgLiquidRoot.settings.onFinish) imgLiquidRoot.settings.onFinish();
+					if ($i === imgLiquidRoot.length - 1) if (imgLiquidRoot.settings.onFinish) imgLiquidRoot.settings.onFinish(); /* << CallBack*/
 				}
 
 
