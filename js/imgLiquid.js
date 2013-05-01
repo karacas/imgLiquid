@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.933 DEV / 30-04-13
+jQuery Plugin: imgLiquid v0.9.934 DEV / 30-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -29,13 +29,14 @@ ex:
 */
 //TODO: Algigns with %
 //TODO: Ver más Callbacks
+//TODO: Classes una vez que esté ready?
 
 
-var imgLiquid = imgLiquid || {VER: '0.9.933'};
+var imgLiquid = imgLiquid || {VER: '0.9.934'};
 imgLiquid.isIE = /*@cc_on!@*/ false;
 imgLiquid.bgs_Available = false;
 imgLiquid.bgs_CheckRunned = false;
-imgLiquid.injectCss = '.imgLiquid {overflow: hidden;} .imgLiquid img {visibility:hidden;} body {/*background-color: #0f0 !important;*/}';
+imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 
 (function ($) {
@@ -125,6 +126,7 @@ imgLiquid.injectCss = '.imgLiquid {overflow: hidden;} .imgLiquid img {visibility
 					settings = $.extend({}, $img.data('imgLiquid_settings'), imgLiquidRoot.options); //Recall
 				}
 				$img.data('imgLiquid_settings', settings);
+				$imgBoxCont.removeClass('imgLiquid_error');
 
 
 				//Start CallBack
@@ -183,7 +185,7 @@ imgLiquid.injectCss = '.imgLiquid {overflow: hidden;} .imgLiquid img {visibility
 					if ($img.data('oldSrc') && $img.data('oldSrc') !== $img.attr('src')) {
 
 						/*Clone & Reset img*/
-						var $imgCopy = $($img[0].outerHTML).removeAttr("style");
+						var $imgCopy = $img.clone().removeAttr("style");
 						$imgCopy.data('imgLiquid_settings', $img.data('imgLiquid_settings'));
 						$img.parent().prepend($imgCopy);
 						$img.remove();
@@ -195,14 +197,17 @@ imgLiquid.injectCss = '.imgLiquid {overflow: hidden;} .imgLiquid img {visibility
 						return;
 					}
 
+
 					//Reproceess?
 					if ($img.data('imgLiquid_oldProcessed')) {
 						makeOldProcess(); return;
 					}
 
+
 					//Set data
 					$img.data('imgLiquid_oldProcessed', false);
 					$img.data('oldSrc', $img.attr('src'));
+
 
 					//Hide others images
 					$('img:not(:first)', $imgBoxCont).css('display', 'none');
@@ -223,7 +228,7 @@ imgLiquid.injectCss = '.imgLiquid {overflow: hidden;} .imgLiquid img {visibility
 					//CheckErrors
 					$img.on('error', onError);
 					$img[0].onerror = onError;
-					//if (!$img[0].complete && $img[0].width) onError(); //[EXPERIMENTAL]
+					//if (!$img[0].complete && $img[0].width) onError(); //TODO: [EXPERIMENTAL]
 
 					//loop until load
 					function onLoad() {
@@ -264,8 +269,9 @@ imgLiquid.injectCss = '.imgLiquid {overflow: hidden;} .imgLiquid img {visibility
 				//___________________________________________________________________
 
 				function onError() {
-					if (settings.onItemError) settings.onItemError($i, $imgBoxCont, $img); /* << CallBack*/
 					$img.data('imgLiquid_error', true);
+					if (settings.onItemError) settings.onItemError($i, $imgBoxCont, $img); /* << CallBack*/
+					$imgBoxCont.addClass('imgLiquid_error');
 					checkFinish();
 				}
 
