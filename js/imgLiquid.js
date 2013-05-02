@@ -1,5 +1,5 @@
 /*
-jQuery Plugin: imgLiquid v0.9.934 DEV / 30-04-13
+jQuery Plugin: imgLiquid v0.9.935 DEV / 30-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -32,7 +32,7 @@ ex:
 //TODO: Classes una vez que esté ready?
 
 
-var imgLiquid = imgLiquid || {VER: '0.9.934'};
+var imgLiquid = imgLiquid || {VER: '0.9.935'};
 imgLiquid.isIE = /*@cc_on!@*/ false;
 imgLiquid.bgs_Available = false;
 imgLiquid.bgs_CheckRunned = false;
@@ -117,7 +117,9 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 				$img = $('img:first',$imgBoxCont),
 				settings;
 
+
 				if ($img.length === 0) {onError(); return;}
+
 
 				//Extend settings
 				if (!$img.data('imgLiquid_settings')) {
@@ -126,17 +128,23 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 					settings = $.extend({}, $img.data('imgLiquid_settings'), imgLiquidRoot.options); //Recall
 				}
 				$img.data('imgLiquid_settings', settings);
+
+
+				//Classes
 				$imgBoxCont.removeClass('imgLiquid_error');
+				$imgBoxCont.removeClass('imgLiquid_ready');
 
 
 				//Start CallBack
 				if (settings.onItemStart) settings.onItemStart($i, $imgBoxCont, $img); /* << CallBack*/
+
 
 				//Process
 				if (imgLiquid.bgs_Available && settings.useBackgroundSize)
 					processBgSize();
 				else
 					processOldMethod();
+
 
 				//END MAIN <<
 
@@ -146,31 +154,28 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 				function processBgSize() {
 
-					var bs_val = (settings.fill) ? 'cover' : 'contain',
-						bpos = (settings.horizontalAlign + " " + settings.verticalAlign).toLowerCase();
-
 					//Check change img src
 					if ($imgBoxCont.css('background-image').indexOf(encodeURI($img.attr('src'))) === -1) {
 						$imgBoxCont.css({'background-image': 'url(' + encodeURI($img.attr('src')) + ')'});
 					}
 
 					$imgBoxCont.css({
-						'background-size': bs_val,
-						'background-position': bpos,
-						'background-repeat': 'no-repeat'
+						'background-size':		(settings.fill) ? 'cover' : 'contain',
+						'background-position':	(settings.horizontalAlign + " " + settings.verticalAlign).toLowerCase(),
+						'background-repeat':	'no-repeat'
 					});
 
 					$('a:first', $imgBoxCont).css({
-						'display': 'block',
-						'width': '100%',
-						'height': '100%'
+						'display':	'block',
+						'width':	'100%',
+						'height':	'100%'
 					});
 
 					$('img', $imgBoxCont).css({'display': 'none'});
 
-
 					if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img); /* << CallBack*/
 
+					$imgBoxCont.addClass('imgLiquid_ready');
 					checkFinish();
 				}
 
@@ -251,6 +256,8 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 				//___________________________________________________________________
 
 				function checkResponsive() {
+					/*Only for oldProcessed method (background-size dont need)*/
+
 					if (!settings.responsive && !$img.data('imgLiquid_oldProcessed')) return;
 					if (!$img.data('imgLiquid_settings')) return;
 
@@ -270,8 +277,8 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 				function onError() {
 					$img.data('imgLiquid_error', true);
-					if (settings.onItemError) settings.onItemError($i, $imgBoxCont, $img); /* << CallBack*/
 					$imgBoxCont.addClass('imgLiquid_error');
+					if (settings.onItemError) settings.onItemError($i, $imgBoxCont, $img); /* << CallBack*/
 					checkFinish();
 				}
 
@@ -358,6 +365,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 						if (settings.removeBoxBackground) $imgBoxCont.css('background-image', 'none');
 						$img.fadeTo(settings.fadeInTime, 1);
 						$img.data('imgLiquid_oldProcessed', true);
+						$imgBoxCont.addClass('imgLiquid_ready');
 					}
 
 					if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img); /* << CallBack*/
@@ -370,7 +378,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 				//___________________________________________________________________
 
 				function checkFinish() { /*Check callBack*/
-					if ($i === imgLiquidRoot.length - 1) if (imgLiquidRoot.settings.onFinish) imgLiquidRoot.settings.onFinish(); /* << CallBack*/
+					if ($i === imgLiquidRoot.length - 1) if (imgLiquidRoot.settings.onFinish) imgLiquidRoot.settings.onFinish();
 				}
 
 

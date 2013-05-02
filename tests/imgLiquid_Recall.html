@@ -20,43 +20,45 @@
 	<script type="text/javascript">
 	$(document).ready(function () {
 
-		$(".imgLiquidFill").imgLiquid({fill:false, horizontalAlign:'right', useBackgroundSize: !true, onItemError:function(i){console.log('Error__' + i)}});
-		$(".imgLiquidNoFill").imgLiquid({fill:false, horizontalAlign:'right', useBackgroundSize: true, onItemError:function(i){console.log('Error__' + i)}});
+		$(".imgLiquidOld").imgLiquid({fill:false, horizontalAlign:'right', useBackgroundSize: !true, onItemError:function(i){console.log('Error__' + i)}});
+		$(".imgLiquidNoNew").imgLiquid({fill:false, horizontalAlign:'right', useBackgroundSize: true, onItemError:function(i){console.log('Error__' + i)}});
 
 
 		$('.recall').click(function(){
-			$(".imgLiquidFill").imgLiquid({fill:false, horizontalAlign:'left', verticalAlign: 'top'});
-			$(".imgLiquidNoFill").imgLiquid({fill:false, horizontalAlign:'left', verticalAlign: 'top'});
-			console.log({fill:false, horizontalAlign:'left', verticalAlign: 'top'});
+			$(".imgLiquidOld, .imgLiquidNoNew").imgLiquid({fill:false, horizontalAlign:'right', verticalAlign: 'bottom'});
 			return false;
 		});
 
 		$('.recall2').click(function(){
-			$(".imgLiquidFill").imgLiquid({fill:true});
-			$(".imgLiquidNoFill").imgLiquid({fill:true});
-			console.log({fill:true});
+			$(".imgLiquidOld, .imgLiquidNoNew").imgLiquid({fill:true});
 			return false;
 		});
 
 		$('.recall3').click(function(){
-			$(".imgLiquidFill").imgLiquid();
-			$(".imgLiquidNoFill").imgLiquid();
-			console.log({});
+			$(".imgLiquidOld, .imgLiquidNoNew").imgLiquid();
 			return false;
 		});
 
 		$('.recall4').click(function(){
-			$(".imgLiquid").imgLiquid({fill:true, horizontalAlign:'center', verticalAlign:'center'});
-			console.log({fill:true, horizontalAlign:'center', verticalAlign:'center'});
+			$(".imgLiquidOld, .imgLiquidNoNew").imgLiquid({fill:true, horizontalAlign:'center', verticalAlign:'center'});
 			return false;
 		});
 
 		$('.recall5').click(function(){
-			$(".imgLiquidFill").imgLiquid({fill:!true});
-			$(".imgLiquidNoFill").imgLiquid({fill:!true});
-			console.log({fill:!true});
+			$(".imgLiquidOld, .imgLiquidNoNew").imgLiquid({fill:!true});
 			return false;
 		});
+
+		$('.recall6').click(function(){
+			$(".imgLiquidOld, .imgLiquidNoNew").imgLiquid({horizontalAlign:'left', verticalAlign:'top'});
+			return false;
+		});
+
+		$('.recall7').click(function(){
+			$(".imgLiquidOld, .imgLiquidNoNew").imgLiquid({horizontalAlign:'center', verticalAlign:'center'});
+			return false;
+		});
+
 
 	});
 </script>
@@ -70,104 +72,97 @@ body {
 	background-color:#fff;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-weight:300;
-	margin:30px;
+	margin:20px;
 	width: 100%;
 }
 .boxSep{
 	background-color:#f7f7f7;
 	border: 1px solid #ddd;
-	margin:10px;
 	float:left;
-	margin-right:30px;
+	margin-right:10px;
+	margin-top: 10px;
 }
 .boxSep2{
 	background-color:#f7f7f7;
 	border: 1px solid #ddd;
-	width: 70%;
-	margin:10px;
+	width: 40%;
+	margin-right:10px;
+	margin-top: 10px;
 }
-.LogSep{
-	margin:10px;
+.recalls a{
+	margin-right: 10px;
+	font-size: 13px;
+	text-decoration: none;
+	text-transform: uppercase;
 }
-h1{
-	margin:10px;
-	margin-bottom:60px;
-	font-size:30px;
-	font-family: 'Open Sans', arial, sans-serif!Important;
-	font-weight:300;
-	color:#888;
-}
-h2{
-	margin:10px;
-	margin-top:0;
-	margin-bottom:2px;
-	font-size:20px;
-	font-family: 'Open Sans', arial, sans-serif!Important;
-	font-weight:300;
-	color:#bbb;
-	margin-top:80px;
+.recalls a:hover{
+	text-decoration: underline;
 }
 </style>
 
 </head>
 <body>
 
-	<a href="#" class='recall'  title="">Recall </a> /
-	<a href="#" class='recall2' title="">Recall 2 </a> /
-	<a href="#" class='recall3' title="">Recall 3 </a> /
-	<a href="#" class='recall4' title="">Recall 4 </a> /
-	<a href="#" class='recall5' title="">Recall 5 </a>
+	<div class="recalls">
+		<a href="#" class='recall3' title="">None</a>
+		<a href="#" class='recall2' title="">Fill</a>
+		<a href="#" class='recall5' title="">NoFill</a>
+		<a href="#" class='recall4' title="">Fill center/center</a>
+		<a href="#" class='recall'  title="">NoFill right-bottom</a>
+		<a href="#" class='recall6' title="">left/top</a>
+		<a href="#" class='recall7' title="">center/center</a>
+	</div>
 
-	<br>
-	<div style='clear:both'></div>
-	<br>
+	<br><br>
 
+	OLD
 	<div class="boxSep2" >
-		<div class="imgLiquidFill imgLiquid" style="width:100%; height:200px;">
+		<div class="imgLiquidOld imgLiquid" style="width:100%; height:150px;">
 			<a href="woody.jpg" target="_blank" title="test">
 				<img alt="TEST" src="woody.jpg"/>
 			</a>
 		</div>
 	</div>
-
 	<div style='clear:both'></div>
 
 	<div class="boxSep" >
-		<div class="imgLiquidFill imgLiquid" style="width:150px; height:200px;" data-imgLiquid-verticalAlign="bottom" data-imgLiquid-horizontalAlign="left">
+		<div class="imgLiquidOld imgLiquid" style="width:150px; height:150px;" data-imgLiquid-verticalAlign="bottom" data-imgLiquid-horizontalAlign="left">
 			<a href="woody.jpg" target="_blank" title="test">
 				<img alt="TEST" src="woody.jpg"/>
 			</a>
 		</div>
 	</div>
-
 	<div class="boxSep" >
-		<div class="imgLiquidFill imgLiquid" style="width:350px; height:200px;">
+		<div class="imgLiquidOld imgLiquid" style="width:220px; height:150px;">
 			<a href="woody.jpg" target="_blank" title="test">
 				<img alt="TEST" src="woody.jpg"/>
 			</a>
 		</div>
 	</div>
 
+
+	<div style='clear:both'></div>
+	<br><br><br>
+
+	NEW
+	<div class="boxSep2" >
+		<div class="imgLiquidNoNew imgLiquid" style="width:100%; height:150px;">
+			<a href="woody.jpg" target="_blank" title="test">
+				<img alt="TEST" src="woody.jpg"/>
+			</a>
+		</div>
+	</div>
 	<div style='clear:both'></div>
 
 	<div class="boxSep" >
-		<div class="imgLiquidNoFill imgLiquid" style="width:200px; height:200px;" >
+		<div class="imgLiquidNoNew imgLiquid" style="width:150px; height:150px;" data-imgLiquid-verticalAlign="bottom" data-imgLiquid-horizontalAlign="left">
 			<a href="woody.jpg" target="_blank" title="test">
 				<img alt="TEST" src="woody.jpg"/>
 			</a>
 		</div>
 	</div>
-
 	<div class="boxSep" >
-		<div class="imgLiquidNoFill imgLiquid" style="width:150px; height:200px;" data-imgLiquid-verticalAlign="" >
-			<a href="woody.jpg" target="_blank" title="test">
-				<img alt="TEST" src="woody.jpg"/>
-			</a>
-		</div>
-	</div>
-
-	<div class="boxSep" >
-		<div class="imgLiquidNoFill imgLiquid" style="width:350px; height:200px;">
+		<div class="imgLiquidNoNew imgLiquid" style="width:220px; height:150px;">
 			<a href="woody.jpg" target="_blank" title="test">
 				<img alt="TEST" src="woody.jpg"/>
 			</a>
