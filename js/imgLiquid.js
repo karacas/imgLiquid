@@ -4,7 +4,7 @@ imgLiquid v0.9.936 DEV / 30-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses
-https:// github.com/karacas/imgLiquid
+https://github.com/karacas/imgLiquid
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
@@ -131,7 +131,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 					settings = $.extend({}, imgLiquidRoot.settings, getSettingsOverwrite());
 				} else {
 					// Recall
-					// Remove Classes (Recall)
+					// Remove Classes
 					$imgBoxCont.removeClass('imgLiquid_error').removeClass('imgLiquid_ready');
 					settings = $.extend({}, $img.data('imgLiquid_settings'), imgLiquidRoot.options);
 				}
@@ -158,7 +158,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 					// Check change img src
 					if ($imgBoxCont.css('background-image').indexOf(encodeURI($img.attr('src'))) === -1) {
-						// CHANGE
+						// Change
 						$imgBoxCont.css({'background-image': 'url(' + encodeURI($img.attr('src')) + ')'});
 					}
 
