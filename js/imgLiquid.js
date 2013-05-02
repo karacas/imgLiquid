@@ -26,9 +26,10 @@ ex:
 		data-imgLiquid-horizontalAlign="center"
 		data-imgLiquid-verticalAlign="center"
 
-*/
+		*/
 //TODO: Algigns with %
 //TODO: Ver más Callbacks
+
 
 var imgLiquid = imgLiquid || {VER: '0.9.935'};
 imgLiquid.isIE = /*@cc_on!@*/ false;
@@ -121,16 +122,15 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 				//Extend settings
 				if (!$img.data('imgLiquid_settings')) {
-					settings = $.extend({}, imgLiquidRoot.settings, getSettingsOverwrite()); //First time
+					//First time
+					settings = $.extend({}, imgLiquidRoot.settings, getSettingsOverwrite());
 				} else {
-					settings = $.extend({}, $img.data('imgLiquid_settings'), imgLiquidRoot.options); //Recall
+					//Recall
+					//Remove Classes (Recall)
+					$imgBoxCont.removeClass('imgLiquid_error').removeClass('imgLiquid_ready');
+					settings = $.extend({}, $img.data('imgLiquid_settings'), imgLiquidRoot.options);
 				}
 				$img.data('imgLiquid_settings', settings);
-
-
-				//Classes
-				$imgBoxCont.removeClass('imgLiquid_error');
-				$imgBoxCont.removeClass('imgLiquid_ready');
 
 
 				//Start CallBack
@@ -145,7 +145,6 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 
 				//END MAIN <<
-
 
 
 				//___________________________________________________________________
@@ -173,6 +172,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 					if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img); /* << CallBack*/
 
+					$imgBoxCont.addClass('imgLiquid_bgSize');
 					$imgBoxCont.addClass('imgLiquid_ready');
 					checkFinish();
 				}
@@ -290,8 +290,8 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 					if (imgLiquidRoot.settings.useDataHtmlAttr) {
 						var fll = $imgBoxCont.attr('data-imgLiquid-fill'),
-							ha = $imgBoxCont.attr('data-imgLiquid-horizontalAlign'),
-							va = $imgBoxCont.attr('data-imgLiquid-verticalAlign');
+						ha = $imgBoxCont.attr('data-imgLiquid-horizontalAlign'),
+						va = $imgBoxCont.attr('data-imgLiquid-verticalAlign');
 
 						if (fll === 'true' || fll === 'false') SettingsOverwrite.fill = Boolean(fll === 'true');
 						if (ha === 'left' || ha === 'center' || ha === 'right') SettingsOverwrite.horizontalAlign = ha;
@@ -363,6 +363,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 						if (settings.removeBoxBackground) $imgBoxCont.css('background-image', 'none');
 						$img.fadeTo(settings.fadeInTime, 1);
 						$img.data('imgLiquid_oldProcessed', true);
+						$imgBoxCont.addClass('imgLiquid_nobgSize');
 						$imgBoxCont.addClass('imgLiquid_ready');
 					}
 
