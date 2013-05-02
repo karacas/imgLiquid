@@ -29,8 +29,6 @@ ex:
 */
 //TODO: Algigns with %
 //TODO: Ver más Callbacks
-//TODO: Classes una vez que esté ready?
-
 
 var imgLiquid = imgLiquid || {VER: '0.9.935'};
 imgLiquid.isIE = /*@cc_on!@*/ false;
