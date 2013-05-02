@@ -1,11 +1,9 @@
 /*
-imgLiquid v0.9.937 DEV / 30-04-13
+imgLiquid v0.9.938 DEV / 30-04-13
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses
 https://github.com/karacas/imgLiquid
-
-ie detector: https://gist.github.com/padolsey/527683
 
 ex:
 	$(".imgLiquid").imgLiquid({fill:true});
@@ -27,15 +25,12 @@ ex:
 		data-imgLiquid-fill="true"
 		data-imgLiquid-horizontalAlign="center"
 		data-imgLiquid-verticalAlign="center"
-
-
 */
 
-
 //
-// TODO: Algigns with %
+// TODO: Aligns with %
 
-var imgLiquid = imgLiquid || {VER: '0.9.937'};
+var imgLiquid = imgLiquid || {VER: '0.9.938'};
 imgLiquid.bgs_Available = false;
 imgLiquid.bgs_CheckRunned = false;
 imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
@@ -80,7 +75,6 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 				delay: 0,							/* Only for use with BackgroundSize false (or old browsers) */
 				fadeInTime: 0,						/* Only for use with BackgroundSize false (or old browsers) */
 				removeBoxBackground: true,			/* Only for use with BackgroundSize false (or old browsers) */
-				ieFadeInDisabled: true,				/* Only for use with BackgroundSize false (or old browsers) */
 				hardPixels: true,					/* Only for use with BackgroundSize false (or old browsers) */
 				responsiveCheckTime: 500,			/* Only for use with BackgroundSize false (or old browsers) */ /* time to check div resize */
 				timecheckvisibility: 500,			/* Only for use with BackgroundSize false (or old browsers) */ /* time to recheck if visible/loaded */
@@ -304,7 +298,6 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 						if (va === 'top' || va === 'bottom' || va === 'center') SettingsOverwrite.verticalAlign = va;
 					}
 
-					if (imgLiquid.isOldIe && imgLiquidRoot.settings.ieFadeInDisabled) SettingsOverwrite.fadeInTime = 0; // ie no anims
 					return SettingsOverwrite;
 				}
 
@@ -408,21 +401,4 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 		style.appendChild(document.createTextNode(css));
 	}
 	head.appendChild(style);
-}();
-
-
-
-// Detect archaic browser _________________________________________________
-// https://gist.github.com/padolsey/527683
-!function(){
-	var undef,
-		v = 3,
-		div = document.createElement('div'),
-		all = div.getElementsByTagName('i');
-	while (
-		div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
-		all[0]
-	);
-	var ie =  v > 4 ? v : undef;
-	imgLiquid.isOldIe = (ie && ie <9) || false;
 }();
