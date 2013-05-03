@@ -1,39 +1,39 @@
 /*
-imgLiquid v0.9.938 DEV / 30-04-13
+imgLiquid v0.9.940 DEV / 03-05-2013
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses
 https://github.com/karacas/imgLiquid
 
 ex:
-	$(".imgLiquid").imgLiquid({fill:true});
+	$('.imgLiquid').imgLiquid({fill:true});
 
 	// OPTIONS:
 
-	>js
-		fill: true,
-		verticalAlign:		// 'center' // 'top' // 'bottom'
-		horizontalAlign:	// 'center' // 'left' // 'right'
+	> js:
+			fill: true,
+			verticalAlign:		// 'center' //	'top'	//	'bottom' // '50%'  // '10%'
+			horizontalAlign:	// 'center' //	'left'	//	'right'  // '50%'  // '10%'
 
-	>js callBakcs
-		onStart:		function(){},
-		onFinish:		function(){},
-		onItemStart:	function(index, container, img){},
-		onItemFinish:	function(index, container, img){}
+	> callBakcs:
+			onStart:		function(){},
+			onFinish:		function(){},
+			onItemStart:	function(index, container, img){},
+			onItemFinish:	function(index, container, img){}
 
-	>hml5 data attr (overwrite all)
-		data-imgLiquid-fill="true"
-		data-imgLiquid-horizontalAlign="center"
-		data-imgLiquid-verticalAlign="center"
+	> hml5 data attr (overwrite all)
+			data-imgLiquid-fill='true'
+			data-imgLiquid-horizontalAlign='center'
+			data-imgLiquid-verticalAlign='center'
 */
-
 //
-// TODO: Aligns with %
 
-var imgLiquid = imgLiquid || {VER: '0.9.938'};
+
+var imgLiquid = imgLiquid || {VER: '0.9.940'};
 imgLiquid.bgs_Available = false;
 imgLiquid.bgs_CheckRunned = false;
 imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
+
 
 (function ($) {
 
@@ -59,6 +59,8 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 
 
+
+
 	// ___________________________________________________________________
 
 	$.fn.extend({
@@ -66,8 +68,8 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 			this.defaults = {
 				fill: true,
-				verticalAlign: 'center',			//	'top'	//	'bottom'
-				horizontalAlign: 'center',			//	'left'	//	'right'
+				verticalAlign: 'center',			//	'top'	//	'bottom' // '50%'  // '10%'
+				horizontalAlign: 'center',			//	'left'	//	'right'  // '50%'  // '10%'
 				useBackgroundSize: true,
 				useDataHtmlAttr: true,
 
@@ -91,14 +93,13 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 			checkBgsIsavailable();
 			var imgLiquidRoot = this;
 
-
 			// Extend global settings
 			this.options = options;
 			this.settings = $.extend({}, this.defaults, this.options);
 
-
 			// CallBack
 			if (this.settings.onStart) this.settings.onStart();
+
 
 
 
@@ -111,8 +112,6 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 				var settings,
 				$imgBoxCont = $(this),
 				$img = $('img:first',$imgBoxCont);
-
-
 				if (!$img.length) {onError(); return;}
 
 
@@ -143,6 +142,8 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 				// END MAIN <<
 
 
+
+
 				// ___________________________________________________________________
 
 				function processBgSize() {
@@ -155,7 +156,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 					$imgBoxCont.css({
 						'background-size':		(settings.fill) ? 'cover' : 'contain',
-						'background-position':	(settings.horizontalAlign + " " + settings.verticalAlign).toLowerCase(),
+						'background-position':	(settings.horizontalAlign + ' ' + settings.verticalAlign).toLowerCase(),
 						'background-repeat':	'no-repeat'
 					});
 
@@ -185,7 +186,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 					if ($img.data('oldSrc') && $img.data('oldSrc') !== $img.attr('src')) {
 
 						/* Clone & Reset img */
-						var $imgCopy = $img.clone().removeAttr("style");
+						var $imgCopy = $img.clone().removeAttr('style');
 						$imgCopy.data('imgLiquid_settings', $img.data('imgLiquid_settings'));
 						$img.parent().prepend($imgCopy);
 						$img.remove();
@@ -215,7 +216,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 					// CSSs
 					$imgBoxCont.css({'overflow': 'hidden'});
-					$img.fadeTo(0, 0).removeAttr("width").removeAttr("height").css({
+					$img.fadeTo(0, 0).removeAttr('width').removeAttr('height').css({
 						'visibility': 'visible',
 						'max-width': 'none',
 						'max-height': 'none',
@@ -289,15 +290,16 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 					var SettingsOverwrite = {};
 
 					if (imgLiquidRoot.settings.useDataHtmlAttr) {
-						var fll = $imgBoxCont.attr('data-imgLiquid-fill'),
-						ha = $imgBoxCont.attr('data-imgLiquid-horizontalAlign'),
-						va = $imgBoxCont.attr('data-imgLiquid-verticalAlign');
+						var dif = $imgBoxCont.attr('data-imgLiquid-fill'),
+						ha =  $imgBoxCont.attr('data-imgLiquid-horizontalAlign'),
+						va =  $imgBoxCont.attr('data-imgLiquid-verticalAlign');
 
-						if (fll === 'true' || fll === 'false') SettingsOverwrite.fill = Boolean(fll === 'true');
-						if (ha === 'left' || ha === 'center' || ha === 'right') SettingsOverwrite.horizontalAlign = ha;
-						if (va === 'top' || va === 'bottom' || va === 'center') SettingsOverwrite.verticalAlign = va;
+						if (dif === 'true' || dif === 'false') SettingsOverwrite.fill = Boolean (dif === 'true');
+						if (ha !== undefined && (ha === 'left' || ha === 'center' || ha === 'right' || ha.indexOf('%') !== -1)) SettingsOverwrite.horizontalAlign = ha;
+						if (va !== undefined && (va === 'top' ||  va === 'bottom' || va === 'center' || va.indexOf('%') !== -1)) SettingsOverwrite.verticalAlign = va;
 					}
 
+					if (imgLiquid.isIE && imgLiquidRoot.settings.ieFadeInDisabled) SettingsOverwrite.fadeInTime = 0; //ie no anims
 					return SettingsOverwrite;
 				}
 
@@ -338,15 +340,25 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 					// Align X
 					ha = settings.horizontalAlign.toLowerCase();
 					hdif = $imgCW - wn;
+					if (ha === 'left') margL = 0;
 					if (ha === 'center') margL = hdif * 0.5;
 					if (ha === 'right') margL = hdif;
+					if (ha.indexOf('%') !== -1){
+						ha = parseInt (ha.replace('%',''), 10);
+						if (ha > 0) margL = hdif * ha * 0.01;
+					}
 
 
 					// Align Y
 					va = settings.verticalAlign.toLowerCase();
 					vdif = $imgCH - hn;
+					if (va === 'left') margT = 0;
 					if (va === 'center') margT = vdif * 0.5;
 					if (va === 'bottom') margT = vdif;
+					if (va.indexOf('%') !== -1){
+						va = parseInt (va.replace('%',''), 10);
+						if (va > 0) margT = vdif * va * 0.01;
+					}
 
 
 					// Add Css
@@ -367,6 +379,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 						$imgBoxCont.addClass('imgLiquid_nobgSize');
 						$imgBoxCont.addClass('imgLiquid_ready');
 					}
+
 
 					if (settings.onItemFinish) settings.onItemFinish($i, $imgBoxCont, $img); /* << CallBack */
 					checkFinish();
