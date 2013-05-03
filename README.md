@@ -15,13 +15,13 @@ Dual licensed under the MIT and GPL licenses.
 ####js:
 ```js
 $(document).ready(function() {
-	$(".imgLiquid").imgLiquid();
+	$(".imgLiquidFill").imgLiquid();
 });
 ```
 
 ####Html:
 ```html
-<div class="imgLiquid" style="width:300px; height:200px;">
+<div class="imgLiquidFill imgLiquid" style="width:300px; height:200px;">
 	<img alt="Woody" src="Woody.jpg" />
 </div>
 ```
@@ -63,6 +63,6 @@ http://codepen.io/karacas/pen/nlugd
     >hml5 data attr (overwrite js options)
         data-imgLiquid-fill="true"
         data-imgLiquid-horizontalAlign="center"
-        data-imgLiquid-verticalAlign="center"
+        data-imgLiquid-verticalAlign="50%"
 
 ```
