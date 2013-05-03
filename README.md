@@ -1,8 +1,8 @@
 ![ScreenShot](https://raw.github.com/karacas/imgLiquid/master/examples/logoimgliquid.png)
 
-imgLiquid v0.9.92 / (26-04-13)
+imgLiquid v0.9.940 / 03-05-2013
 #####A jQuery Plugin to resize images to fit in a container.
-Alejandro Emparan (karacas) @krc_ale
+Alejandro Emparan (karacas) / @krc_ale
 Dual licensed under the MIT and GPL licenses.
 ## 
 #Usage
@@ -15,27 +15,15 @@ Dual licensed under the MIT and GPL licenses.
 ####js:
 ```js
 $(document).ready(function() {
-	$(".imgLiquid").imgLiquid();
+	$(".imgLiquidFill").imgLiquid();
 });
 ```
 
 ####Html:
 ```html
-<div class="imgLiquid" style="width:300px; height:200px;">
+<div class="imgLiquidFill imgLiquid" style="width:300px; height:200px;">
 	<img alt="Woody" src="Woody.jpg" />
 </div>
-```
-
-####css:
-```css
-/*
-Important:
-	set "visibility:hidden" for better results
-	or use src/css/imgLiquid.js.css
-*/
-.imgLiquid img{
-    visibility:hidden;
-}
 ```
  
 ####View in action:
@@ -63,8 +51,8 @@ http://codepen.io/karacas/pen/nlugd
 
     >js
         fill: true,
-        verticalAlign:      //'center' //'top' //'bottom'
-        horizontalAlign:    //'center' //'left' //'right'
+        verticalAlign:      // 'center' //  'top'   //  'bottom' // '50%'  // '10%'
+        horizontalAlign:    // 'center' //  'left'  //  'right'  // '50%'  // '10%'
 
         //CallBakcs
         onStart:        function(){},
@@ -75,6 +63,6 @@ http://codepen.io/karacas/pen/nlugd
     >hml5 data attr (overwrite js options)
         data-imgLiquid-fill="true"
         data-imgLiquid-horizontalAlign="center"
-        data-imgLiquid-verticalAlign="center"
+        data-imgLiquid-verticalAlign="50%"
 
 ```

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>imgLiquid Jquery Plugin</title>
+
+	<!-- RESET ______________________ -->
+	<link   href="reset.css"	type="text/css" rel="stylesheet" />
+
+	<!-- JQUERY ______________________ -->
+	<!--[if lt IE 9]> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script> <![endif]-->
+	<!--[if gte IE 9]><!--> <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js" type="text/javascript"></script> <!--<![endif]-->
+
+
+	<!-- IMGLIQUID ______________________ -->
+	<script src ="../js/imgLiquid-min.js" type="text/javascript"></script>
+
+
+	<!-- EXAMPLE ______________________ -->
+	<script type="text/javascript">
+	$(document).ready(function () {
+		$(".imgLiquidFill").imgLiquid({fill:true});
+		$(".imgLiquidNoFill").imgLiquid({fill:false});
+	});
+	</script>
+
+	<!-- CSS ______________________ -->
+	<style type="text/css">
+	/*github-ribbon*/
+	.github-ribbon{background-color:#121621;top:3.2em;right:-3.7em;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg);-webkit-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;-moz-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;-ms-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;-o-box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;box-shadow:0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;color:rgba(255,255,255,0.90);display:block;padding:.6em 3.5em;position:absolute;font:bold .82em sans-serif;text-align:center;text-decoration:none;text-shadow:1px -1px 8px rgba(0,0,0,0.60);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none}
+
+	body {
+		margin:0;
+		padding:0;
+		background-color:#fff;
+		font-family: 'Open Sans', arial, sans-serif;
+		font-weight:300;
+		margin:30px;
+	}
+	.boxSep{
+		background-color:#f7f7f7;
+		border: 1px solid #ddd;
+		margin:10px;
+		float:left;
+		margin-right:30px;
+	}
+	.LogSep{
+		margin:10px;
+	}
+	h1{
+		margin:10px;
+		margin-bottom:60px;
+		font-size:30px;
+		font-family: 'Open Sans', arial, sans-serif!Important;
+		font-weight:300;
+		color:#888;
+	}
+	h2{
+		margin:10px;
+		margin-top:0;
+		margin-bottom:2px;
+		font-size:20px;
+		font-family: 'Open Sans', arial, sans-serif!Important;
+		font-weight:300;
+		color:#bbb;
+		margin-top:80px;
+	}
+	</style>
+</head>
+
+
+
+<body>
+
+	<a href="https://github.com/karacas/imgLiquid" class="github-ribbon">Fork me on GitHub</a>
+	<div class="LogSep" >
+		<img src="logoimgliquid.png" alt="imgliquid"><br><br>
+		<p style='line-height:24px'>jQuery plugin to resize images to fit in a container.
+			<br>All of the images src of Woody's are the same.
+			<br>More info & usage in <a href="https://github.com/karacas/imgLiquid" >gitHub</a>.
+		</p>
+	</div>
+
+	<h2 style='clear:both'>ImageBox fill: true</h2>
+	<div class="boxSep" >
+		<div class="imgLiquidFill imgLiquid" style="width:200px; height:200px;" data-imgLiquid-fill="false">
+			<a href="woody.jpg"  target="_blank"  title="test">
+				<img alt="TEST" src="woody.jpg"/>
+			</a>
+		</div>
+	</div>
+
+	<div class="boxSep" >
+		<div class="imgLiquidFill imgLiquid" style="width:150px; height:200px;" data-imgLiquid-verticalAlign="bottom"  data-imgLiquid-fill="false">
+			<a href="woody.jpg" target="_blank"  title="test">
+				<img alt="TEST" src="woody.jpg"/>
+			</a>
+		</div>
+	</div>
+
+	<div class="boxSep" >
+		<div class="imgLiquidFill imgLiquid" style="width:350px; height:200px;">
+			<a href="woody.jpg"  target="_blank" title="test">
+				<img alt="TEST" src="woody.jpg"/>
+			</a>
+		</div>
+	</div>
+
+
+	<div style='clear:both'></div>
+	<h2 style='clear:both'>ImageBox fill: false</h2>
+	<div class="boxSep" >
+		<div class="imgLiquidNoFill imgLiquid" style="width:200px; height:200px;" >
+			<a href="woody.jpg"  target="_blank" title="test">
+				<img alt="TEST" src="woody.jpg"/>
+			</a>
+		</div>
+	</div>
+
+	<div class="boxSep" >
+		<div class="imgLiquidNoFill imgLiquid" style="width:150px; height:200px;">
+			<a href="woody.jpg"  target="_blank" title="test">
+				<img alt="TEST" src="woody.jpg"/>
+			</a>
+		</div>
+	</div>
+
+	<div class="boxSep" >
+		<div class="imgLiquidNoFill imgLiquid" style="width:350px; height:200px;">
+			<a href="woody.jpg" target="_blank"  title="test">
+				<img alt="TEST" src="woody.jpg"/>
+			</a>
+		</div>
+	</div>
+
+
+</body>
+</html>
