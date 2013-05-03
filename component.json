@@ -2,14 +2,6 @@
     "name": "imgLiquid",
     "version": "0.9.940",
     "main": "js/imgLiquid.js",
-    "dependencies": {
-        "jquery": ">=1.8.1"
-    },
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "components",
-        "tests",
-        "examples"
-    ]
+    "dependencies": {"jquery": ">=1.8.1"},
+    "ignore": ["**/.*", "node_modules", "components", "tests", "examples"]
 }
