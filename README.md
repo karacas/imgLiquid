@@ -1,4 +1,4 @@
-![ScreenShot](https://raw.github.com/karacas/imgLiquid/master/examples/logoimgliquid.png)
+![ScreenShot](https://raw.github.com/karacas/imgLiquid/master/tests/logoimgliquid.png)
 
 imgLiquid v0.9.940 / 03-05-2013
 #####A jQuery Plugin to resize images to fit in a container.
