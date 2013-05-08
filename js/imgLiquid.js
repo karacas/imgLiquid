@@ -1,5 +1,5 @@
 /*
-imgLiquid v0.9.942 / 03-05-2013
+imgLiquid v0.9.944DEV / 03-05-2013
 jQuery plugin to resize images to fit in a container.
 Copyright (c) 2012 Alejandro Emparan (karacas) @krc_ale
 Dual licensed under the MIT and GPL licenses
@@ -29,10 +29,10 @@ ex:
 //
 
 
-var imgLiquid = imgLiquid || {VER: '0.9.942'};
+var imgLiquid = imgLiquid || {VER: '0.9.944'};
 imgLiquid.bgs_Available = false;
 imgLiquid.bgs_CheckRunned = false;
-imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
+imgLiquid_injectCss ('.imgLiquid img {visibility:hidden}');
 
 
 (function ($) {
@@ -79,7 +79,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 				removeBoxBackground: true,			/* Only for use with BackgroundSize false (or old browsers) */
 				hardPixels: true,					/* Only for use with BackgroundSize false (or old browsers) */
 				responsiveCheckTime: 500,			/* Only for use with BackgroundSize false (or old browsers) */ /* time to check div resize */
-				timecheckvisibility: 500,			/* Only for use with BackgroundSize false (or old browsers) */ /* time to recheck if visible/loaded */
+				timeCheckVisibility: 500,			/* Only for use with BackgroundSize false (or old browsers) */ /* time to recheck if visible/loaded */
 
 				// CALLBACKS
 				onStart: null,						// no-params
@@ -239,7 +239,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 							$img.data('imgLiquid_loaded', true);
 							setTimeout(makeOldProcess, $i * settings.delay);
 						} else {
-							setTimeout(onLoad, settings.timecheckvisibility);
+							setTimeout(onLoad, settings.timeCheckVisibility);
 						}
 					}
 
@@ -337,6 +337,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 						hn = Math.floor($imgCH);
 					}
 
+
 					// Align X
 					ha = settings.horizontalAlign.toLowerCase();
 					hdif = $imgCW - wn;
@@ -403,8 +404,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 
 // Inject css styles ______________________________________________________
-!function () {
-	var css = imgLiquid.injectCss,
+function imgLiquid_injectCss (css) {
 	head = document.getElementsByTagName('head')[0],
 	style = document.createElement('style');
 	style.type = 'text/css';
@@ -414,4 +414,4 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 		style.appendChild(document.createTextNode(css));
 	}
 	head.appendChild(style);
-}();
+};
