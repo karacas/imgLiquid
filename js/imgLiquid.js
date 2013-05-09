@@ -109,7 +109,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 				// MAIN >> each for image
 
-				var settings,
+				var settings = imgLiquidRoot.settings,
 				$imgBoxCont = $(this),
 				$img = $('img:first',$imgBoxCont);
 				if (!$img.length) {onError(); return;}
