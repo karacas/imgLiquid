@@ -15,7 +15,7 @@ ex:
 			verticalAlign:		// 'center' //	'top'	//	'bottom' // '50%'  // '10%'
 			horizontalAlign:	// 'center' //	'left'	//	'right'  // '50%'  // '10%'
 
-	> callBakcs:
+	> CallBacks:
 			onStart:		function(){},
 			onFinish:		function(){},
 			onItemStart:	function(index, container, img){},
