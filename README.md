@@ -54,7 +54,7 @@ http://codepen.io/karacas/pen/nlugd
         verticalAlign:      // 'center' //  'top'   //  'bottom' // '50%'  // '10%'
         horizontalAlign:    // 'center' //  'left'  //  'right'  // '50%'  // '10%'
 
-        //CallBakcs
+        //CallBacks
         onStart:        function(){},
         onFinish:       function(){},
         onItemStart:    function(index, container, img){},
