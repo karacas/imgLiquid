@@ -1,7 +1,7 @@
 ![ScreenShot](https://raw.github.com/karacas/imgLiquid/master/tests/logoimgliquid.png)
 
 imgLiquid v0.9.943 / 03-05-2013
-#####A jQuery Plugin to resize images to fit in a container.
+#####A jQuery Plugin to resize images/videos to fit in a container.
 Alejandro Emparan (karacas) / @krc_ale
 Dual licensed under the MIT and GPL licenses.
 ## 
@@ -24,6 +24,9 @@ $(document).ready(function() {
 <div class="imgLiquidFill imgLiquid" style="width:300px; height:200px;">
 	<img alt="Woody" src="Woody.jpg" />
 </div>
+<div class="imgLiquidFill imgLiquid" style="width:300px; height:200px;">
+  <video alt="Woody scene" src="Woody.webm" />
+</div>
 ```
  
 ####View in action:
@@ -44,6 +47,7 @@ http://codepen.io/karacas/pen/nlugd
 	- CallBacks.
     - HTML5 data-* attributes.
 	- All browsers (Incl. ie6).
+  - HTML5 video support
 ```
  
 ###Options:
