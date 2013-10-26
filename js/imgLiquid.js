@@ -32,7 +32,7 @@ ex:
 var imgLiquid = imgLiquid || {VER: '0.9.943'};
 imgLiquid.bgs_Available = false;
 imgLiquid.bgs_CheckRunned = false;
-imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
+imgLiquid.injectCss = ".imgLiquid img {visibility:hidden}\n\t.imgLiquid video {visibility:hidden}";
 
 
 (function ($) {
@@ -68,25 +68,25 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 			this.defaults = {
 				fill: true,
-				verticalAlign: 'center',			//	'top'	//	'bottom' // '50%'  // '10%'
-				horizontalAlign: 'center',			//	'left'	//	'right'  // '50%'  // '10%'
+				verticalAlign: 'center',    //	'top'	//	'bottom' // '50%'  // '10%'
+				horizontalAlign: 'center',  //	'left'	//	'right'  // '50%'  // '10%'
 				useBackgroundSize: true,
 				useDataHtmlAttr: true,
 
-				responsive: true,					/* Only for use with BackgroundSize false (or old browsers) */
-				delay: 0,							/* Only for use with BackgroundSize false (or old browsers) */
-				fadeInTime: 0,						/* Only for use with BackgroundSize false (or old browsers) */
-				removeBoxBackground: true,			/* Only for use with BackgroundSize false (or old browsers) */
-				hardPixels: true,					/* Only for use with BackgroundSize false (or old browsers) */
-				responsiveCheckTime: 500,			/* Only for use with BackgroundSize false (or old browsers) */ /* time to check div resize */
-				timecheckvisibility: 500,			/* Only for use with BackgroundSize false (or old browsers) */ /* time to recheck if visible/loaded */
+				responsive: true,           /* Only for use with BackgroundSize false (or old browsers) */
+				delay: 0,                   /* Only for use with BackgroundSize false (or old browsers) */
+				fadeInTime: 0,              /* Only for use with BackgroundSize false (or old browsers) */
+				removeBoxBackground: true,  /* Only for use with BackgroundSize false (or old browsers) */
+				hardPixels: true,           /* Only for use with BackgroundSize false (or old browsers) */
+				responsiveCheckTime: 500,   /* Only for use with BackgroundSize false (or old browsers) */ /* time to check div resize */
+				timecheckvisibility: 500,   /* Only for use with BackgroundSize false (or old browsers) */ /* time to recheck if visible/loaded */
 
 				// CALLBACKS
-				onStart: null,						// no-params
-				onFinish: null,						// no-params
-				onItemStart: null,					// params: (index, container, img )
-				onItemFinish: null,					// params: (index, container, img )
-				onItemError: null					// params: (index, container, img )
+				onStart: null,              // no-params
+				onFinish: null,             // no-params
+				onItemStart: null,          // params: (index, container, img )
+				onItemFinish: null,	        // params: (index, container, img )
+				onItemError: null	          // params: (index, container, img )
 			};
 
 
@@ -111,7 +111,14 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 				var settings = imgLiquidRoot.settings,
 				$imgBoxCont = $(this),
-				$img = $('img:first',$imgBoxCont);
+				$img = $('img:first',$imgBoxCont),
+        $video = false;
+
+        if (!$img.length) {
+          $img = $('video:first',$imgBoxCont);
+          $video = true;
+        }
+
 				if (!$img.length) {onError(); return;}
 
 
@@ -133,7 +140,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 
 				// Process
-				if (imgLiquid.bgs_Available && settings.useBackgroundSize)
+				if (!$video && imgLiquid.bgs_Available && settings.useBackgroundSize)
 					processBgSize();
 				else
 					processOldMethod();
@@ -191,7 +198,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 						$img.parent().prepend($imgCopy);
 						$img.remove();
 						$img = $imgCopy;
-						$img[0].width = 0;
+						$($img[0]).width(0);
 
 						// Bug ie with > if (!$img[0].complete && $img[0].width) onError();
 						setTimeout(processOldMethod, 10);
@@ -211,12 +218,16 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 
 					// Hide others images
-					$('img:not(:first)', $imgBoxCont).css('display', 'none');
+          if($video) {
+            $('video:not(:first)', $imgBoxCont).css('display', 'none');
+          } else {
+            $('img:not(:first)', $imgBoxCont).css('display', 'none');
+          }
 
 
 					// CSSs
 					$imgBoxCont.css({'overflow': 'hidden'});
-					$img.fadeTo(0, 0).removeAttr('width').removeAttr('height').css({
+					$img.hide().removeAttr('width').removeAttr('height').css({
 						'visibility': 'visible',
 						'max-width': 'none',
 						'max-height': 'none',
@@ -235,7 +246,8 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 					// loop until load
 					function onLoad() {
 						if ($img.data('imgLiquid_error') || $img.data('imgLiquid_loaded') || $img.data('imgLiquid_oldProcessed')) return;
-						if ($imgBoxCont.is(':visible') && $img[0].complete && $img[0].width > 0 && $img[0].height > 0) {
+						if ($imgBoxCont.is(':visible') && ($video || $img[0].complete)
+                && $($img[0]).width() > 0 && $($img[0]).height() > 0) {
 							$img.data('imgLiquid_loaded', true);
 							setTimeout(makeOldProcess, $i * settings.delay);
 						} else {
@@ -318,10 +330,9 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 					$imgCW = $imgBoxCont.width(),
 					$imgCH = $imgBoxCont.height();
 
-
 					// Save original sizes
-					if ($img.data('owidth')	=== undefined) $img.data('owidth',	$img[0].width);
-					if ($img.data('oheight') === undefined) $img.data('oheight', $img[0].height);
+					if ($img.data('owidth')	=== undefined) $img.data('owidth',	$($img[0]).width());
+					if ($img.data('oheight') === undefined) $img.data('oheight', $($img[0]).height());
 
 
 					// Compare ratio
