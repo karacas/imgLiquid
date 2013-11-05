@@ -1,6 +1,6 @@
 {
     "name": "imgLiquid",
-    "version": "0.9.943",
+    "version": "0.9.944",
     "main": "js/imgLiquid.js",
     "dependencies": {"jquery": ">=1.8.1"},
     "ignore": ["**/.*", "node_modules", "components", "tests", "examples"]
