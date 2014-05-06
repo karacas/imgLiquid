@@ -22,7 +22,7 @@ $(document).ready(function() {
 ####Html:
 ```html
 <div class="imgLiquidFill imgLiquid" style="width:300px; height:200px;">
-	<img alt="Woody" src="Woody.jpg" />
+	<img alt="Woody" src="woody.jpg" />
 </div>
 ```
  
