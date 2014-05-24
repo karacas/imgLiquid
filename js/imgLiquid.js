@@ -352,7 +352,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 					// Align Y
 					va = settings.verticalAlign.toLowerCase();
 					vdif = $imgCH - hn;
-					if (va === 'left') margT = 0;
+					if (va === 'top') margT = 0;
 					if (va === 'center') margT = vdif * 0.5;
 					if (va === 'bottom') margT = vdif;
 					if (va.indexOf('%') !== -1){
