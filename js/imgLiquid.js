@@ -156,7 +156,7 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 					}
 
 					$imgBoxCont.css({
-						'background-size':		(settings.fill) ? 'cover' : 'contain',
+						'background-size':		(!settings.fill && $img[0].width <= $imgBoxCont.width() && $img[0].height <= $imgBoxCont.height()) ? 'auto' : (settings.fill) ? 'cover' : 'contain',
 						'background-position':	(settings.horizontalAlign + ' ' + settings.verticalAlign).toLowerCase(),
 						'background-repeat':	'no-repeat'
 					});
@@ -325,16 +325,23 @@ imgLiquid.injectCss = '.imgLiquid img {visibility:hidden}';
 
 
 					// Compare ratio
-					if (settings.fill === ($imgCW / $imgCH) >= ($img.data('owidth') / $img.data('oheight'))) {
-						w = '100%';
-						h = 'auto';
-						wn = Math.floor($imgCW);
-						hn = Math.floor($imgCW * ($img.data('oheight') / $img.data('owidth')));
-					} else {
+					if (!settings.fill && $img.data('owidth') <= $imgCW && $img.data('oheight') <= $imgCH) {
 						w = 'auto';
-						h = '100%';
-						wn = Math.floor($imgCH * ($img.data('owidth') / $img.data('oheight')));
-						hn = Math.floor($imgCH);
+						h = 'auto';
+						wn = $img.data('owidth');
+						hn = $img.data('oheight');
+					} else {
+						if (settings.fill === ($imgCW / $imgCH) >= ($img.data('owidth') / $img.data('oheight'))) {
+							w = '100%';
+							h = 'auto';
+							wn = Math.floor($imgCW);
+							hn = Math.floor($imgCW * ($img.data('oheight') / $img.data('owidth')));
+						} else {
+							w = 'auto';
+							h = '100%';
+							wn = Math.floor($imgCH * ($img.data('owidth') / $img.data('oheight')));
+							hn = Math.floor($imgCH);
+						}
 					}
 
 					// Align X
