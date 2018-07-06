@@ -25,16 +25,15 @@ $(document).ready(function() {
 	<img alt="Woody" src="woody.jpg" />
 </div>
 ```
- 
 #### View in action:
-http://goo.gl/Wk8bU
-#### or play with it:
 http://jsfiddle.net/karacas/3CRx7/#base
+
 http://codepen.io/karacas/pen/nlugd
-## 
+
+
 ### Features:
 ```
-	- Uses CSS Background-size when is available. (new!)
+    - Uses CSS Background-size when is available. (new!)
     - Bootstrap compatible.
     - Lightweight: < 2.0KBs gzipped.
 	- Fill / Crop.
